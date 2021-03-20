@@ -1,5 +1,6 @@
 package com.xenecca.api.dto.request;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
@@ -15,8 +16,9 @@ public class NewUserDTO {
 	private String _lastName;
 	@NotBlank
 	private String _username;
-	@NotBlank
+	@NotBlank(message = "Email must be provided. Cannot be blank!")
+	@Email(message = "Invalid email format.")
 	private String _email;
-	@NotBlank
+	@NotBlank(message = "Password cannot be blank!")
 	private String _password;
 }
