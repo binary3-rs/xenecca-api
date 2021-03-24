@@ -1,10 +1,10 @@
 package com.xenecca.api.exception;
 
 import java.util.Date;
+import java.util.NoSuchElementException;
 
 import javax.validation.ConstraintViolationException;
 
-import org.apache.tomcat.util.ExceptionUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,7 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private final String INVALID_JWT_OR_NON_AUTH = "You're not allowed to access this resource. Your token is invalid or expired.";
 	private final String NULL_POINTER_EXCEPTION_MESSAGE = "An error occured. Check again the request body and try again!";
+	private final String RESOURCE_NOT_FOUND_MESSAGE = "The resource cannot be found. Wrong ID provided!";
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception ex, WebRequest request) {
@@ -69,6 +70,13 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@ExceptionHandler(NoSuchElementException.class)
+	public final ResponseEntity<ExceptionResponse> noSuchElementException(Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), RESOURCE_NOT_FOUND_MESSAGE,
+				request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public final ResponseEntity<ExceptionResponse> integrityViolationException(Exception ex, WebRequest request) {
 		String message = getRootCause(ex).getMessage().toLowerCase();
@@ -80,7 +88,6 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ConstraintViolationException.class)
 	public final ResponseEntity<ExceptionResponse> constraintViolationException(ConstraintViolationException ex,
 			WebRequest request) {
-		//String message = getRootCause(ex).getMessage().toLowerCase();
 		StringBuilder builder = new StringBuilder();
 		ex.getConstraintViolations().forEach(constraint -> {
 			builder.append(constraint.getMessage());

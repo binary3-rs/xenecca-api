@@ -8,7 +8,6 @@ import com.xenecca.api.dto.response.CategoryDTO;
 import com.xenecca.api.model.Category;
 
 @Mapper(componentModel = "spring")
-
 public interface CategoryMapper {
 	CategoryDTO mapToDTO(Category category);
 

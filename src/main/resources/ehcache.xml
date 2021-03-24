@@ -1,0 +1,78 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
+	monitoring="autodetect" dynamicConfig="true">
+
+	<diskStore path="java.io.tmpdir/ehcache" />
+
+	<defaultCache maxEntriesLocalHeap="500" eternal="false"
+		timeToIdleSeconds="600" timeToLiveSeconds="600"
+		diskSpoolBufferSizeMB="50" maxEntriesLocalDisk="1000"
+		diskExpiryThreadIntervalSeconds="300" memoryStoreEvictionPolicy="LRU"
+		statistics="true">
+		<persistence strategy="localTempSwap" />
+	</defaultCache>
+
+	<cache name="com.xenecca.api.model.Course"
+		maxEntriesLocalHeap="500" eternal="false" timeToIdleSeconds="600"
+		timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU">
+		<persistence strategy="localTempSwap" />
+	</cache>
+
+	<cache name="com.xenecca.api.model.Instructor"
+		maxEntriesLocalHeap="500" eternal="false" timeToIdleSeconds="600"
+		timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU">
+		<persistence strategy="localTempSwap" />
+	</cache>
+
+	<cache name="com.xenecca.api.model.CurriculumItem"
+		maxEntriesLocalHeap="1000" eternal="true"
+		memoryStoreEvictionPolicy="LRU">
+<!-- 		 timeToIdleSeconds="600"
+		timeToLiveSeconds="600" 
+ -->		
+ 		<persistence strategy="localTempSwap" />
+	</cache>
+
+<cache name="com.xenecca.api.model.Category"
+		maxEntriesLocalHeap="100" eternal="true"
+		memoryStoreEvictionPolicy="LRU">
+<!--		timeToIdleSeconds="600"
+		timeToLiveSeconds="600"-->
+		<persistence strategy="localTempSwap" />
+	</cache>
+	
+	<cache name="com.xenecca.api.model.Subcategory"
+		maxEntriesLocalHeap="100" eternal="true"
+		memoryStoreEvictionPolicy="LRU">
+		<!-- timeToIdleSeconds="600"
+		timeToLiveSeconds="600" -->
+		
+		<persistence strategy="localTempSwap" />
+	</cache>
+	
+	<cache name="com.xenecca.api.model.Topic"
+		maxEntriesLocalHeap="100" eternal="true"
+		memoryStoreEvictionPolicy="LRU">
+<!-- 		timeToIdleSeconds="600"
+		timeToLiveSeconds="600" > -->
+		<persistence strategy="localTempSwap" />
+	</cache>
+	
+	<cache name="com.xenecca.api.model.Language"
+		maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="600"
+		timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU">
+		<persistence strategy="localTempSwap" />
+	</cache>
+	<cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
+		maxEntriesLocalHeap="1000" eternal="true">
+		<persistence strategy="localTempSwap" />
+	</cache>
+	
+	<cache name="org.hibernate.cache.internal.StandardQueryCache"
+       maxElementsInMemory="100"
+       eternal="false"
+       timeToLiveSeconds="120"
+       memoryStoreEvictionPolicy="LRU">
+</cache>
+
+</ehcache>

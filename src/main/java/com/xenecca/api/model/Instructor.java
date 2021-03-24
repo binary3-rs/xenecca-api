@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.URL;
@@ -32,6 +35,8 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Instructor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +55,7 @@ public class Instructor {
 
 	@Column(name = "num_of_courses", columnDefinition = "integer default 0")
 	private Integer _numOfCourses;
-	
+
 	@Column(name = "num_of_students", columnDefinition = "integer default 0")
 	private Integer _numOfStudents;
 
@@ -58,7 +63,7 @@ public class Instructor {
 	@Max(value = 5, message = "Rating must not greater than 5!")
 	@Column(name = "avg_rating", columnDefinition = "decimal(6,5) default 0.0")
 	private Double _avgRating;
-	
+
 	@URL
 	@Column(name = "original_image_url")
 	private String _originalImageURL;

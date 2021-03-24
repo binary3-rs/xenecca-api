@@ -1,11 +1,11 @@
 package com.xenecca.api.model;
 
-import java.math.BigDecimal;
-import java.sql.Time;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +23,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.URL;
@@ -40,8 +42,16 @@ import lombok.experimental.Accessors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 @Entity
-public class Course {
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Course implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3783958850800043842L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,6 +80,7 @@ public class Course {
 	@Column(name = "currency", columnDefinition = "varchar(1) default '$'")
 	private Character _currency;
 
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@Builder.Default
 	@OneToMany(mappedBy = "_course", orphanRemoval = true)
 	private Set<CurriculumItem> _curriculumItems = new HashSet<CurriculumItem>();
@@ -103,11 +114,13 @@ public class Course {
 	@Column(name = "image_path")
 	private String _imagePath;
 
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@Builder.Default
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "course_instructor", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "instructor_id"))
 	private Set<Instructor> _instructors = new HashSet<>();
 
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "language_id")
 	private Language _language;
@@ -125,7 +138,7 @@ public class Course {
 	private Integer _numOfReviews = 0;
 
 	@URL
-	@Column(name = "original_image_url", unique=true)
+	@Column(name = "original_image_url", unique = true)
 	private String _originalImageURL;
 
 	@Min(0)
@@ -137,7 +150,7 @@ public class Course {
 	private String _requirements;
 
 	@URL
-	@Column(name = "smartybro_url", unique = true, nullable=false, length = 300)
+	@Column(name = "smartybro_url", unique = true, nullable = false, length = 300)
 	private String _smartybroURL;
 
 	@Min(0)
@@ -145,10 +158,12 @@ public class Course {
 	@Column(name = "students_enrolled", columnDefinition = "integer default 0")
 	private Integer _studentsEnrolled = 0;
 
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subcategory_id")
 	private Subcategory _subcategory;
 
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "topic_id")
 	private Topic _topic;
