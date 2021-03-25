@@ -110,10 +110,13 @@ public class Course implements Serializable {
 	@Size(min = 0, max = 1000)
 	@Column(name = "goals")
 	private String _goals;
+	
+	@Column(name = "headline", length=255)
+	private String _headline;
 
 	@Column(name = "image_path")
 	private String _imagePath;
-
+	
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@Builder.Default
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })

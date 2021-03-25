@@ -13,6 +13,7 @@ import com.xenecca.api.dto.response.CourseDTO;
 import com.xenecca.api.mapper.CourseMapper;
 import com.xenecca.api.model.Course;
 import com.xenecca.api.service.CourseService;
+import com.xenecca.api.service.SearchService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,10 +32,14 @@ public class CourseController {
 	private CourseService _courseService;
 
 	@Autowired
+	private SearchService _searchService;
+
+	@Autowired
 	private CourseMapper _courseMapper;
 
 	@GetMapping
-	public List<CourseDTO> getAllCourses(@RequestParam(name="pageNo", defaultValue="0") Integer pageNo, @RequestParam(value="pageSize", defaultValue="18") Integer pageSize) {
+	public List<CourseDTO> getAllCourses(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "18") Integer pageSize) {
 		Iterable<Course> courses = getCourseService().getAllCourses(pageNo, pageSize);
 		return getCourseMapper().mapToDTOList(courses);
 
@@ -44,6 +49,12 @@ public class CourseController {
 	public CourseDTO getCourseById(@PathVariable("id") Long courseId) {
 		Course course = getCourseService().getCourseById(courseId);
 		return getCourseMapper().mapToDTO(course);
+
+	}
+
+	@GetMapping("test")
+	public boolean test() {
+		return getSearchService().addDocument();
 
 	}
 
