@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xenecca.api.dto.response.CourseDTO;
+import com.xenecca.api.es.models.CourseDoc;
 import com.xenecca.api.mapper.CourseMapper;
 import com.xenecca.api.model.Course;
 import com.xenecca.api.service.CourseService;
@@ -37,12 +38,23 @@ public class CourseController {
 	@Autowired
 	private CourseMapper _courseMapper;
 
-	@GetMapping
-	public List<CourseDTO> getAllCourses(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "18") Integer pageSize) {
-		Iterable<Course> courses = getCourseService().getAllCourses(pageNo, pageSize);
-		return getCourseMapper().mapToDTOList(courses);
+//	@GetMapping
+//	public List<CourseDTO> getAllCourses(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+//			@RequestParam(value = "pageSize", defaultValue = "18") Integer pageSize) {
+//		Iterable<Course> courses = getCourseService().getAllCourses(pageNo, pageSize);
+//		return getCourseMapper().mapToDTOList(courses);
+//
+//	}
 
+	@GetMapping
+	public List<CourseDoc> searchCourses(@RequestParam(name = "q", defaultValue = "*") String searchTerm,
+			@RequestParam(name = "category", required = false) Integer categoryId,
+			@RequestParam(value = "subcategory", required = false) Integer subcategoryId,
+			@RequestParam(value = "topic", required = false) Integer topicId,
+			@RequestParam(value = "language", required = false) Integer languageId,
+			@RequestParam(value = "price_free", required = false) Boolean isPriceFree) {
+
+		return getSearchService().searchCourses(searchTerm, categoryId, subcategoryId, topicId, languageId, isPriceFree);
 	}
 
 	@GetMapping("{id}")

@@ -61,7 +61,7 @@ public class CourseDoc {
 	private Double _price;
 
 	@Field(name = "price_as_string", type = Text)
-	private Double _priceAsString;
+	private String _priceAsString;
 
 	@Field(name = "instructors", type = FieldType.Nested, includeInParent = true)
 	private List<InstructorDoc> _instructors;
