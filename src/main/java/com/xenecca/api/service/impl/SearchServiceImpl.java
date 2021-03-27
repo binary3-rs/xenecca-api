@@ -37,7 +37,7 @@ public class SearchServiceImpl implements SearchService {
 		doc.setPrice(200.0);
 		doc.setSubcategory(1L);
 		doc.setTopic(1L);
-		doc.setInstructors(Arrays.asList(new InstructorDoc("John Smith"), new InstructorDoc("John Doe")));
+		doc.setInstructors(Arrays.asList(new InstructorDoc("John Smith", null), new InstructorDoc("John Doe", null)));
 		System.out.println(getCourseDocRepository().save(doc));
 		return false;
 	}

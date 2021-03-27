@@ -110,13 +110,13 @@ public class Course implements Serializable {
 	@Size(min = 0, max = 1000)
 	@Column(name = "goals")
 	private String _goals;
-	
-	@Column(name = "headline", length=255)
+
+	@Column(name = "headline", length = 255)
 	private String _headline;
 
 	@Column(name = "image_path")
 	private String _imagePath;
-	
+
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@Builder.Default
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -143,6 +143,10 @@ public class Course implements Serializable {
 	@URL
 	@Column(name = "original_image_url", unique = true)
 	private String _originalImageURL;
+
+	@Min(0)
+	@Column(name = "old_price", columnDefinition = "decimal(6,2) default 0.0")
+	private Double _oldPrice;
 
 	@Min(0)
 	@Column(name = "price", columnDefinition = "decimal(6,2) default 0.0")
