@@ -1,7 +1,11 @@
 package com.xenecca.api.dto.response;
 
+import static org.springframework.data.elasticsearch.annotations.FieldType.Text;
+
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.data.elasticsearch.annotations.Field;
 
 import com.xenecca.api.es.models.CourseDoc;
 import com.xenecca.api.model.Course;
@@ -20,6 +24,7 @@ import lombok.experimental.Accessors;
 public class CoursePreviewDTO {
 
 	private Long _id;
+	private String _badge;
 
 	private String _title;
 
@@ -27,15 +32,9 @@ public class CoursePreviewDTO {
 
 	private Double _avgRating;
 
-	private CategoryDTO _category;
-
-	private SubcategoryDTO _subcategory;
-
-	private TopicDTO _topic;
-
-	private LanguageDTO _language;
-
 	private Double _price;
+
+	private Double _oldPrice;
 
 	private String _priceAsString;
 
@@ -55,14 +54,12 @@ public class CoursePreviewDTO {
 
 	public CoursePreviewDTO(CourseDoc doc) {
 		_id = doc.getDocId();
+		_badge = doc.getBadge();
 		_title = doc.getTitle();
 		_headline = doc.getHeadline();
 		_avgRating = doc.getAvgRating();
-		// _category = new CategoryDTO(doc.getCategory().get)
-		_subcategory = null;
-		_topic = null;
-		_language = null;
 		_price = doc.getPrice();
+		_oldPrice = doc.getOldPrice();
 		_priceAsString = doc.getPriceAsString();
 		_instructors = null;
 		_poster = doc.getPoster();
@@ -73,18 +70,15 @@ public class CoursePreviewDTO {
 		_videoContentLength = doc.getVideoContentLength();
 
 	}
-	
-	
+
 	public CoursePreviewDTO(Course course) {
 		_id = course.getId();
 		_title = course.getTitle();
 		_headline = course.getHeadline();
 		_avgRating = course.getAvgRating();
-		// _category = new CategoryDTO(doc.getCategory().get)
-		_subcategory = null;
-		_topic = null;
-		_language = null;
+		_badge = course.getBadge();
 		_price = course.getPrice();
+		_price = course.getOldPrice();
 		_priceAsString = course.getPrice().toString() + course.getCurrency();
 		_instructors = null;
 		_poster = course.getPosterPath();

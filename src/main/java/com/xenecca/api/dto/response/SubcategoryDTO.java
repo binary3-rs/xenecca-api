@@ -1,5 +1,7 @@
 package com.xenecca.api.dto.response;
 
+import com.xenecca.api.model.Subcategory;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +16,11 @@ import lombok.experimental.Accessors;
 public class SubcategoryDTO {
 	private Long _id;
 	private String _name;
+
+	public SubcategoryDTO(Subcategory subcategory) {
+		if (subcategory != null) {
+			_id = subcategory.getId();
+			_name = subcategory.getName();
+		}
+	}
 }

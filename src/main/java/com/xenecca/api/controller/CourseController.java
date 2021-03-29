@@ -74,7 +74,8 @@ public class CourseController {
 	@GetMapping("{id}")
 	public CourseDTO getCourseById(@PathVariable("id") Long courseId) {
 		Course course = getCourseService().getCourseById(courseId);
-		return getCourseMapper().mapToDTO(course);
+		//return getCourseMapper().mapToDTO(course);
+		return new CourseDTO(course);
 
 	}
 

@@ -59,9 +59,15 @@ public class CourseDoc {
 
 	@Field(name = "price", type = Double)
 	private Double _price;
+	
+	@Field(name = "old_price", type = Double)
+	private Double _oldPrice;
 
 	@Field(name = "price_as_string", index = false, type = Text)
 	private String _priceAsString;
+
+	@Field(name = "badge", type = Text)
+	private String _badge;
 
 	@Field(name = "instructors", type = FieldType.Nested, includeInParent = true)
 	private List<InstructorDoc> _instructors;
@@ -77,10 +83,10 @@ public class CourseDoc {
 
 	@Field(name = "num_of_reviews", nullValue = "0", index = false, type = Integer)
 	private Integer _numOfReviews;
-	
+
 	@Field(name = "video_content_length", nullValue = "0", index = false, type = Text)
 	private String _videoContentLength;
-	
+
 	@Field(name = "time_updated", index = false, type = FieldType.Date, store = true, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date _timeUpdated;
 
