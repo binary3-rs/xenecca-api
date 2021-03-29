@@ -89,8 +89,8 @@ public class Course implements Serializable {
 	@Column(name = "description")
 	private String _description;
 
-	@Column(name = "device_access", length = 40)
-	private String _deviceAccess;
+	@Column(name = "devices_access", length = 40)
+	private String _devicesAccess;
 
 	@Min(value = 0, message = "Discount percent must not be less than 0%")
 	@Max(value = 100, message = "Discount percent must not be greater than 100%")
@@ -103,9 +103,8 @@ public class Course implements Serializable {
 	@Column(name = "discount_code", length = 40)
 	private String _discountCode;
 
-	@Builder.Default
-	@Column(name = "duration_in_mins", columnDefinition = "integer default 0")
-	private Integer _durationInMins = 0;
+	@Column(name = "video_content_length")
+	private String _videoContentLength;
 
 	@Size(min = 0, max = 1000)
 	@Column(name = "goals")
@@ -114,8 +113,8 @@ public class Course implements Serializable {
 	@Column(name = "headline", length = 255)
 	private String _headline;
 
-	@Column(name = "image_path")
-	private String _imagePath;
+	@Column(name = "poster_path")
+	private String _posterPath;
 
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@Builder.Default
@@ -131,18 +130,18 @@ public class Course implements Serializable {
 	@Column(name = "has_lifetime_access")
 	private Boolean _lifetimeAccess;
 
-	@Min(1)
+	@Min(0)
 	@Builder.Default
-	@Column(name = "num_of_articles", columnDefinition = "integer default 1")
-	private Integer _numOfArticles = 1;
+	@Column(name = "num_of_articles", columnDefinition = "integer default 0")
+	private Integer _numOfArticles = 0;
 
 	@Builder.Default
 	@Column(name = "num_of_reviews", columnDefinition = "integer default 0")
 	private Integer _numOfReviews = 0;
 
 	@URL
-	@Column(name = "original_image_url", unique = true)
-	private String _originalImageURL;
+	@Column(name = "original_poster_url", unique = true)
+	private String _originalPosterURL;
 
 	@Min(0)
 	@Column(name = "old_price", columnDefinition = "decimal(6,2) default 0.0")
@@ -162,8 +161,8 @@ public class Course implements Serializable {
 
 	@Min(0)
 	@Builder.Default
-	@Column(name = "students_enrolled", columnDefinition = "integer default 0")
-	private Integer _studentsEnrolled = 0;
+	@Column(name = "num_of_students", columnDefinition = "integer default 0")
+	private Integer _numOfStudents = 0;
 
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)

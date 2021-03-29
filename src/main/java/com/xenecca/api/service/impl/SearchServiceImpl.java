@@ -85,7 +85,6 @@ public class SearchServiceImpl implements SearchService {
 	private Criteria _createCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
 			Integer topicId, Integer languageId, Boolean isPriceFree) {
 		Criteria criteria = new Criteria();
-		System.out.println(searchTerm);
 		if (!searchTerm.isEmpty() && searchTerm != null) {
 			criteria = criteria.and("title").contains(searchTerm).or("headline").contains(searchTerm);
 		}
@@ -104,7 +103,8 @@ public class SearchServiceImpl implements SearchService {
 		}
 		// TODO: check this out
 		if (isPriceFree != null && isPriceFree == true) {
-			criteria = criteria.and("price").matches(Double.valueOf(12.99));
+			System.out.println("DEBUG");
+			criteria = criteria.and("price").matches(0.0);
 		}
 
 		return criteria;

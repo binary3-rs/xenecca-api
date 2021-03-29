@@ -33,10 +33,10 @@ public class CourseServiceImpl implements CourseService {
 	private final int PAGE_SIZE = 18;
 
 	@Override
-	public Iterable<Course> getAllCourses(Integer pageNo, Integer pageSize) {
+	public Iterable<Course> getAllCourses(Integer pageNo) {
 		
 		//return getCourseRepository().findAll();
-		Pageable sortedByDateAddedDesc = PageRequest.of(pageNo, pageSize, Sort.by("_createdAt").descending());
+		Pageable sortedByDateAddedDesc = PageRequest.of(pageNo, PAGE_SIZE, Sort.by("_createdAt").descending());
 		Page<Course> pageOfCourses = getCourseRepository().findAll(sortedByDateAddedDesc);
 		return pageOfCourses.getContent();
 		

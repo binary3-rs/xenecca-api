@@ -18,9 +18,9 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InstructorDoc {
-	@Field(type = Keyword)
-	private String _name;
-
-	@Field(type = Text, storeNullValue = true)
+	@Field(name ="full_name", type = Keyword)
+	private String _fullName;
+	
+	@Field(name="image", type = Text, storeNullValue = true)
 	private String _image;
 }

@@ -60,28 +60,28 @@ public class CourseDoc {
 	@Field(name = "price", type = Double)
 	private Double _price;
 
-	@Field(name = "price_as_string", type = Text)
+	@Field(name = "price_as_string", index = false, type = Text)
 	private String _priceAsString;
 
 	@Field(name = "instructors", type = FieldType.Nested, includeInParent = true)
 	private List<InstructorDoc> _instructors;
 
-	@Field(name = "image", index = false, storeNullValue = true, type = Text)
-	private String _image;
+	@Field(name = "poster", index = false, storeNullValue = true, type = Text)
+	private String _poster;
 
-	@Field(name = "original_image_url", index = false, storeNullValue = true, type = Text)
-	private String _originalImageUrl;
-	
-	@Field(name = "students_enrolled", nullValue = "0", index = false, type = Integer)
-	private String _studentsEnrolled;
+	@Field(name = "original_poster_url", index = false, storeNullValue = true, type = Text)
+	private String _originalPosterURL;
+
+	@Field(name = "num_of_students", nullValue = "0", index = false, type = Integer)
+	private Integer _numOfStudents;
 
 	@Field(name = "num_of_reviews", nullValue = "0", index = false, type = Integer)
-	private String _numOfReviews;
-
-	@Field(name = "discount_period", storeNullValue = true, type = Text)
-	private String _discountPeriod;
-
-	@Field(name = "time_added", index = false, type = FieldType.Date, store = true, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date _timeAdded;
+	private Integer _numOfReviews;
+	
+	@Field(name = "video_content_length", nullValue = "0", index = false, type = Text)
+	private String _videoContentLength;
+	
+	@Field(name = "time_updated", index = false, type = FieldType.Date, store = true, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date _timeUpdated;
 
 }

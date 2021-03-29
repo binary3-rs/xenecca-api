@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xenecca.api.dto.response.CourseDTO;
+import com.xenecca.api.dto.response.CoursePreviewDTO;
 import com.xenecca.api.es.models.CourseDoc;
 import com.xenecca.api.mapper.CourseMapper;
+import com.xenecca.api.mapper.CoursePreviewMapper;
 import com.xenecca.api.model.Course;
 import com.xenecca.api.service.CourseService;
 import com.xenecca.api.service.SearchService;
@@ -38,6 +40,9 @@ public class CourseController {
 	@Autowired
 	private CourseMapper _courseMapper;
 
+	@Autowired
+	private CoursePreviewMapper _coursePreviewMapper;
+
 //	@GetMapping
 //	public List<CourseDTO> getAllCourses(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
 //			@RequestParam(value = "pageSize", defaultValue = "18") Integer pageSize) {
@@ -47,14 +52,23 @@ public class CourseController {
 //	}
 
 	@GetMapping
-	public List<CourseDoc> searchCourses(@RequestParam(name = "q", defaultValue = "*") String searchTerm,
+	public List<CoursePreviewDTO> searchCourses(@RequestParam(name = "q", required = false) String searchTerm,
 			@RequestParam(name = "category", required = false) Integer categoryId,
 			@RequestParam(value = "subcategory", required = false) Integer subcategoryId,
 			@RequestParam(value = "topic", required = false) Integer topicId,
 			@RequestParam(value = "language", required = false) Integer languageId,
-			@RequestParam(value = "price_free", required = false) Boolean isPriceFree) {
+			@RequestParam(value = "price_free", required = false) Boolean isPriceFree,
+			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
 
-		return getSearchService().searchCourses(searchTerm, categoryId, subcategoryId, topicId, languageId, isPriceFree);
+		if (searchTerm == null && categoryId == null && subcategoryId == null && topicId == null && languageId == null
+				&& isPriceFree == null) {
+			System.out.println("DEBUG");
+			Iterable<Course> courses = getCourseService().getAllCourses(pageNo);
+			return getCoursePreviewMapper().mapCoursesToDTOList(courses);
+		}
+
+		return getCoursePreviewMapper().mapDocToDTOList(getSearchService().searchCourses(searchTerm, categoryId,
+				subcategoryId, topicId, languageId, isPriceFree));
 	}
 
 	@GetMapping("{id}")
