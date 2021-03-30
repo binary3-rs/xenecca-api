@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.lucene.search.TopDocs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -18,6 +18,7 @@ import com.xenecca.api.dao.es.CourseDocRepository;
 import com.xenecca.api.es.models.CourseDoc;
 import com.xenecca.api.es.models.InstructorDoc;
 import com.xenecca.api.service.SearchService;
+import com.xenecca.api.utils.SortAndCompareUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -56,15 +57,13 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId, Integer topicId,
-			Integer languageId, Boolean paid) {
+			Integer languageId, Integer ratingThreshold, Integer durationThreshold, Integer pageNo, String sortBy, String order) {
 		List<CourseDoc> resp = new ArrayList<CourseDoc>();
-		// Criteria criteria = new
-		// Criteria("title").contains(searchTerm).or("headline").contains(searchTerm);
-		Criteria criteria = createCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, topicId, languageId,
-				paid);
+		Criteria criteria = createCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, topicId, languageId);
 		Query query = new CriteriaQuery(criteria);
+		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order);
+		query.setPageable(pageable);
 		SearchHits<CourseDoc> courses = getTemplate().search(query, CourseDoc.class);
-		// Iterator<SearchHit> hits
 		for (SearchHit<CourseDoc> course : courses.getSearchHits()) {
 			CourseDoc res = course.getContent();
 			if (res != null) {
@@ -73,17 +72,10 @@ public class SearchServiceImpl implements SearchService {
 
 		}
 		return resp;
-		// if cate
-//		
-//		Pageable sortedByDateAddedDesc = PageRequest.of(0, 18, Sort.by("_createdAt").descending());
-//		Page<CourseDoc> pageOfCourses = getCourseDocRepository().find(searchTerm, categoryId, subcategoryId, topicId,
-//				languageId, paid, sortedByDateAddedDesc);
-
-		// return pageOfCourses.getContent();
 	}
 
 	private Criteria createCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
-			Integer topicId, Integer languageId, Boolean isPriceFree) {
+			Integer topicId, Integer languageId) {
 		Criteria criteria = new Criteria();
 		if (!searchTerm.isEmpty() && searchTerm != null) {
 			criteria = criteria.and("title").contains(searchTerm).or("headline").contains(searchTerm);
@@ -101,11 +93,11 @@ public class SearchServiceImpl implements SearchService {
 		if (languageId != null) {
 			criteria = criteria.and("language").matches(languageId);
 		}
-		// TODO: check this out
-		if (isPriceFree != null && isPriceFree == true) {
-			System.out.println("DEBUG");
-			criteria = criteria.and("price").matches(0.0);
-		}
+//		// TODO: check this out
+//		if (isPriceFree != null && isPriceFree == true) {
+//			System.out.println("DEBUG");
+//			criteria = criteria.and("price").matches(0.0);
+//		}
 
 		return criteria;
 	}

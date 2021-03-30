@@ -1,12 +1,11 @@
 package com.xenecca.api.dao.es;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Repository;
 
 import com.xenecca.api.es.models.CourseDoc;
 
+@Repository
 public interface CourseDocRepository extends ElasticsearchRepository<CourseDoc, Long> {
 	// @Query("{\"multi_match\": {\"query\": \"?0\", \"fields\": [\"firstName\",
 	// \"lastName\"], \"fuzziness\": \"AUTO\"}}")

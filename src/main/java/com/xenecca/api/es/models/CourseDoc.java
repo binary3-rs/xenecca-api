@@ -8,13 +8,13 @@ import static org.springframework.data.elasticsearch.annotations.FieldType.Text;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.InnerField;
+import org.springframework.data.elasticsearch.annotations.MultiField;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,9 +42,9 @@ public class CourseDoc {
 	@Field(name = "headline", nullValue = "", type = Text)
 	private String _headline;
 
-	@Field(name = "avg_rating", nullValue = "0.0", type = Double)
+	@Field(name = "avg_rating", index = false, nullValue = "0.0", type = Double)
 	private Double _avgRating;
-
+	
 	@Field(name = "category", storeNullValue = true, type = Keyword)
 	private Long _category;
 
@@ -59,7 +59,7 @@ public class CourseDoc {
 
 	@Field(name = "price", type = Double)
 	private Double _price;
-	
+
 	@Field(name = "old_price", type = Double)
 	private Double _oldPrice;
 
@@ -87,7 +87,10 @@ public class CourseDoc {
 	@Field(name = "video_content_length", nullValue = "0", index = false, type = Text)
 	private String _videoContentLength;
 
-	@Field(name = "time_updated", index = false, type = FieldType.Date, store = true, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date _timeUpdated;
+//	@MultiField(mainField = @Field(name = "updated_at", type = Text, fielddata = true), otherFields = {
+//			@InnerField(suffix = "keyword", type = Keyword) })
+	@Field(name = "updated_at", type = FieldType.Date, // , fielddata=true,
+			store = true, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date _updatedAt;
 
 }

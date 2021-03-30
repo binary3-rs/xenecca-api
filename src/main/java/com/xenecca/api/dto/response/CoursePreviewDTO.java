@@ -66,7 +66,7 @@ public class CoursePreviewDTO {
 		_originalPosterURL = doc.getOriginalPosterURL();
 		_numOfStudents = doc.getNumOfStudents();
 		_numOfReviews = doc.getNumOfReviews();
-		_timeUpdated = doc.getTimeUpdated();
+		_timeUpdated = doc.getUpdatedAt();
 		_videoContentLength = doc.getVideoContentLength();
 
 	}

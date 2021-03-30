@@ -49,7 +49,7 @@ public class CourseDTO {
 	private Integer _numOfStudents;
 	private String _udemyURL;
 	private Map<String, Integer> _ratings;
-	private Timestamp _timeUpdated;
+	private Timestamp _updatedAt;
 
 	public CourseDTO(Course course) {
 		_id = course.getId();
@@ -81,7 +81,7 @@ public class CourseDTO {
 		_udemyURL = course.getUdemyURL();
 		_ratings = Map.of("rating1", course.getRatingCount1(), "rating2", course.getRatingCount2(), "rating3",
 				course.getRatingCount3(), "rating4", course.getRatingCount4(), "rating5", course.getRatingCount5());
-		_timeUpdated = course.getUpdatedAt();
+		_updatedAt = course.getUpdatedAt();
 	}
 
 }

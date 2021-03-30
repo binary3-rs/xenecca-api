@@ -57,27 +57,25 @@ public class CourseController {
 			@RequestParam(value = "subcategory", required = false) Integer subcategoryId,
 			@RequestParam(value = "topic", required = false) Integer topicId,
 			@RequestParam(value = "language", required = false) Integer languageId,
-			@RequestParam(value = "price_free", required = false) Boolean isPriceFree,
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(name = "sort_by", defaultValue = "date_updated") String sortBy,
-			@RequestParam(name = "order", defaultValue = "desc") String order
-			) {
+			@RequestParam(name = "sort", defaultValue = "date_added") String sortBy,
+			@RequestParam(name = "order", defaultValue = "desc") String order) {
 
-		if (searchTerm == null && categoryId == null && subcategoryId == null && topicId == null && languageId == null
-				&& isPriceFree == null) {
+		if (searchTerm == null && categoryId == null && subcategoryId == null && topicId == null
+				&& languageId == null) {
 			System.out.println("DEBUG");
 			Iterable<Course> courses = getCourseService().getAllCourses(pageNo, sortBy, order);
 			return getCoursePreviewMapper().mapCoursesToDTOList(courses);
 		}
 
 		return getCoursePreviewMapper().mapDocToDTOList(getSearchService().searchCourses(searchTerm, categoryId,
-				subcategoryId, topicId, languageId, isPriceFree));
+				subcategoryId, topicId, languageId, null, null, pageNo, sortBy, order));
 	}
 
 	@GetMapping("{id}")
 	public CourseDTO getCourseById(@PathVariable("id") Long courseId) {
 		Course course = getCourseService().getCourseById(courseId);
-		//return getCourseMapper().mapToDTO(course);
+		// return getCourseMapper().mapToDTO(course);
 		return new CourseDTO(course);
 
 	}

@@ -9,6 +9,6 @@ public interface SearchService {
 	public boolean addDocument();
 
 	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId, Integer topicId,
-			Integer languageId, Boolean isPriceFree);
+			Integer languageId, Integer ratingThreshold, Integer durationThreshold, Integer pageNo, String sortBy, String order);
 
 }
