@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.xenecca.api.mapper.CurriculumItemMapper;
 import com.xenecca.api.model.Course;
+import com.xenecca.api.model.CurriculumItem;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +30,7 @@ public class CourseDTO {
 	private Double _avgRating;
 	private String _badge;
 	private Boolean _hasCertificate;
-	private List<CurriculumItemDTO> _curriculumItems;
+	private List<CurriculumSectionDTO> _curriculumItems;
 	private String _description;
 	private String _devicesAccess;
 	private Integer _discountPercent;
@@ -59,7 +61,7 @@ public class CourseDTO {
 		_avgRating = course.getAvgRating();
 		_badge = course.getBadge();
 		_hasCertificate = course.getCertificate();
-//		private List<CurriculumItemDTO> _curriculumItems;
+		_curriculumItems = CurriculumItemMapper.mapToCurriculumDTO(course.getCurriculumItems());
 		_description = course.getDescription();
 		_devicesAccess = course.getDevicesAccess();
 		_discountPercent = 100; // hardcoded

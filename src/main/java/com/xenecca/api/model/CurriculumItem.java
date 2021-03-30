@@ -44,24 +44,24 @@ public class CurriculumItem {
 	@NotBlank(message = "Curriculum section title must not be blank!")
 	@Column(name = "title", nullable = false)
 	private String _title;
-	
+
 	@Column(name = "item_type", length = 20)
 	private String _itemType;
 
 	@Builder.Default
-	@Column(name = "udemy_lesson_id", unique=true, nullable=true)
+	@Column(name = "udemy_lesson_id", unique = true, nullable = true)
 	private Long _udemyLessonId = null;
-	
+
 	@Min(1)
 	@Column(name = "index")
 	private Integer _index;
-	
+
 	@Min(0)
 	@Column(name = "section_index")
 	private Integer _sectionIndex;
 
-//	@Column(name = "is_section")
-//	private Integer _section;
+	@Column(name = "description", length = 500)
+	private String _description;
 
 	@Min(0)
 	@Column(name = "content_length")
