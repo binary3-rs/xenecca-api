@@ -1,6 +1,8 @@
 package com.xenecca.api.mapper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,13 +50,31 @@ public class CurriculumItemMapper {
 		 * entry:lecturesToAdd.entrySet()) {
 		 * curriculumSections.get(entry.getKey()).addLectures(entry.getValue()); }
 		 */
-		return new ArrayList<CurriculumSectionDTO>(curriculumSections.values());
+
+		for (int key : curriculumSections.keySet()) {
+			Collections.sort(curriculumSections.get(key).getLectures(), new CurriculumItemComparator());
+
+		}
+		List<CurriculumSectionDTO> curriculum = new ArrayList<CurriculumSectionDTO>(curriculumSections.values());
+		Collections.sort(curriculum, new CurriculumSectionComparator());
+		return curriculum;
+	}
+}
+
+class CurriculumItemComparator implements Comparator<CurriculumItemDTO> {
+
+	@Override
+	public int compare(CurriculumItemDTO item1, CurriculumItemDTO item2) {
+		return Integer.compare(item1.getIndex(), item2.getIndex());
 	}
 
-//    private int compareItems(CurriculumItem item1, CurriculumItem item2) {
-//    	if(item1.getIndex() < item1.)
-//        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-//        return lhs.customInt > rhs.customInt ? -1 : (lhs.customInt < rhs.customInt) ? 1 : 0;
-//    } 
+}
+
+class CurriculumSectionComparator implements Comparator<CurriculumSectionDTO> {
+
+	@Override
+	public int compare(CurriculumSectionDTO item1, CurriculumSectionDTO item2) {
+		return Integer.compare(item1.getIndex(), item2.getIndex());
+	}
 
 }
