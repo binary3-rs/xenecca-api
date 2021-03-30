@@ -4,14 +4,8 @@ import com.xenecca.api.model.Course;
 
 public interface CourseService {
 
-	public Iterable<Course> getAllCourses(Integer pageNo);
+	public Iterable<Course> getAllCourses(Integer pageNo, String sortBy, String order);
 	
 	public Course getCourseById(Long courseId);
-
-	public Iterable<Course> getAllCoursesByCategoryId(Long categoryId);
-
-	public Iterable<Course> getAllCoursesBySubcategoryId(Long subcategoryId);
-
-	public Iterable<Course> getAllCoursesByTopicId(Long topicId);
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.xenecca.api.dao.CourseRepository;
 import com.xenecca.api.model.Course;
 import com.xenecca.api.service.CourseService;
+import com.xenecca.api.utils.SortAndCompareUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,42 +28,21 @@ public class CourseServiceImpl implements CourseService {
 	@Autowired
 	private CourseRepository _courseRepository;
 
-	@Autowired
-	private SessionFactory sessionFactory;
-	
-	private final int PAGE_SIZE = 18;
 
 	@Override
-	public Iterable<Course> getAllCourses(Integer pageNo) {
-		
-		//return getCourseRepository().findAll();
-		Pageable sortedByDateAddedDesc = PageRequest.of(pageNo, PAGE_SIZE, Sort.by("_createdAt").descending());
-		Page<Course> pageOfCourses = getCourseRepository().findAll(sortedByDateAddedDesc);
+	public Iterable<Course> getAllCourses(Integer pageNo, String sortBy, String order) {
+		//String sortByField = SortAndCompareUtils.sortField(sortBy);
+		//Sort sort = order.equals("asc") ? Sort.by(sortByField).ascending() : Sort.by(sortByField).descending();
+		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order); 
+		//PageRequest.of(pageNo, PAGE_SIZE, sort);
+		Page<Course> pageOfCourses = getCourseRepository().findAll(sortedPageable);
 		return pageOfCourses.getContent();
-		
+
 	}
 
 	@Override
 	public Course getCourseById(Long courseId) {
 		return getCourseRepository().findById(courseId).get();
-	}
-
-	@Override
-	public Iterable<Course> getAllCoursesByCategoryId(Long categoryId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Iterable<Course> getAllCoursesBySubcategoryId(Long subcategoryId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Iterable<Course> getAllCoursesByTopicId(Long topicId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

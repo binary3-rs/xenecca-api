@@ -60,7 +60,7 @@ public class SearchServiceImpl implements SearchService {
 		List<CourseDoc> resp = new ArrayList<CourseDoc>();
 		// Criteria criteria = new
 		// Criteria("title").contains(searchTerm).or("headline").contains(searchTerm);
-		Criteria criteria = _createCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, topicId, languageId,
+		Criteria criteria = createCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, topicId, languageId,
 				paid);
 		Query query = new CriteriaQuery(criteria);
 		SearchHits<CourseDoc> courses = getTemplate().search(query, CourseDoc.class);
@@ -82,7 +82,7 @@ public class SearchServiceImpl implements SearchService {
 		// return pageOfCourses.getContent();
 	}
 
-	private Criteria _createCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
+	private Criteria createCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
 			Integer topicId, Integer languageId, Boolean isPriceFree) {
 		Criteria criteria = new Criteria();
 		if (!searchTerm.isEmpty() && searchTerm != null) {

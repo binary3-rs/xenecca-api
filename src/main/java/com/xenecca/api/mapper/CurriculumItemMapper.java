@@ -21,7 +21,7 @@ public class CurriculumItemMapper {
 		int sectionIndex;
 		for (CurriculumItem item : items) {
 
-			if (item.getItemType().contentEquals("section")) {
+			if (item.getItemType().equals("section")) {
 				currentSection = new CurriculumSectionDTO(item);
 				sectionIndex = item.getIndex();
 				if (lecturesToAdd.containsKey(sectionIndex) && lecturesToAdd.get(sectionIndex).size() > 0) {

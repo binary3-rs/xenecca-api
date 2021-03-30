@@ -58,12 +58,15 @@ public class CourseController {
 			@RequestParam(value = "topic", required = false) Integer topicId,
 			@RequestParam(value = "language", required = false) Integer languageId,
 			@RequestParam(value = "price_free", required = false) Boolean isPriceFree,
-			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(name = "sort_by", defaultValue = "date_updated") String sortBy,
+			@RequestParam(name = "order", defaultValue = "desc") String order
+			) {
 
 		if (searchTerm == null && categoryId == null && subcategoryId == null && topicId == null && languageId == null
 				&& isPriceFree == null) {
 			System.out.println("DEBUG");
-			Iterable<Course> courses = getCourseService().getAllCourses(pageNo);
+			Iterable<Course> courses = getCourseService().getAllCourses(pageNo, sortBy, order);
 			return getCoursePreviewMapper().mapCoursesToDTOList(courses);
 		}
 
