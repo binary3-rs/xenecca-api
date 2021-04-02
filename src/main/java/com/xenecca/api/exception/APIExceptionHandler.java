@@ -63,12 +63,12 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 
-//	@ExceptionHandler(NullPointerException.class)
-//	public final ResponseEntity<ExceptionResponse> nullPointerException(Exception ex, WebRequest request) {
-//		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), NULL_POINTER_EXCEPTION_MESSAGE,
-//				request.getDescription(false));
-//		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
+	@ExceptionHandler(NullPointerException.class)
+	public final ResponseEntity<ExceptionResponse> nullPointerException(Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), NULL_POINTER_EXCEPTION_MESSAGE,
+				request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 	@ExceptionHandler(NoSuchElementException.class)
 	public final ResponseEntity<ExceptionResponse> noSuchElementException(Exception ex, WebRequest request) {
@@ -76,7 +76,7 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 				request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
-	
+
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public final ResponseEntity<ExceptionResponse> integrityViolationException(Exception ex, WebRequest request) {
 		String message = getRootCause(ex).getMessage().toLowerCase();
@@ -97,12 +97,12 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 
-//	@ExceptionHandler(Exception.class)
-//	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
-//		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-//				request.getDescription(false));
-//		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
+	@ExceptionHandler(Exception.class)
+	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 	// helper
 	private Throwable getRootCause(Throwable t) {

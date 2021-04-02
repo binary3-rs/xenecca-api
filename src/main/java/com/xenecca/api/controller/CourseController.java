@@ -54,7 +54,6 @@ public class CourseController {
 			Iterable<Course> courses = getCourseService().getAllCourses(pageNo, sortBy, order);
 			return getCoursePreviewMapper().mapCoursesToDTOList(courses);
 		}
-
 		return getCoursePreviewMapper().mapDocToDTOList(getSearchService().searchCourses(searchTerm, categoryId,
 				subcategoryId, topicId, languageId, rating, duration, pageNo, sortBy, order));
 	}

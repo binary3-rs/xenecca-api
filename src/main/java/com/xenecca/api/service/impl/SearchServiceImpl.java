@@ -111,7 +111,7 @@ public class SearchServiceImpl implements SearchService {
 	private List<Criteria> createDurationCriteria(List<String> duration) {
 
 		List<Criteria> durationCriteria = new ArrayList<Criteria>();
-		Map<String, Map<String, Integer>> limits = Constants.durationLimits;
+		Map<String, Map<String, Integer>> limits = Constants.DURATION_LIMITS;
 
 		for (String limit : duration) {
 			if (limits.containsKey(limit)) {

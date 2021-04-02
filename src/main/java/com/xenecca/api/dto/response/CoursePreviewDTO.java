@@ -3,9 +3,8 @@ package com.xenecca.api.dto.response;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xenecca.api.es.models.CourseDoc;
 import com.xenecca.api.mapper.InstructorMapper;
 import com.xenecca.api.model.Course;
@@ -21,6 +20,7 @@ import lombok.experimental.Accessors;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties("instructorMapper")
 public class CoursePreviewDTO {
 
 	private Long _id;
@@ -51,10 +51,8 @@ public class CoursePreviewDTO {
 	private Date _timeUpdated;
 
 	private String _videoContentLength;
-	
-	@Autowired
-	private InstructorMapper _instructorMapper;
-	
+	private InstructorMapper _instructorMapper = new InstructorMapper();
+
 	public CoursePreviewDTO(CourseDoc doc) {
 		_id = doc.getDocId();
 		_badge = doc.getBadge();
@@ -64,7 +62,7 @@ public class CoursePreviewDTO {
 		_price = doc.getPrice();
 		_oldPrice = doc.getOldPrice();
 		_priceAsString = doc.getPriceAsString();
-		_instructors = getInstructorMapper().mapDocToDTO(doc.getInstructors());
+		_instructors = getInstructorMapper().mapDocsToDTOList(doc.getInstructors());
 		_poster = doc.getPoster();
 		_originalPosterURL = doc.getOriginalPosterURL();
 		_numOfStudents = doc.getNumOfStudents();
@@ -83,7 +81,7 @@ public class CoursePreviewDTO {
 		_price = course.getPrice();
 		_price = course.getOldPrice();
 		_priceAsString = course.getPrice().toString() + course.getCurrency();
-		_instructors = getInstructorMapper().mapToDTO(course.getInstructors());
+		_instructors = getInstructorMapper().mapToDTOList(course.getInstructors());
 		_poster = course.getPosterPath();
 		_originalPosterURL = course.getOriginalPosterURL();
 		_numOfStudents = course.getNumOfStudents();
