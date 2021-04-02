@@ -67,7 +67,7 @@ public class CoursePreviewDTO {
 		_numOfStudents = doc.getNumOfStudents();
 		_numOfReviews = doc.getNumOfReviews();
 		_timeUpdated = doc.getUpdatedAt();
-		_videoContentLength = doc.getVideoContentLength();
+		_videoContentLength = doc.getDurationInHrs() + " hours";
 
 	}
 

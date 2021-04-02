@@ -2,6 +2,7 @@ package com.xenecca.api.es.models;
 
 import static org.springframework.data.elasticsearch.annotations.FieldType.Double;
 import static org.springframework.data.elasticsearch.annotations.FieldType.Integer;
+import static org.springframework.data.elasticsearch.annotations.FieldType.Float;
 import static org.springframework.data.elasticsearch.annotations.FieldType.Keyword;
 import static org.springframework.data.elasticsearch.annotations.FieldType.Text;
 
@@ -13,8 +14,7 @@ import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.InnerField;
-import org.springframework.data.elasticsearch.annotations.MultiField;
+import org.springframework.data.elasticsearch.annotations.Mapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +30,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(indexName = "xenecca-course", shards = 1, replicas = 2)
+@Mapping(mappingPath = "/elastic-mappings/course-doc-mappings.json")
 public class CourseDoc {
 
 	@Id
@@ -44,7 +45,7 @@ public class CourseDoc {
 
 	@Field(name = "avg_rating", index = false, nullValue = "0.0", type = Double)
 	private Double _avgRating;
-	
+
 	@Field(name = "category", storeNullValue = true, type = Keyword)
 	private Long _category;
 
@@ -84,9 +85,10 @@ public class CourseDoc {
 	@Field(name = "num_of_reviews", nullValue = "0", index = false, type = Integer)
 	private Integer _numOfReviews;
 
-	@Field(name = "video_content_length", nullValue = "0", index = false, type = Text)
-	private String _videoContentLength;
+	@Field(name = "duration_in_hrs", nullValue = "0", index = false, type = Float)
+	private Float _durationInHrs;
 
+	
 //	@MultiField(mainField = @Field(name = "updated_at", type = Text, fielddata = true), otherFields = {
 //			@InnerField(suffix = "keyword", type = Keyword) })
 	@Field(name = "updated_at", type = FieldType.Date, // , fielddata=true,

@@ -3,6 +3,7 @@ package com.xenecca.api.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import com.xenecca.api.dao.es.CourseDocRepository;
 import com.xenecca.api.es.models.CourseDoc;
 import com.xenecca.api.es.models.InstructorDoc;
 import com.xenecca.api.service.SearchService;
+import com.xenecca.api.utils.Constants;
 import com.xenecca.api.utils.SortAndCompareUtils;
 
 import lombok.Getter;
@@ -57,9 +59,10 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId, Integer topicId,
-			Integer languageId, Integer ratingThreshold, Integer durationThreshold, Integer pageNo, String sortBy, String order) {
+			Integer languageId, Float rating, List<String> duration, Integer pageNo, String sortBy, String order) {
 		List<CourseDoc> resp = new ArrayList<CourseDoc>();
-		Criteria criteria = createCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, topicId, languageId);
+		Criteria criteria = createCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, topicId, languageId,
+				rating, duration);
 		Query query = new CriteriaQuery(criteria);
 		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order);
 		query.setPageable(pageable);
@@ -75,30 +78,69 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	private Criteria createCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
-			Integer topicId, Integer languageId) {
+			Integer topicId, Integer languageId, Float rating, List<String> duration) {
 		Criteria criteria = new Criteria();
-		if (!searchTerm.isEmpty() && searchTerm != null) {
-			criteria = criteria.and("title").contains(searchTerm).or("headline").contains(searchTerm);
+		if (searchTerm != null && !searchTerm.isEmpty()) {
+			criteria.subCriteria(new Criteria("title").contains(searchTerm).or("headline").contains(searchTerm));
 		}
+
 		if (categoryId != null || subcategoryId != null || topicId != null) {
 			if (topicId != null) {
-				criteria = criteria.and("topic").matches(topicId);
+				criteria.subCriteria(new Criteria("topic").matches(topicId));
 			} else if (subcategoryId != null) {
-				criteria = criteria.and("subcategory").matches(subcategoryId);
+				criteria.subCriteria(new Criteria("subcategory").matches(subcategoryId));
+
 			} else {
-				criteria = criteria.and("category").matches(categoryId);
+				criteria.subCriteria(new Criteria("category").matches(categoryId));
 			}
 		}
 
 		if (languageId != null) {
-			criteria = criteria.and("language").matches(languageId);
+			criteria.subCriteria(new Criteria("language").matches(languageId));
 		}
-//		// TODO: check this out
-//		if (isPriceFree != null && isPriceFree == true) {
-//			System.out.println("DEBUG");
-//			criteria = criteria.and("price").matches(0.0);
-//		}
+		if (rating != null) {
+			criteria.subCriteria(new Criteria("avg_rating").greaterThanEqual(rating));
+		}
+		if (duration != null) {
+			criteria.subCriteria(composeDurationCriteria(createDurationCriteria(duration)));
+		}
 
 		return criteria;
 	}
+
+	private List<Criteria> createDurationCriteria(List<String> duration) {
+
+		List<Criteria> durationCriteria = new ArrayList<Criteria>();
+		Map<String, Map<String, Integer>> limits = Constants.durationLimits;
+
+		for (String limit : duration) {
+			if (limits.containsKey(limit)) {
+				int lowerLimit = limits.get(limit).get("lower");
+				int upperLimit = limits.get(limit).get("upper");
+				durationCriteria.add(new Criteria("duration_in_hrs").between(lowerLimit, upperLimit));
+			}
+
+		}
+
+		return durationCriteria;
+	}
+
+	private Criteria composeDurationCriteria(List<Criteria> criteria) {
+		switch (criteria.size()) {
+		case 0:
+			return null;
+		case 1:
+			return criteria.get(0);
+		case 2:
+			return criteria.get(0).or(criteria.get(1));
+		case 3:
+			return criteria.get(0).or(criteria.get(1)).or(criteria.get(2));
+		case 4:
+			return criteria.get(0).or(criteria.get(1)).or(criteria.get(2)).or(criteria.get(3));
+		default:
+			return null;
+		}
+
+	}
+
 }
