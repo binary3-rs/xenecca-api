@@ -81,7 +81,7 @@ public class SearchServiceImpl implements SearchService {
 			Integer topicId, Integer languageId, Float rating, List<String> duration) {
 		Criteria criteria = new Criteria();
 		if (searchTerm != null && !searchTerm.isEmpty()) {
-			criteria.subCriteria(new Criteria("title").contains(searchTerm).or("headline").contains(searchTerm));
+			criteria.subCriteria(new Criteria("title").contains(searchTerm).or("headline").contains(searchTerm).or("instructors.full_name").contains(searchTerm));
 		}
 
 		if (categoryId != null || subcategoryId != null || topicId != null) {

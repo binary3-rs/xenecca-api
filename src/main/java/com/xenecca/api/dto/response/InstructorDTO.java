@@ -1,5 +1,9 @@
 package com.xenecca.api.dto.response;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.xenecca.api.es.models.InstructorDoc;
 import com.xenecca.api.model.Instructor;
 
 import lombok.AllArgsConstructor;
@@ -21,5 +25,15 @@ public class InstructorDTO {
 		_fullName = instructor.getFullName();
 		_image = instructor.getImagePath();
 	}
+	
+	
+	public InstructorDTO(InstructorDoc instructor) {
+		_fullName = instructor.getFullName();
+		_image = instructor.getImage();
+	}
+	
+
+	
+	
 
 }
