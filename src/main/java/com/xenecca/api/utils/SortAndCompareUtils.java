@@ -5,8 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 public class SortAndCompareUtils {
-	private static final int PAGE_SIZE = 18;
-
+	
 	private static String sortField(String sortBy) {
 		switch (sortBy) {
 		case "date_added":
@@ -28,7 +27,7 @@ public class SortAndCompareUtils {
 	public static Pageable createPageable(Integer pageNo, String sortBy, String order) {
 		String sortByField = SortAndCompareUtils.sortField(sortBy);
 		Sort sort = SortAndCompareUtils.sortOrder(sortByField, order);
-		return PageRequest.of(pageNo, PAGE_SIZE, sort);
+		return PageRequest.of(pageNo, Constants.PAGE_SIZE, sort);
 	}
 
 }
