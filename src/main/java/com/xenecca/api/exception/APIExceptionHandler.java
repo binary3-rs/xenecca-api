@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -70,7 +71,7 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ExceptionHandler(NoSuchElementException.class)
+	@ExceptionHandler({ NoSuchElementException.class, EmptyResultDataAccessException.class })
 	public final ResponseEntity<ExceptionResponse> noSuchElementException(Exception ex, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), RESOURCE_NOT_FOUND_MESSAGE,
 				request.getDescription(false));
@@ -84,7 +85,6 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 
-	// TODO: add this to every MS
 	@ExceptionHandler(ConstraintViolationException.class)
 	public final ResponseEntity<ExceptionResponse> constraintViolationException(ConstraintViolationException ex,
 			WebRequest request) {
@@ -97,7 +97,7 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler({RuntimeException.class, Exception.class})
 	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));

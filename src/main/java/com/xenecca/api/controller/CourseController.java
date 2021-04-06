@@ -3,10 +3,13 @@ package com.xenecca.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xenecca.api.dto.response.CourseDTO;
@@ -49,8 +52,8 @@ public class CourseController {
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(name = "sort", defaultValue = "date_added") String sortBy,
 			@RequestParam(name = "order", defaultValue = "desc") String order) {
-		if (searchTerm == null && categoryId == null && subcategoryId == null && topicId == null
-				&& languageId == null && rating == null && duration == null) {
+		if (searchTerm == null && categoryId == null && subcategoryId == null && topicId == null && languageId == null
+				&& rating == null && duration == null) {
 			Iterable<Course> courses = getCourseService().getAllCourses(pageNo, sortBy, order);
 			return getCoursePreviewMapper().mapCoursesToDTOList(courses);
 		}
@@ -64,11 +67,16 @@ public class CourseController {
 		return new CourseDTO(course);
 
 	}
-
-	@GetMapping("test")
-	public boolean test() {
-		return getSearchService().addDocument();
-
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("{id}")
+	public void deleteCourse(@PathVariable("id") Long courseId) {
+		
+		// delete course instance
+		getCourseService().deleteCourseById(courseId);
+		// delete course document
+		getSearchService().deleteCourseById(courseId);
+		
 	}
+
 
 }

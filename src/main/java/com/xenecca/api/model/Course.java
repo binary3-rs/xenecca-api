@@ -191,14 +191,6 @@ public class Course implements Serializable {
 	@Column(name = "rating_count_1", columnDefinition = "integer default 0")
 	private Integer _ratingCount1 = 0;
 
-	@Builder.Default
-	@Column(name = "is_coupon_active", columnDefinition = "boolean default true")
-	private Boolean _couponActive = true;
-
-	@Builder.Default
-	@Column(name = "is_archived", columnDefinition = "boolean default false")
-	private Boolean _archived = false;
-
 	@Min(0)
 	@Builder.Default
 	@Column(name = "rating_count_2", columnDefinition = "integer default 0")
