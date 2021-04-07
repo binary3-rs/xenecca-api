@@ -1,4 +1,4 @@
-package com.xenecca.api.model.types;
+package com.xenecca.api.model.type;
 
 public enum ResourceType {
 	CHEATSHEET("Cheatsheet"), BOOK("Book"), SCRIPT("Script"), IMAGE("Image"), BLOG_OR_ARTICLE("Blog/article"),

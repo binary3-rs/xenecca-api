@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.xenecca.api.exception.APIExceptionHandler;
 import com.xenecca.api.security.AuthManager;
 import com.xenecca.api.security.JwtTokenFilter;
 import com.xenecca.api.security.RestAuthenticationEntryPoint;
@@ -33,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private RestAuthenticationEntryPoint _authEntryPoint;
-	
+
 	@Bean(BeanIds.AUTHENTICATION_MANAGER)
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -43,14 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests()
-		.antMatchers("/api/v1/users/", "/api/v1/login", "/api-docs/**", "/swagger-ui.html**").permitAll()
-		.antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
-		.antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
-		.antMatchers(HttpMethod.DELETE, "/api/v1/**").authenticated()
-        .antMatchers(HttpMethod.PUT, "/api/v1/**").authenticated()
-		.and().exceptionHandling()
-		.authenticationEntryPoint(getAuthEntryPoint()).and().sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.antMatchers("/api/v1/users/", "/api/v1/login", "/api-docs/**", "/swagger-ui.html**").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/v1/**").permitAll().antMatchers(HttpMethod.POST, "/api/v1/**")
+				.authenticated().antMatchers(HttpMethod.DELETE, "/api/v1/**").authenticated()
+				.antMatchers(HttpMethod.PUT, "/api/v1/**").authenticated().and().exceptionHandling()
+				.authenticationEntryPoint(getAuthEntryPoint()).and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(getTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 

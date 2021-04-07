@@ -1,4 +1,4 @@
-package com.xenecca.api.model;
+package com.xenecca.api.model.learnresource;
 
 import java.sql.Time;
 import java.util.HashSet;
@@ -9,19 +9,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.xenecca.api.model.types.MaterialType;
-import com.xenecca.api.model.types.ResourceType;
+import com.xenecca.api.model.Category;
+import com.xenecca.api.model.type.MaterialType;
+import com.xenecca.api.model.type.ResourceType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,22 +52,23 @@ public class LearningResource {
 	private String _name;
 
 	// NOTE: this can be URL (online resource) or file path (if resource is file)
-	@Column(name = "resource", unique = true, nullable = false, length = 255)
+	@NotBlank(message = "Resource must not be blank!")
+	@Column(name = "resource", unique = true, nullable = false, length = 500)
 	private String _resource;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "resource_category_id")
+	private LearningResourceCategory _resourceCategory;
 
 	@Builder.Default
 	@Enumerated(EnumType.STRING)
 	@Column(name = "material_type")
 	private MaterialType _materialType = MaterialType.URL;
 
+	@Builder.Default
 	@Enumerated(EnumType.STRING)
 	@Column(name = "resource_type")
-	private ResourceType _resourceType;
-
-	@Builder.Default
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "learning_tag", joinColumns = @JoinColumn(name = "learning_resource_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-	private Set<Tag> _tags = new HashSet<>();
+	private ResourceType _resourceType = ResourceType.TUTORIAL;
 
 	@CreationTimestamp
 	@Column(name = "created_at")
@@ -73,15 +77,5 @@ public class LearningResource {
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private Time _updatedAt;
-
-	public void addTag(Tag tag) {
-		_tags.add(tag);
-		tag.addResource(this);
-	}
-
-	public void removeTag(Tag tag) {
-		_tags.remove(tag);
-		tag.removeResource(this);
-	}
 
 }

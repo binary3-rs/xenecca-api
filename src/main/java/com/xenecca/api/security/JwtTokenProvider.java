@@ -70,7 +70,6 @@ public class JwtTokenProvider {
 
 		String username = getUsername(token);
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		// getAuthorities(token);
 		return new UsernamePasswordAuthenticationToken(username, "", authorities);
 	}
 

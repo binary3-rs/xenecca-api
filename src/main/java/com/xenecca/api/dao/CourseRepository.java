@@ -15,16 +15,6 @@ import com.xenecca.api.model.Course;
 
 @Repository
 public interface CourseRepository extends PagingAndSortingRepository<Course, Long> {
-	/*
-	 * // @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true")
-	 * })
-	 * 
-	 * @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true"),
-	 * 
-	 * @QueryHint(name = "org.hibernate.cacheRegion", value =
-	 * "com.xenecca.api.model.Course") }) //@Cacheable(key="#p1") Page<Course>
-	 * findAll(Pageable pageable);
-	 */
 
 	List<Course> findAllBy_category__id(Long id, Pageable pageable);
 

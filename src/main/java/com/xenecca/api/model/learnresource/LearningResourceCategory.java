@@ -1,19 +1,21 @@
-package com.xenecca.api.model;
+package com.xenecca.api.model.learnresource;
 
 import java.sql.Time;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.xenecca.api.model.type.LearningResourceDomain;
+import com.xenecca.api.model.type.MaterialType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,20 +31,19 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Tag {
-
+public class LearningResourceCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long _id;
 
-	@NotBlank(message = "Name of the learning tag must not be blank!")
-	@Column(name = "name", unique = true, nullable = false, length = 30)
+	@NotBlank(message = "Category name must not be blank!")
+	@Column(name = "name", unique = true, nullable = false, length = 50)
 	private String _name;
 
-	@Builder.Default
-	@ManyToMany(mappedBy = "_tags")
-	private Set<LearningResource> _resources = new HashSet<>();
+	@Enumerated(EnumType.STRING)
+	@Column(name = "domain")
+	private LearningResourceDomain _domain;
 
 	@CreationTimestamp
 	@Column(name = "created_at")
@@ -51,13 +52,4 @@ public class Tag {
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private Time _updatedAt;
-
-	public void addResource(LearningResource resource) {
-		_resources.add(resource);
-	}
-
-	public void removeResource(LearningResource resource) {
-		_resources.remove(resource);
-	}
-
 }

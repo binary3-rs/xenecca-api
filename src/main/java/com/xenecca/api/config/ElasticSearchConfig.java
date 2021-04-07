@@ -13,7 +13,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "com.xenecca.api.dao.es")
 @ComponentScan(basePackages = { "com.baeldung.spring.data.es.service" })
-public class ESConfig {
+public class ElasticSearchConfig {
 
 	@Bean
 	public RestHighLevelClient client() {
