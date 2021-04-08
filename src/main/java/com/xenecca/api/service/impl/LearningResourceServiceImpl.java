@@ -13,6 +13,7 @@ import com.xenecca.api.dto.request.NewLearningResourceDTO;
 import com.xenecca.api.exception.InvalidRequestDataException;
 import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.model.type.MaterialType;
+import com.xenecca.api.model.type.ResourceType;
 import com.xenecca.api.service.LearningResourceService;
 import com.xenecca.api.service.SearchService;
 import com.xenecca.api.utils.FileUtils;
@@ -97,9 +98,7 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 
 			}
 			throw e;
-
 		}
-
 	}
 
 	@Override

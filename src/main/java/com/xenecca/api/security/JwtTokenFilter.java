@@ -40,19 +40,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		String token = getTokenProvider().resolveToken((HttpServletRequest) request);
-		System.out.println("HERE");
 		try {
 			if (token != null) {
-
 				getTokenProvider().validateToken(token);
 				Authentication auth = getTokenProvider().getAuthentication(token);
 				if (auth != null) {
 					log.info("Authenticating user....");
 					SecurityContextHolder.getContext().setAuthentication(auth);
 				}
-				chain.doFilter(request, response);
-
 			}
+			chain.doFilter(request, response);
 
 		} catch (InvalidJwtAuthenticationException e) {
 			setErrorResponse(request, response, HttpStatus.UNAUTHORIZED, e);
@@ -64,7 +61,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
 	}
 
-	public void setErrorResponse(HttpServletRequest request, HttpServletResponse response, HttpStatus status, Throwable ex) {
+	public void setErrorResponse(HttpServletRequest request, HttpServletResponse response, HttpStatus status,
+			Throwable ex) {
 		response.setStatus(status.value());
 		response.setContentType("application/json");
 		ExceptionResponse apiError = new ExceptionResponse(new Date(), ex.getMessage(), request.getRequestURI());

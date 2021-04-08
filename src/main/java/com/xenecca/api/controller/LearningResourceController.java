@@ -1,6 +1,8 @@
 package com.xenecca.api.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -21,6 +23,7 @@ import com.xenecca.api.dto.request.NewLearningResourceDTO;
 import com.xenecca.api.dto.response.LearningResourceDTO;
 import com.xenecca.api.mapper.LearningResourceMapper;
 import com.xenecca.api.model.learnresource.LearningResource;
+import com.xenecca.api.model.type.ResourceType;
 import com.xenecca.api.service.LearningResourceService;
 import com.xenecca.api.service.SearchService;
 
@@ -61,6 +64,15 @@ public class LearningResourceController {
 		}
 		return getLearningResourceMapper()
 				.mapDocsToDTOList(getSearchService().searchResources(searchTerm, categoryId, pageNo));
+	}
+
+	@GetMapping("/types")
+	public Map<String, String> getResourceTypes() {
+		Map<String, String> types = new HashMap<String, String>();
+		for (ResourceType type : ResourceType.values()) {
+			types.put(type.toString(), type.getName());
+		}
+		return types;
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)

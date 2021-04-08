@@ -79,8 +79,13 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
-	public final ResponseEntity<ExceptionResponse> integrityViolationException(Exception ex, WebRequest request) {
-		String message = getRootCause(ex).getMessage().toLowerCase();
+	public final ResponseEntity<ExceptionResponse> integrityViolationException(DataIntegrityViolationException ex,
+			WebRequest request) throws Throwable {
+		Throwable exception = ex.getRootCause();
+		String message = exception.getMessage();
+		if (message.contains("Detail")) {
+			message = message.split("Detail:")[1];
+		}
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), message, request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
@@ -90,7 +95,11 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 			WebRequest request) {
 		StringBuilder builder = new StringBuilder();
 		ex.getConstraintViolations().forEach(constraint -> {
-			builder.append(constraint.getMessage());
+			String message = constraint.getMessage();
+			if (message.contains("Detail:")) {
+				message = message.split("detail: ")[1];
+			}
+			builder.append(message);
 		});
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), builder.toString(),
 				request.getDescription(false));
@@ -108,18 +117,7 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
-		System.out.println("TEST");
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	// helper
-	private Throwable getRootCause(Throwable t) {
-		Throwable result = t;
-		Throwable cause;
-
-		while (null != (cause = result.getCause()) && (result != cause)) {
-			result = cause;
-		}
-		return result;
-	}
 }
