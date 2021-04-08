@@ -46,8 +46,6 @@ public class JwtTokenProvider {
 	@Value("${security.jwt.token.header.prefix:Bearer }")
 	private String _headerPrefix;
 
-	// public static final ThreadLocal<UserContext> USER_CONTEXT = new
-	// ThreadLocal<UserContext>();
 	public static String jwtToken = null;
 
 	@PostConstruct
@@ -81,23 +79,6 @@ public class JwtTokenProvider {
 		return Jwts.parser().setSigningKey(getSecretKey()).parseClaimsJws(token).getBody();
 	}
 
-	/*
-	 * private List<GrantedAuthority> getAuthorities(String token) { Claims claims =
-	 * getClaimsFromToken(token);
-	 * 
-	 * @SuppressWarnings("unchecked") List<String> authorities = (List<String>)
-	 * claims.get("roles"); return
-	 * authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.
-	 * toList()); }
-	 */
-	/*
-	 * private Long getUserId(String token) { Claims claims =
-	 * getClaimsFromToken(token);
-	 * 
-	 * @SuppressWarnings("unchecked") // recode this Long userId =
-	 * Long.parseLong(claims.get("userId").toString()); return userId; }
-	 */
-
 	public String resolveToken(HttpServletRequest req) {
 		String bearerToken = req.getHeader(getJwtHeader());
 		if (bearerToken != null && bearerToken.startsWith(getHeaderPrefix())) {
@@ -106,14 +87,6 @@ public class JwtTokenProvider {
 		return null;
 	}
 
-	/*
-	 * public void setUserContext(String token) { String username =
-	 * getUsername(token); List<GrantedAuthority> authorities =
-	 * getAuthorities(token); Long userId = getUserId(token); jwtToken = token; if
-	 * (USER_CONTEXT.get() == null) { USER_CONTEXT.set(new UserContext(userId,
-	 * username, token, authorities)); } }
-	 */
-	// set user context to null
 	public boolean validateToken(String token) {
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(getSecretKey()).parseClaimsJws(token);

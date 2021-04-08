@@ -67,16 +67,16 @@ public class CourseController {
 		return new CourseDTO(course);
 
 	}
+
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("{id}")
 	public void deleteCourse(@PathVariable("id") Long courseId) {
-		
+
 		// delete course instance
 		getCourseService().deleteCourseById(courseId);
 		// delete course document
-		getSearchService().removeCourseFromIndexById(courseId);
-		
-	}
+		getSearchService().deleteCourseDocument(courseId);
 
+	}
 
 }

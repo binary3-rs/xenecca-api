@@ -13,6 +13,8 @@ public interface SearchService {
 	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId, Integer topicId,
 			Integer languageId, Float rating, List<String> duration, Integer pageNo, String sortBy, String order);
 
+	public void deleteCourseDocument(Long courseId);
+	
 	public void storeResourceDocument(LearningResource resource);
 
 	public void deleteResourceDocument(Long resourceId);

@@ -83,6 +83,11 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
+	public void deleteCourseDocument(Long courseId) {
+		getCourseDocRepository().deleteById(courseId);
+	}
+
+	@Override
 	public void storeResourceDocument(LearningResource resource) {
 		LearningResourceDoc doc = LearningResourceDoc.builder().docId(resource.getId())
 				.category(resource.getResourceCategory().getId()).name(resource.getName())
