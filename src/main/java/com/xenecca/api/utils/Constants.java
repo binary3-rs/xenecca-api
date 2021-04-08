@@ -6,6 +6,7 @@ import java.util.Map;
 public class Constants {
 
 	public static final int PAGE_SIZE = 18;
+	public static final int RESOURCES_PAGE_SIZE = 100;
 
 	public final static Map<String, Map<String, Integer>> DURATION_LIMITS = new HashMap<String, Map<String, Integer>>() {
 		/**

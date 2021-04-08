@@ -41,8 +41,8 @@ public class LearningResourceDTO {
 
 	private String _resource;
 
-	private MaterialType _materialType;
+	private String _materialType;
 
-	private ResourceType _resourceType;
+	private String _resourceType;
 
 }

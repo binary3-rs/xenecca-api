@@ -74,7 +74,7 @@ public class CourseController {
 		// delete course instance
 		getCourseService().deleteCourseById(courseId);
 		// delete course document
-		getSearchService().deleteCourseById(courseId);
+		getSearchService().removeCourseFromIndexById(courseId);
 		
 	}
 

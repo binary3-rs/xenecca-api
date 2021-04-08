@@ -16,8 +16,11 @@ import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.xenecca.api.dao.es.CourseDocRepository;
+import com.xenecca.api.dao.es.LearningResourceDocRepository;
 import com.xenecca.api.es.models.CourseDoc;
 import com.xenecca.api.es.models.InstructorDoc;
+import com.xenecca.api.es.models.LearningResourceDoc;
+import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.service.SearchService;
 import com.xenecca.api.utils.Constants;
 import com.xenecca.api.utils.SortAndCompareUtils;
@@ -36,6 +39,9 @@ public class SearchServiceImpl implements SearchService {
 
 	@Autowired
 	private CourseDocRepository _courseDocRepository;
+
+	@Autowired
+	private LearningResourceDocRepository _resourceDocRepository;
 
 	@Autowired
 	private ElasticsearchOperations _template;
@@ -60,24 +66,55 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId, Integer topicId,
 			Integer languageId, Float rating, List<String> duration, Integer pageNo, String sortBy, String order) {
-		List<CourseDoc> resp = new ArrayList<CourseDoc>();
-		Criteria criteria = createCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, topicId, languageId,
-				rating, duration);
+		List<CourseDoc> courseList = new ArrayList<CourseDoc>();
+		Criteria criteria = createCourseCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, topicId,
+				languageId, rating, duration);
 		Query query = new CriteriaQuery(criteria);
 		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order);
 		query.setPageable(pageable);
 		SearchHits<CourseDoc> courses = getTemplate().search(query, CourseDoc.class);
-		for (SearchHit<CourseDoc> course : courses.getSearchHits()) {
-			CourseDoc res = course.getContent();
-			if (res != null) {
-				resp.add(course.getContent());
+		for (SearchHit<CourseDoc> courseHit : courses.getSearchHits()) {
+			CourseDoc courseDoc = courseHit.getContent();
+			if (courseDoc != null) {
+				courseList.add(courseDoc);
+			}
+		}
+		return courseList;
+	}
+
+	@Override
+	public void storeResourceDocument(LearningResource resource) {
+		LearningResourceDoc doc = LearningResourceDoc.builder().docId(resource.getId())
+				.category(resource.getResourceCategory().getId()).name(resource.getName())
+				.materialType(resource.getMaterialType().toString()).resource(resource.getResource())
+				.resourceType(resource.getResourceType().getName()).build();
+		getResourceDocRepository().save(doc);
+	}
+
+	@Override
+	public void deleteResourceDocument(Long resourceId) {
+		getResourceDocRepository().deleteById(resourceId);
+	}
+
+	@Override
+	public List<LearningResourceDoc> searchResources(String searchTerm, Integer categoryId, Integer pageNo) {
+		List<LearningResourceDoc> resourceList = new ArrayList<LearningResourceDoc>();
+		Criteria criteria = createResourceCriteriaBasedOnParams(searchTerm, categoryId);
+		Query query = new CriteriaQuery(criteria);
+		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, null, null);
+		query.setPageable(pageable);
+		SearchHits<LearningResourceDoc> resources = getTemplate().search(query, LearningResourceDoc.class);
+		for (SearchHit<LearningResourceDoc> resourceHit : resources.getSearchHits()) {
+			LearningResourceDoc resourceDoc = resourceHit.getContent();
+			if (resourceDoc != null) {
+				resourceList.add(resourceDoc);
 			}
 
 		}
-		return resp;
+		return resourceList;
 	}
 
-	private Criteria createCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
+	private Criteria createCourseCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
 			Integer topicId, Integer languageId, Float rating, List<String> duration) {
 		Criteria criteria = new Criteria();
 		if (searchTerm != null && !searchTerm.isEmpty()) {
@@ -107,6 +144,20 @@ public class SearchServiceImpl implements SearchService {
 		}
 
 		return criteria;
+	}
+
+	private Criteria createResourceCriteriaBasedOnParams(String searchTerm, Integer categoryId) {
+		Criteria criteria = new Criteria();
+		if (searchTerm != null && !searchTerm.isEmpty()) {
+			criteria.subCriteria(new Criteria("name").contains(searchTerm));
+		}
+
+		if (categoryId != null) {
+			criteria.subCriteria(new Criteria("category").matches(categoryId));
+		}
+
+		return criteria;
+
 	}
 
 	private List<Criteria> createDurationCriteria(List<String> duration) {
@@ -139,12 +190,6 @@ public class SearchServiceImpl implements SearchService {
 		default:
 			return null;
 		}
-	}
-
-	@Override
-	public void deleteCourseById(Long courseId) {
-		getCourseDocRepository().deleteById(courseId);
-
 	}
 
 }

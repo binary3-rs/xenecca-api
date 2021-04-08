@@ -3,19 +3,21 @@ package com.xenecca.api.service.impl;
 import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.xenecca.api.dao.LearningResourceCategoryRepository;
 import com.xenecca.api.dao.LearningResourceRepository;
 import com.xenecca.api.dto.request.NewLearningResourceDTO;
-import com.xenecca.api.exception.FileStorageException;
 import com.xenecca.api.exception.InvalidRequestDataException;
-import com.xenecca.api.mapper.LearningResourceMapper;
 import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.model.type.MaterialType;
 import com.xenecca.api.service.LearningResourceService;
+import com.xenecca.api.service.SearchService;
 import com.xenecca.api.utils.FileUtils;
+import com.xenecca.api.utils.SortAndCompareUtils;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -32,10 +34,10 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 	private LearningResourceRepository _learningResourceRepository;
 	@Autowired
 	private LearningResourceCategoryRepository _learningCategoryRepository;
-
+	
 	@Autowired
-	private LearningResourceMapper _learningResourceMaper;
-
+	private SearchService _searchService;
+	
 	@Override
 	public LearningResource addLearningResource(NewLearningResourceDTO learningResource) {
 		MaterialType materialType = learningResource.getMaterialType();
@@ -47,7 +49,9 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 						getLearningCategoryRepository().findById(learningResource.getResourceCategoryId()).get())
 				.build();
 		try {
-			return getLearningResourceRepository().save(resource);
+			resource =  getLearningResourceRepository().save(resource);
+			getSearchService().storeResourceDocument(resource);
+			return resource;
 		} catch (Exception e) {
 			if (materialType.equals(MaterialType.FILE)) {
 				FileUtils.deleteFile(Paths.get(resourceValue));
@@ -55,6 +59,13 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 			throw e;
 
 		}
+	}
+
+	@Override
+	public Iterable<LearningResource> getAllResources(Integer pageNo) {
+		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, null, null);
+		Page<LearningResource> pageOfResources = getLearningResourceRepository().findAll(sortedPageable);
+		return pageOfResources.getContent();
 	}
 
 	@Override
@@ -77,7 +88,8 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 		try {
 			resource = getLearningResourceRepository().save(resource);
 			FileUtils.deleteFile(Paths.get(oldFile));
-			return  resource;
+			getSearchService().storeResourceDocument(resource);
+			return resource;
 		} catch (Exception e) {
 			if (materialType.equals(MaterialType.FILE)) {
 				resource.setResource(oldFile);
@@ -97,6 +109,7 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 			FileUtils.deleteFile(Paths.get(resource.getResource()));
 		}
 		getLearningResourceRepository().delete(resource);
+		getSearchService().deleteResourceDocument(resourceId);
 
 	}
 
@@ -117,4 +130,5 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 		}
 		return resourceValue;
 	}
+
 }

@@ -7,9 +7,11 @@ public interface LearningResourceService {
 
 	public LearningResource addLearningResource(NewLearningResourceDTO learningResource);
 
+	public Iterable<LearningResource> getAllResources(Integer pageNo);
+
 	public LearningResource updateLearningResource(Long resourceId, NewLearningResourceDTO learningResource);
-	
+
 	public void deleteLearningResource(Long resourceId);
-	
+
 
 }

@@ -30,7 +30,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(indexName = "xenecca-course", shards = 1, replicas = 2)
-@Mapping(mappingPath = "/elastic-mappings/course-doc-mappings.json")
+@Mapping(mappingPath = "/elastic-mappings/course-doc-mapping.json")
 public class CourseDoc {
 
 	@Id
@@ -88,11 +88,7 @@ public class CourseDoc {
 	@Field(name = "duration_in_hrs", nullValue = "0", index = false, type = Float)
 	private Float _durationInHrs;
 
-	
-//	@MultiField(mainField = @Field(name = "updated_at", type = Text, fielddata = true), otherFields = {
-//			@InnerField(suffix = "keyword", type = Keyword) })
-	@Field(name = "updated_at", type = FieldType.Date, // , fielddata=true,
-			store = true, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
+	@Field(name = "updated_at", type = FieldType.Date, store = true, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date _updatedAt;
 
 }

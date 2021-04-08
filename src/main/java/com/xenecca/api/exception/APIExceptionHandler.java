@@ -37,7 +37,6 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(InvalidJwtAuthenticationException.class)
 	public final ResponseEntity<ExceptionResponse> invalidJwtAuthenticationException(Exception ex, WebRequest request) {
-		System.out.println("TEST");
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
@@ -104,14 +103,14 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 				request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
-	@ExceptionHandler({RuntimeException.class, Exception.class})
-	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-				request.getDescription(false));
-		System.out.println("TEST");
-		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+//
+//	@ExceptionHandler({ RuntimeException.class, Exception.class })
+//	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
+//		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+//				request.getDescription(false));
+//		System.out.println("TEST");
+//		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+//	}
 
 	// helper
 	private Throwable getRootCause(Throwable t) {

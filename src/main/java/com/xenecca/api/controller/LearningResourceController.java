@@ -1,22 +1,28 @@
 package com.xenecca.api.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xenecca.api.dto.request.NewLearningResourceDTO;
 import com.xenecca.api.dto.response.LearningResourceDTO;
 import com.xenecca.api.mapper.LearningResourceMapper;
+import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.service.LearningResourceService;
+import com.xenecca.api.service.SearchService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,11 +41,26 @@ public class LearningResourceController {
 	private LearningResourceService _learningResourceService;
 
 	@Autowired
+	private SearchService _searchService;
+
+	@Autowired
 	private LearningResourceMapper _learningResourceMapper;
 
 	@PostMapping
 	public LearningResourceDTO addLearningResource(@Valid @ModelAttribute NewLearningResourceDTO learningResource) {
 		return getLearningResourceMapper().mapToDTO(getLearningResourceService().addLearningResource(learningResource));
+	}
+
+	@GetMapping
+	public List<LearningResourceDTO> getResources(@RequestParam(name = "q", required = false) String searchTerm,
+			@RequestParam(name = "category", required = false) Integer categoryId,
+			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
+		if (searchTerm == null && categoryId == null) {
+			Iterable<LearningResource> resources = getLearningResourceService().getAllResources(pageNo);
+			return getLearningResourceMapper().mapToDTOList(resources);
+		}
+		return getLearningResourceMapper()
+				.mapDocsToDTOList(getSearchService().searchResources(searchTerm, categoryId, pageNo));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
