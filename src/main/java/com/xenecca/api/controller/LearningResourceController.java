@@ -74,18 +74,19 @@ public class LearningResourceController {
 		}
 		return types;
 	}
+	
+	@PutMapping("{id}")
+	public LearningResourceDTO updateLearningResource(@PathVariable("id") Long resourceId,
+			@Valid @ModelAttribute NewLearningResourceDTO learningResource) {
+		return getLearningResourceMapper().mapToDTO(getLearningResourceService().updateLearningResource(resourceId, learningResource));
+	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("{id}")
-	public void deleteLearningResource(@PathVariable("id") Long resourceId,
-			@Valid @ModelAttribute NewLearningResourceDTO learningResource) {
+	public void deleteLearningResource(@PathVariable("id") Long resourceId) {
 		getLearningResourceService().deleteLearningResource(resourceId);
 	}
 
-	@PutMapping("{id}")
-	public void updateLearningResource(@PathVariable("id") Long resourceId,
-			@Valid @ModelAttribute NewLearningResourceDTO learningResource) {
-		getLearningResourceService().updateLearningResource(resourceId, learningResource);
-	}
+
 
 }
