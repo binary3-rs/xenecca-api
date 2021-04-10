@@ -21,9 +21,15 @@ public class TopicServiceImpl implements TopicService {
 
 	@Autowired
 	private TopicRepository _topicRepository;
+
 	@Override
 	public Iterable<Topic> getAllTopics() {
 		return getTopicRepository().findAll();
+	}
+
+	@Override
+	public Iterable<Topic> getTopicsBySubcategoryId(Long subcategoryId) {
+		return getTopicRepository().findBy_subcategory__id(subcategoryId);
 	}
 
 }

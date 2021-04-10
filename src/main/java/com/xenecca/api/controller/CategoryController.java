@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xenecca.api.dto.request.NewCategoryDTO;
@@ -42,11 +41,8 @@ public class CategoryController {
 
 	@GetMapping
 	public List<CategoryDTO> getAllCategories() {
-
 		Iterable<Category> categories = getCategoryService().getAllCategories();
 		return getCategoryMapper().mapToDTOList(categories);
-
 	}
-	// TODO: PUT and DELETE, GET one
 
 }

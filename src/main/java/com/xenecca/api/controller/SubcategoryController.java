@@ -31,16 +31,14 @@ public class SubcategoryController {
 	@Autowired
 	private SubcategoryMapper _subcategoryMapper;
 
-//	@PostMapping("/api/v1/categories/{id}/subcategories")
-//	public SubcategoryDTO addCategory(@PathVariable("id") Long categoryId, @RequestBody NewSubcategoryDTO data)
-//			throws Exception {
-//		return getSubcategoryMapper().mapToDTO(getSubcategoryService().addSubcategory(categoryId, data));
-//	}
-//	
-
+	@GetMapping("/api/v1/subcategories")
+	public List<SubcategoryDTO> getAllSubcategories() {
+		return getSubcategoryMapper().mapToDTOList(getSubcategoryService().getAllSubcategories());
+	}
+	
 	@GetMapping("/api/v1/categories/{id}/subcategories")
 	public List<SubcategoryDTO> getSubcategoriesForCategory(@PathVariable("id") Long categoryId) {
-		return getSubcategoryMapper().mapToDTOList(getSubcategoryService().getSubcategoriesForCategory(categoryId));
+		return getSubcategoryMapper().mapToDTOList(getSubcategoryService().getSubcategoriesByCategory(categoryId));
 	}
 
 }

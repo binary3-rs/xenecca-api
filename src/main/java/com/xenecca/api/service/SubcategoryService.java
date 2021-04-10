@@ -6,7 +6,7 @@ import com.xenecca.api.model.Subcategory;
 public interface SubcategoryService {
 	
 	public Subcategory addSubcategory(Long categoryId, NewSubcategoryDTO subcategoryData) throws Exception;
-	
-	public Iterable<Subcategory> getSubcategoriesForCategory(Long categoryId);
+	public Iterable<Subcategory> getAllSubcategories();
+	public Iterable<Subcategory> getSubcategoriesByCategory(Long categoryId);
 
 }

@@ -42,7 +42,7 @@ public class Subcategory {
 	private Long _id;
 
 	@NotBlank(message = "Subcategory name must not be blank!")
-	@Column(name = "name", unique = true, nullable = false, length=30)
+	@Column(name = "name", unique = true, nullable = false, length = 30)
 	private String _name;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -50,9 +50,13 @@ public class Subcategory {
 	private Category _category;
 
 	@Builder.Default
+	@OneToMany(mappedBy = "_subcategory", orphanRemoval = true)
+	private Set<Topic> _topics = new HashSet<Topic>();
+
+	@Builder.Default
 	@OneToMany(mappedBy = "_subcategory")
 	private Set<Course> _courses = new HashSet<Course>();
-	
+
 	@CreationTimestamp
 	@Column(name = "created_at")
 	private Time _createdAt;
@@ -64,7 +68,7 @@ public class Subcategory {
 	public void addCourse(Course course) {
 		_courses.add(course);
 	}
-	
+
 	public void setCategory(Category category) {
 		_category = category;
 		category.addSubcategory(this);

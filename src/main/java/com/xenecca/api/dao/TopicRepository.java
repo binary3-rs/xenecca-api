@@ -7,5 +7,5 @@ import com.xenecca.api.model.Topic;
 
 @Repository
 public interface TopicRepository extends CrudRepository<Topic, Long> {
-
+	public Iterable<Topic> findBy_subcategory__id(Long subcategoryId);
 }

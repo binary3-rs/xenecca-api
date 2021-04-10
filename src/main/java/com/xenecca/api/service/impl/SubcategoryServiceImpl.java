@@ -42,7 +42,12 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	}
 
 	@Override
-	public Iterable<Subcategory> getSubcategoriesForCategory(Long categoryId) {
+	public Iterable<Subcategory> getAllSubcategories() {
+		return getSubcategoryRepository().findAll();
+	}
+
+	@Override
+	public Iterable<Subcategory> getSubcategoriesByCategory(Long categoryId) {
 		return getSubcategoryRepository().findBy_category__id(categoryId);
 	}
 

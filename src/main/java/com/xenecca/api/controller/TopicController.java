@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xenecca.api.dto.response.SubcategoryDTO;
 import com.xenecca.api.dto.response.TopicDTO;
 import com.xenecca.api.mapper.TopicMapper;
 import com.xenecca.api.model.Topic;
@@ -32,10 +34,14 @@ public class TopicController {
 	private TopicMapper _topicMapper;
 
 	@GetMapping
-	public List<TopicDTO> getAllLanguages() {
+	public List<TopicDTO> getAllTopics() {
 		Iterable<Topic> topics = getTopicService().getAllTopics();
 		return getTopicMapper().mapToDTOList(topics);
 
 	}
 
+	@GetMapping("/api/v1/subcategories/{id}/topics")
+	public List<TopicDTO> getTopicsForSubcategory(@PathVariable("id") Long subcategoryId) {
+		return getTopicMapper().mapToDTOList(getTopicService().getTopicsBySubcategoryId(subcategoryId));
+	}
 }
