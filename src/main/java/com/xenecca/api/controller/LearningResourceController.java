@@ -1,13 +1,19 @@
 package com.xenecca.api.controller;
 
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.activation.MimeType;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,6 +72,19 @@ public class LearningResourceController {
 				.mapDocsToDTOList(getSearchService().searchResources(searchTerm, categoryId, pageNo));
 	}
 
+	@GetMapping(value = "/{id}", produces = MediaType.ALL_VALUE)
+	public ResponseEntity<InputStreamResource> getFileResource(@PathVariable("id") Long resourceId) {
+		Map<String, Object> fileData = getLearningResourceService().getFileResource(resourceId);
+		ByteArrayInputStream file = (ByteArrayInputStream) fileData.get("file");
+		String name = fileData.get("name").toString();
+		String[] mimeType = fileData.get("mimeType").toString().split("/");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", String.format("inline; filename=%s", name));
+		return ResponseEntity.ok().headers(headers).contentType(new MediaType(mimeType[0], mimeType[1]))
+				.body(new InputStreamResource(file));
+
+	}
+
 	@GetMapping("/types")
 	public Map<String, String> getResourceTypes() {
 		Map<String, String> types = new HashMap<String, String>();
@@ -74,11 +93,12 @@ public class LearningResourceController {
 		}
 		return types;
 	}
-	
+
 	@PutMapping("{id}")
 	public LearningResourceDTO updateLearningResource(@PathVariable("id") Long resourceId,
 			@Valid @ModelAttribute NewLearningResourceDTO learningResource) {
-		return getLearningResourceMapper().mapToDTO(getLearningResourceService().updateLearningResource(resourceId, learningResource));
+		return getLearningResourceMapper()
+				.mapToDTO(getLearningResourceService().updateLearningResource(resourceId, learningResource));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -86,7 +106,5 @@ public class LearningResourceController {
 	public void deleteLearningResource(@PathVariable("id") Long resourceId) {
 		getLearningResourceService().deleteLearningResource(resourceId);
 	}
-
-
 
 }
