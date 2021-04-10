@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 import javax.activation.MimetypesFileTypeMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

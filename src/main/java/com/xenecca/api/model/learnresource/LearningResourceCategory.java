@@ -59,4 +59,9 @@ public class LearningResourceCategory {
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private Time _updatedAt;
+
+	public LearningResourceCategory(String name, LearningResourceDomain domain) {
+		_name = name;
+		_domain = domain;
+	}
 }
