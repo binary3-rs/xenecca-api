@@ -69,7 +69,7 @@ public class Course implements Serializable {
 	private String _badge;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_id")
+	@JoinColumn(name = "category_id")//, nullable = false)
 	private Category _category;
 
 	@Column(name = "has_certificate")
@@ -123,10 +123,10 @@ public class Course implements Serializable {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "course_instructor", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "instructor_id"))
 	private Set<Instructor> _instructors = new HashSet<>();
-	
+
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "language_id")
+	@JoinColumn(name = "language_id")//, nullable = false)
 	private Language _language;
 
 	@Column(name = "has_lifetime_access")
@@ -168,14 +168,14 @@ public class Course implements Serializable {
 
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "subcategory_id")
+	@JoinColumn(name = "subcategory_id")//, nullable = false)
 	private Subcategory _subcategory;
 
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "topic_id")
+	@JoinColumn(name = "topic_id")//, nullable = false)
 	private Topic _topic;
-
+	
 	@NotBlank(message = "Title must not be blank!")
 	@Column(name = "title", unique = true, nullable = false)
 	private String _title;

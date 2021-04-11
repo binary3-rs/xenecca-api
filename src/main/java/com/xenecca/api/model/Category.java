@@ -36,7 +36,7 @@ public class Category {
 	private Long _id;
 
 	@NotBlank(message = "Category name must not be blank!")
-	@Column(name = "name", unique = true, nullable = false, length = 30)
+	@Column(name = "name", unique = true, nullable = false, length = 60)
 	private String _name;
 
 	@Builder.Default

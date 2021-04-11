@@ -79,7 +79,7 @@ public class CoursePreviewDTO {
 		_avgRating = course.getAvgRating();
 		_badge = course.getBadge();
 		_price = course.getPrice();
-		_price = course.getOldPrice();
+		_oldPrice = course.getOldPrice();
 		_priceAsString = course.getPrice().toString() + course.getCurrency();
 		_instructors = getInstructorMapper().mapToDTOList(course.getInstructors());
 		_poster = course.getPosterPath();
