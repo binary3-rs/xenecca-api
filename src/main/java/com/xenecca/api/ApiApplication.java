@@ -1,7 +1,5 @@
 package com.xenecca.api;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,25 +30,26 @@ public class ApiApplication {
 
 	@Autowired
 	private DbSeedUtils _dbSeedUtils;
-	
+
 	@Autowired
 	private CacheService _cacheService;
-	
+
 	@Autowired
 	private CacheManager _cacheManager;
 
 	@Bean
 	CommandLineRunner runner() {
 		return args -> {
-//			getDbSeedUtils().addUser();
-//			getDbSeedUtils().populateResourceCategories();
-			//getDbSeedUtils().populateCategories();
+			getDbSeedUtils().addUser();
+			getDbSeedUtils().populateResourceCategories();
+			getDbSeedUtils().populateCategories();
 		};
 	}
 
 	@Bean
 	public CacheManager cacheManager() {
-		return new ConcurrentMapCacheManager(new String[]{"categories", "subcategories", "topics", "languages", "resource-categories", "resource-domains"});
+		return new ConcurrentMapCacheManager(new String[] { "categories", "subcategories", "topics", "languages",
+				"resource-categories", "resource-domains" });
 	}
 
 	public static void main(String[] args) {

@@ -17,15 +17,12 @@ import com.xenecca.api.model.type.LearningResourceDomain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Slf4j
 @Component
 public class DbSeedUtils {
-
 	@Autowired
 	private UserRepository _userRepository;
 
@@ -44,7 +41,6 @@ public class DbSeedUtils {
 		try {
 			getUserRepository().save(user);
 		} catch (Exception e) {
-			// log
 		}
 	}
 
@@ -53,10 +49,13 @@ public class DbSeedUtils {
 				"Marketing", "Music", "Office", "Productivity", "Personal Development", "Photography & Video",
 				"Teaching & Academics" };
 		for (String category : categories) {
-			getCategoryRepository().save(new Category(category));
+			try {
+				getCategoryRepository().save(new Category(category));
+			} catch (Exception e) {
+				continue;
+			}
 		}
 	}
-
 
 	public void populateResourceCategories() {
 		String[] webdevCategories = { "HTML", "CSS", "JavaScript", "Angular", "AngularJS", "ReactJS", "VueJS",

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.xenecca.api.dto.response.SubcategoryDTO;
 import com.xenecca.api.dto.response.TopicDTO;
 import com.xenecca.api.mapper.TopicMapper;
 import com.xenecca.api.model.Topic;
@@ -17,12 +16,10 @@ import com.xenecca.api.service.TopicService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Slf4j
 @RestController
 @RequestMapping("/api/v1/topics/")
 public class TopicController {

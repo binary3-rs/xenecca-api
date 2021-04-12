@@ -24,6 +24,7 @@ public class CurriculumSectionDTO {
 	private Integer _contentLength;
 	private String _description;
 	
+	@Builder.Default
 	private List<CurriculumItemDTO> _lectures = new ArrayList<CurriculumItemDTO>();
 
 	public CurriculumSectionDTO(CurriculumItem item) {

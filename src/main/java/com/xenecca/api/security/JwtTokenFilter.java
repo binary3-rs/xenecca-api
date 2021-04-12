@@ -15,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.xenecca.api.exception.APIException;
 import com.xenecca.api.exception.ExceptionResponse;
 import com.xenecca.api.exception.InvalidJwtAuthenticationException;
 

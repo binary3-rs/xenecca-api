@@ -1,7 +1,6 @@
 package com.xenecca.api.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.xenecca.api.dao.es.CourseDocRepository;
 import com.xenecca.api.dao.es.LearningResourceDocRepository;
 import com.xenecca.api.es.models.CourseDoc;
-import com.xenecca.api.es.models.InstructorDoc;
 import com.xenecca.api.es.models.LearningResourceDoc;
 import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.service.SearchService;
@@ -28,12 +26,10 @@ import com.xenecca.api.utils.SortAndCompareUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Slf4j
 @Service
 public class SearchServiceImpl implements SearchService {
 

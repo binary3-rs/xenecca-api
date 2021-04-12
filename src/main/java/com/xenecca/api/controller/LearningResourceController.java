@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.activation.MimeType;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +35,10 @@ import com.xenecca.api.service.SearchService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Slf4j
 @RestController
 @RequestMapping("/api/v1/resources/")
 public class LearningResourceController {

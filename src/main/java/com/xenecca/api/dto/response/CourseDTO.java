@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
-
 import com.xenecca.api.mapper.CurriculumItemMapper;
 import com.xenecca.api.model.Course;
 

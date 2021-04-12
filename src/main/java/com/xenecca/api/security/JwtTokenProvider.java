@@ -75,10 +75,6 @@ public class JwtTokenProvider {
 		return Jwts.parser().setSigningKey(getSecretKey()).parseClaimsJws(token).getBody().getSubject();
 	}
 
-	private Claims getClaimsFromToken(String token) {
-		return Jwts.parser().setSigningKey(getSecretKey()).parseClaimsJws(token).getBody();
-	}
-
 	public String resolveToken(HttpServletRequest req) {
 		String bearerToken = req.getHeader(getJwtHeader());
 		if (bearerToken != null && bearerToken.startsWith(getHeaderPrefix())) {

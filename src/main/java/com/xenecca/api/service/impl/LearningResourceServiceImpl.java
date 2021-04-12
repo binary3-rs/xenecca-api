@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 import javax.activation.MimetypesFileTypeMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,12 +26,10 @@ import com.xenecca.api.utils.SortAndCompareUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Slf4j
 @Service
 public class LearningResourceServiceImpl implements LearningResourceService {
 

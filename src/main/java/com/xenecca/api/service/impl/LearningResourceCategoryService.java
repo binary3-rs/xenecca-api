@@ -16,12 +16,10 @@ import com.xenecca.api.model.type.LearningResourceDomain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Slf4j
 @Service
 public class LearningResourceCategoryService implements com.xenecca.api.service.LearningResourceCategoryService {
 
@@ -43,14 +41,13 @@ public class LearningResourceCategoryService implements com.xenecca.api.service.
 		return getResourceCategoryRepository().findAll();
 
 	}
-	
+
 	@Override
 	@Cacheable(cacheNames = "resource-categories")
 	public Iterable<LearningResourceCategory> getResourceCategoriesByDomain(LearningResourceDomain domain) {
 		return getResourceCategoryRepository().findBy_domain(domain);
 	}
 
-	
 	@Override
 	@Cacheable(cacheNames = "resource-domains")
 	public Map<String, String> getResourceCategoryDomains() {
@@ -75,6 +72,5 @@ public class LearningResourceCategoryService implements com.xenecca.api.service.
 		getResourceCategoryRepository().deleteById(resourceCategoryId);
 
 	}
-
 
 }

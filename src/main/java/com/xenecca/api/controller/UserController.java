@@ -20,12 +20,10 @@ import com.xenecca.api.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Slf4j
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {

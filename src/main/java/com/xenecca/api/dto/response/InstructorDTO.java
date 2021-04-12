@@ -1,8 +1,5 @@
 package com.xenecca.api.dto.response;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.xenecca.api.es.models.InstructorDoc;
 import com.xenecca.api.model.Instructor;
 

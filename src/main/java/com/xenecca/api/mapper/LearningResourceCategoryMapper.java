@@ -5,7 +5,6 @@ import java.util.List;
 import org.mapstruct.Mapper;
 
 import com.xenecca.api.dto.request.NewLearningResourceCategoryDTO;
-import com.xenecca.api.dto.request.NewLearningResourceDTO;
 import com.xenecca.api.dto.response.LearningResourceCategoryDTO;
 import com.xenecca.api.model.learnresource.LearningResourceCategory;
 

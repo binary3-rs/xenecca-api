@@ -39,14 +39,14 @@
 	</cache>
 
 	<cache name="com.xenecca.api.model.Subcategory"
-		maxEntriesLocalHeap="100" eternal="true"
+		maxEntriesLocalHeap="100" eternal="false"
 		memoryStoreEvictionPolicy="LRU" timeToIdleSeconds="600"
 		timeToLiveSeconds="600">
 		<persistence strategy="localTempSwap" />
 	</cache>
 
 	<cache name="com.xenecca.api.model.Topic"
-		maxEntriesLocalHeap="100" eternal="true"
+		maxEntriesLocalHeap="100" eternal="false"
 		memoryStoreEvictionPolicy="LRU" timeToIdleSeconds="600"
 		timeToLiveSeconds="600">
 		<persistence strategy="localTempSwap" />

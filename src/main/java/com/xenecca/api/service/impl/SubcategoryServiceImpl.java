@@ -16,12 +16,10 @@ import com.xenecca.api.service.SubcategoryService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Slf4j
 @Service
 public class SubcategoryServiceImpl implements SubcategoryService {
 

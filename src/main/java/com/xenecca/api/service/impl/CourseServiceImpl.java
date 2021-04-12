@@ -1,6 +1,5 @@
 package com.xenecca.api.service.impl;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,10 @@ import com.xenecca.api.utils.SortAndCompareUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Slf4j
 @Service
 public class CourseServiceImpl implements CourseService {
 
@@ -31,11 +28,7 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Iterable<Course> getAllCourses(Integer pageNo, String sortBy, String order) {
-		// String sortByField = SortAndCompareUtils.sortField(sortBy);
-		// Sort sort = order.equals("asc") ? Sort.by(sortByField).ascending() :
-		// Sort.by(sortByField).descending();
 		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order);
-		// PageRequest.of(pageNo, PAGE_SIZE, sort);
 		Page<Course> pageOfCourses = getCourseRepository().findAll(sortedPageable);
 		return pageOfCourses.getContent();
 
@@ -54,7 +47,7 @@ public class CourseServiceImpl implements CourseService {
 		getCourseRepository().delete(course);
 
 		if (posterPath != null) {
-			boolean res = FileUtils.deleteFile(Paths.get(posterPath));
+			FileUtils.deleteFile(Paths.get(posterPath));
 		}
 	}
 

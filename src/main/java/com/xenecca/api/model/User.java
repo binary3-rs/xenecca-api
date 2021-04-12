@@ -35,6 +35,8 @@ import lombok.experimental.Accessors;
 @Table(name = "\"user\"")
 public class User implements UserDetails {
 
+	private static final long serialVersionUID = -4638345040428870072L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

@@ -1,7 +1,5 @@
 package com.xenecca.api.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -60,7 +58,6 @@ public class AuthServiceImpl implements AuthService {
 			getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(username, password));
 			User user = findUserByUsername(username);
 			String token = "";
-			List<String> roles = null;
 
 			//roles = user.getStringRoles();
 			String pwd = user.getPassword();
