@@ -62,7 +62,9 @@ public class LearningResourceController {
 
 	@GetMapping
 	public List<LearningResourceDTO> getResources(@RequestParam(name = "q", required = false) String searchTerm,
-			@RequestParam(name = "category", required = false) Integer categoryId,
+
+			@RequestParam(name = "category", required = false) Long categoryId,
+
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
 		if (searchTerm == null && categoryId == null) {
 			Iterable<LearningResource> resources = getLearningResourceService().getAllResources(pageNo);
@@ -71,6 +73,24 @@ public class LearningResourceController {
 		return getLearningResourceMapper()
 				.mapDocsToDTOList(getSearchService().searchResources(searchTerm, categoryId, pageNo));
 	}
+
+	/*
+	 * @GetMapping public List<LearningResourceDTO> getResources(@RequestParam(name
+	 * = "q", required = false) String searchTerm,
+	 * 
+	 * @RequestParam(name = "category", required = false) Long categoryId,
+	 * 
+	 * @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) { if
+	 * (searchTerm == null) { // Iterable<LearningResource> resources = //
+	 * getLearningResourceService().getAllResources(pageNo);
+	 * Iterable<LearningResource> resources =
+	 * getLearningResourceService().getAllResourcesByCategory(categoryId, pageNo);
+	 * 
+	 * return getLearningResourceMapper().mapToDTOList(resources); } return
+	 * getLearningResourceMapper()
+	 * .mapDocsToDTOList(getSearchService().searchResources(searchTerm, categoryId,
+	 * pageNo)); }
+	 */
 
 	@GetMapping(value = "/{id}", produces = MediaType.ALL_VALUE)
 	public ResponseEntity<InputStreamResource> getFileResource(@PathVariable("id") Long resourceId) {

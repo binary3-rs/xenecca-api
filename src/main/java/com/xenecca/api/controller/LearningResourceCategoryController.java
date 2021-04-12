@@ -26,6 +26,7 @@ import com.xenecca.api.dto.response.LearningResourceCategoryDTO;
 import com.xenecca.api.dto.response.LearningResourceDTO;
 import com.xenecca.api.mapper.LearningResourceCategoryMapper;
 import com.xenecca.api.model.learnresource.LearningResource;
+import com.xenecca.api.model.learnresource.LearningResourceCategory;
 import com.xenecca.api.model.type.LearningResourceDomain;
 import com.xenecca.api.model.type.ResourceType;
 import com.xenecca.api.service.impl.LearningResourceCategoryService;
@@ -57,8 +58,12 @@ public class LearningResourceCategoryController {
 	}
 
 	@GetMapping
-	public List<LearningResourceCategoryDTO> getResourceCategories() {
-		return getResourceCategoryMapper().mapToDTOList(getResourceCategoryService().getAllResourceCategories());
+	public List<LearningResourceCategoryDTO> getResourceCategories(
+			@RequestParam(name = "domain", required = false) LearningResourceDomain domain) {
+		Iterable<LearningResourceCategory> categories = (domain == null)
+				? getResourceCategoryService().getAllResourceCategories()
+				: getResourceCategoryService().getResourceCategoriesByDomain(domain);
+		return getResourceCategoryMapper().mapToDTOList(categories);
 	}
 
 	@GetMapping("/domains")

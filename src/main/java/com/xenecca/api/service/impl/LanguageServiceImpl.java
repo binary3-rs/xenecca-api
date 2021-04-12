@@ -3,6 +3,7 @@ package com.xenecca.api.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.xenecca.api.dao.LanguageRepository;
@@ -32,6 +33,7 @@ public class LanguageServiceImpl implements LanguageService {
 	}
 
 	@Override
+	@Cacheable(cacheNames = "languages")
 	public Iterable<Language> getAllLanguages() {
 		return getLanguageRepository().findAll();
 	}

@@ -1,6 +1,7 @@
 package com.xenecca.api.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.xenecca.api.dao.CategoryRepository;
@@ -28,8 +29,10 @@ public class CategoryServiceImpl implements CategoryService {
 		Category category = Category.builder().name(categoryData.getName()).build();
 		return getCategoryRepository().save(category);
 	}
-
+	
+	
 	@Override
+	@Cacheable(cacheNames = "categories")
 	public Iterable<Category> getAllCategories() {
 		return getCategoryRepository().findAll();
 	}

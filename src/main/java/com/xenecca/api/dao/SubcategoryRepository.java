@@ -9,4 +9,5 @@ import com.xenecca.api.model.Subcategory;
 public interface SubcategoryRepository extends CrudRepository<Subcategory, Long> {
 
 	public Iterable<Subcategory> findBy_category__id(Long categoryId);
+	public Iterable<Subcategory> findBy_category__name(String categoryName);
 }

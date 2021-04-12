@@ -1,4 +1,4 @@
-package com.xenecca.api.utils;
+package com.xenecca.api.service.utils;
 
 import java.util.Map;
 
@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.xenecca.api.dao.CategoryRepository;
 import com.xenecca.api.dao.LearningResourceCategoryRepository;
 import com.xenecca.api.dao.UserRepository;
+import com.xenecca.api.model.Category;
 import com.xenecca.api.model.User;
 import com.xenecca.api.model.learnresource.LearningResourceCategory;
 import com.xenecca.api.model.type.LearningResourceDomain;
@@ -28,6 +30,9 @@ public class DbSeedUtils {
 	private UserRepository _userRepository;
 
 	@Autowired
+	private CategoryRepository _categoryRepository;
+
+	@Autowired
 	private LearningResourceCategoryRepository _resourceCategoryRepository;
 
 	@Autowired
@@ -42,6 +47,16 @@ public class DbSeedUtils {
 			// log
 		}
 	}
+
+	public void populateCategories() {
+		String[] categories = { "Business", "Design", "Development", "Finance & Accounting", "IT & Software",
+				"Marketing", "Music", "Office", "Productivity", "Personal Development", "Photography & Video",
+				"Teaching & Academics" };
+		for (String category : categories) {
+			getCategoryRepository().save(new Category(category));
+		}
+	}
+
 
 	public void populateResourceCategories() {
 		String[] webdevCategories = { "HTML", "CSS", "JavaScript", "Angular", "AngularJS", "ReactJS", "VueJS",

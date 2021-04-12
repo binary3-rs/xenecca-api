@@ -70,7 +70,14 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 		Page<LearningResource> pageOfResources = getLearningResourceRepository().findAll(sortedPageable);
 		return pageOfResources.getContent();
 	}
+	
 
+	@Override
+	public Iterable<LearningResource> getAllResourcesByCategory(Long categoryId, Integer pageNo) {
+		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, null, null);
+		Page<LearningResource> pageOfResources = getLearningResourceRepository().findBy_resourceCategory__id(categoryId, sortedPageable);
+		return pageOfResources.getContent();
+	}
 	@Override
 	public Map<String, Object> getFileResource(Long resourceId) {
 		LearningResource resource = getLearningResourceRepository().findById(resourceId).get();
@@ -154,4 +161,6 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 				: MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(fileName);
 
 	}
+
+	
 }

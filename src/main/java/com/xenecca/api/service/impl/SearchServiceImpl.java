@@ -47,23 +47,6 @@ public class SearchServiceImpl implements SearchService {
 	private ElasticsearchOperations _template;
 
 	@Override
-	public boolean addDocument() {
-		CourseDoc doc = new CourseDoc();
-		doc.setDocId(1L);
-		doc.setTitle("Test");
-		doc.setAvgRating(2.3);
-		doc.setCategory(2L);
-		doc.setHeadline("Test headline");
-		doc.setLanguage(1L);
-		doc.setPrice(200.0);
-		doc.setSubcategory(1L);
-		doc.setTopic(1L);
-		doc.setInstructors(Arrays.asList(new InstructorDoc("John Smith", null), new InstructorDoc("John Doe", null)));
-		System.out.println(getCourseDocRepository().save(doc));
-		return false;
-	}
-
-	@Override
 	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId, Integer topicId,
 			Integer languageId, Float rating, List<String> duration, Integer pageNo, String sortBy, String order) {
 		List<CourseDoc> courseList = new ArrayList<CourseDoc>();
@@ -102,7 +85,7 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public List<LearningResourceDoc> searchResources(String searchTerm, Integer categoryId, Integer pageNo) {
+	public List<LearningResourceDoc> searchResources(String searchTerm, Long categoryId, Integer pageNo) {
 		List<LearningResourceDoc> resourceList = new ArrayList<LearningResourceDoc>();
 		Criteria criteria = createResourceCriteriaBasedOnParams(searchTerm, categoryId);
 		Query query = new CriteriaQuery(criteria);
@@ -151,7 +134,7 @@ public class SearchServiceImpl implements SearchService {
 		return criteria;
 	}
 
-	private Criteria createResourceCriteriaBasedOnParams(String searchTerm, Integer categoryId) {
+	private Criteria createResourceCriteriaBasedOnParams(String searchTerm, Long categoryId) {
 		Criteria criteria = new Criteria();
 		if (searchTerm != null && !searchTerm.isEmpty()) {
 			criteria.subCriteria(new Criteria("name").contains(searchTerm));

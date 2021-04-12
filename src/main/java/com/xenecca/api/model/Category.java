@@ -51,6 +51,10 @@ public class Category {
 	@Column(name = "updated_at")
 	private Time _updatedAt;
 
+	public Category(String name) {
+		_name = name;
+	}
+
 	public void addSubcategory(Subcategory subcategory) {
 		_subcategories.add(subcategory);
 		// subcategory.setCategory(this);

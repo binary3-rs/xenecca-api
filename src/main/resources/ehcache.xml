@@ -13,51 +13,45 @@
 	</defaultCache>
 
 	<cache name="com.xenecca.api.model.Course"
-		maxEntriesLocalHeap="500" eternal="false" timeToIdleSeconds="30"
-		timeToLiveSeconds="30" memoryStoreEvictionPolicy="LRU">
+		maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" memoryStoreEvictionPolicy="LRU">
 		<persistence strategy="localTempSwap" />
 	</cache>
 
 	<cache name="com.xenecca.api.model.Instructor"
-		maxEntriesLocalHeap="500" eternal="false" timeToIdleSeconds="600"
+		maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="600"
 		timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU">
 		<persistence strategy="localTempSwap" />
 	</cache>
 
 	<cache name="com.xenecca.api.model.CurriculumItem"
-		maxEntriesLocalHeap="1000" eternal="true"
-		memoryStoreEvictionPolicy="LRU">
-<!-- 		 timeToIdleSeconds="600"
-		timeToLiveSeconds="600" 
- -->		
- 		<persistence strategy="localTempSwap" />
+		maxEntriesLocalHeap="1000" eternal="false"
+		memoryStoreEvictionPolicy="LRU" timeToIdleSeconds="600"
+		timeToLiveSeconds="600">
+		<persistence strategy="localTempSwap" />
 	</cache>
 
-<cache name="com.xenecca.api.model.Category"
-		maxEntriesLocalHeap="100" eternal="true"
-		memoryStoreEvictionPolicy="LRU">
-<!--		timeToIdleSeconds="600"
-		timeToLiveSeconds="600"-->
+	<cache name="com.xenecca.api.model.Category"
+		maxEntriesLocalHeap="100" eternal="false"
+		memoryStoreEvictionPolicy="LRU" timeToIdleSeconds="600"
+		timeToLiveSeconds="600">
 		<persistence strategy="localTempSwap" />
 	</cache>
-	
+
 	<cache name="com.xenecca.api.model.Subcategory"
 		maxEntriesLocalHeap="100" eternal="true"
-		memoryStoreEvictionPolicy="LRU">
-		<!-- timeToIdleSeconds="600"
-		timeToLiveSeconds="600" -->
-		
+		memoryStoreEvictionPolicy="LRU" timeToIdleSeconds="600"
+		timeToLiveSeconds="600">
 		<persistence strategy="localTempSwap" />
 	</cache>
-	
+
 	<cache name="com.xenecca.api.model.Topic"
 		maxEntriesLocalHeap="100" eternal="true"
-		memoryStoreEvictionPolicy="LRU">
-<!-- 		timeToIdleSeconds="600"
-		timeToLiveSeconds="600" > -->
+		memoryStoreEvictionPolicy="LRU" timeToIdleSeconds="600"
+		timeToLiveSeconds="600">
 		<persistence strategy="localTempSwap" />
 	</cache>
-	
+
 	<cache name="com.xenecca.api.model.Language"
 		maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="600"
 		timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU">
@@ -67,12 +61,24 @@
 		maxEntriesLocalHeap="1000" eternal="true">
 		<persistence strategy="localTempSwap" />
 	</cache>
-	
-	<cache name="org.hibernate.cache.internal.StandardQueryCache"
-       maxElementsInMemory="100"
-       eternal="false"
-       timeToLiveSeconds="120"
-       memoryStoreEvictionPolicy="LRU">
-</cache>
 
+	<cache name="org.hibernate.cache.internal.StandardQueryCache"
+		maxElementsInMemory="100" eternal="false" timeToLiveSeconds="120"
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+
+	<cache
+		name="com.xenecca.api.model.learnresource.LearningResource"
+		maxEntriesLocalHeap="1000" eternal="false"
+		memoryStoreEvictionPolicy="LRU" timeToIdleSeconds="600"
+		timeToLiveSeconds="600">
+		<persistence strategy="localTempSwap" />
+	</cache>
+	<cache
+		name="com.xenecca.api.model.learnresource.LearningResourceCategory"
+		maxEntriesLocalHeap="1000" eternal="false"
+		memoryStoreEvictionPolicy="LRU" timeToIdleSeconds="600"
+		timeToLiveSeconds="600">
+		<persistence strategy="localTempSwap" />
+	</cache>
 </ehcache>

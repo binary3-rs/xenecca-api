@@ -10,6 +10,8 @@ public interface LearningResourceService {
 	public LearningResource addLearningResource(NewLearningResourceDTO learningResource);
 
 	public Iterable<LearningResource> getAllResources(Integer pageNo);
+	
+	public Iterable<LearningResource> getAllResourcesByCategory(Long categoryId, Integer pageNo);
 
 	public Map<String, Object> getFileResource(Long resourceId);
 
