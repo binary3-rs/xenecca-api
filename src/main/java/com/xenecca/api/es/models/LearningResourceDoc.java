@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(indexName = "learning-resource", shards = 1, replicas = 2)
+@Document(indexName = "xenecca-learning-resource", shards = 1, replicas = 2)
 @Mapping(mappingPath = "/elastic-mappings/learning-resource-doc-mapping.json")
 public class LearningResourceDoc {
 

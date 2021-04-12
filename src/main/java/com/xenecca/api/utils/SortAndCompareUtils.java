@@ -1,9 +1,15 @@
 package com.xenecca.api.utils;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import lombok.Getter;
+import lombok.experimental.Accessors;
+
+@Accessors(prefix = "_")
+@Getter
 public class SortAndCompareUtils {
 
 	private static String sortField(String sortBy) {
@@ -33,7 +39,7 @@ public class SortAndCompareUtils {
 	}
 
 	public static Pageable createPageable(Integer pageNo, String sortBy, String order) {
-		if(sortBy == null && order == null) {
+		if (sortBy == null && order == null) {
 			return PageRequest.of(pageNo, Constants.RESOURCES_PAGE_SIZE);
 		}
 		String sortByField = SortAndCompareUtils.sortField(sortBy);
