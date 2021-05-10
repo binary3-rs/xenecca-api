@@ -8,8 +8,8 @@ import com.xenecca.api.model.learnresource.LearningResource;
 
 public interface SearchService {
 
-	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId, Integer topicId,
-			Integer languageId, Float rating, List<String> duration, Integer pageNo, String sortBy, String order);
+	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId,
+			Integer languageId, Integer pageNo, String sortBy, String order);
 
 	public void deleteCourseDocument(Long courseId);
 

@@ -2,7 +2,6 @@ package com.xenecca.api.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,6 @@ import com.xenecca.api.es.models.CourseDoc;
 import com.xenecca.api.es.models.LearningResourceDoc;
 import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.service.SearchService;
-import com.xenecca.api.utils.Constants;
 import com.xenecca.api.utils.SortAndCompareUtils;
 
 import lombok.Getter;
@@ -43,11 +41,10 @@ public class SearchServiceImpl implements SearchService {
 	private ElasticsearchOperations _template;
 
 	@Override
-	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId, Integer topicId,
-			Integer languageId, Float rating, List<String> duration, Integer pageNo, String sortBy, String order) {
+	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId,
+			Integer languageId, Integer pageNo, String sortBy, String order) {
 		List<CourseDoc> courseList = new ArrayList<CourseDoc>();
-		Criteria criteria = createCourseCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, topicId,
-				languageId, rating, duration);
+		Criteria criteria = createCourseCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, languageId);
 		Query query = new CriteriaQuery(criteria);
 		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order);
 		query.setPageable(pageable);
@@ -99,17 +96,14 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	private Criteria createCourseCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
-			Integer topicId, Integer languageId, Float rating, List<String> duration) {
+			Integer languageId) {
 		Criteria criteria = new Criteria();
 		if (searchTerm != null && !searchTerm.isEmpty()) {
-			criteria.subCriteria(new Criteria("title").contains(searchTerm).or("headline").contains(searchTerm)
-					.or("instructors.full_name").contains(searchTerm));
+			criteria.subCriteria(new Criteria("title").contains(searchTerm).or("headline").contains(searchTerm));
 		}
 
-		if (categoryId != null || subcategoryId != null || topicId != null) {
-			if (topicId != null) {
-				criteria.subCriteria(new Criteria("topic").matches(topicId));
-			} else if (subcategoryId != null) {
+		if (categoryId != null || subcategoryId != null) {
+			if (subcategoryId != null) {
 				criteria.subCriteria(new Criteria("subcategory").matches(subcategoryId));
 
 			} else {
@@ -119,12 +113,6 @@ public class SearchServiceImpl implements SearchService {
 
 		if (languageId != null) {
 			criteria.subCriteria(new Criteria("language").matches(languageId));
-		}
-		if (rating != null) {
-			criteria.subCriteria(new Criteria("avg_rating").greaterThanEqual(rating));
-		}
-		if (duration != null) {
-			criteria.subCriteria(composeDurationCriteria(createDurationCriteria(duration)));
 		}
 
 		return criteria;
@@ -142,38 +130,6 @@ public class SearchServiceImpl implements SearchService {
 
 		return criteria;
 
-	}
-
-	private List<Criteria> createDurationCriteria(List<String> duration) {
-
-		List<Criteria> durationCriteria = new ArrayList<Criteria>();
-		Map<String, Map<String, Integer>> limits = Constants.DURATION_LIMITS;
-
-		for (String limit : duration) {
-			if (limits.containsKey(limit)) {
-				int lowerLimit = limits.get(limit).get("lower");
-				int upperLimit = limits.get(limit).get("upper");
-				durationCriteria.add(new Criteria("duration_in_hrs").between(lowerLimit, upperLimit));
-			}
-		}
-		return durationCriteria;
-	}
-
-	private Criteria composeDurationCriteria(List<Criteria> criteria) {
-		switch (criteria.size()) {
-		case 0:
-			return null;
-		case 1:
-			return criteria.get(0);
-		case 2:
-			return criteria.get(0).or(criteria.get(1));
-		case 3:
-			return criteria.get(0).or(criteria.get(1)).or(criteria.get(2));
-		case 4:
-			return criteria.get(0).or(criteria.get(1)).or(criteria.get(2)).or(criteria.get(3));
-		default:
-			return null;
-		}
 	}
 
 }

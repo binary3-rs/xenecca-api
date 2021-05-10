@@ -43,20 +43,16 @@ public class CourseController {
 	public List<CoursePreviewDTO> searchCourses(@RequestParam(name = "q", required = false) String searchTerm,
 			@RequestParam(name = "category", required = false) Integer categoryId,
 			@RequestParam(value = "subcategory", required = false) Integer subcategoryId,
-			@RequestParam(value = "topic", required = false) Integer topicId,
 			@RequestParam(value = "language", required = false) Integer languageId,
-			@RequestParam(value = "rating", required = false) Float rating,
-			@RequestParam(value = "duration", required = false) List<String> duration,
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(name = "sort", defaultValue = "date_added") String sortBy,
 			@RequestParam(name = "order", defaultValue = "desc") String order) {
-		if (searchTerm == null && categoryId == null && subcategoryId == null && topicId == null && languageId == null
-				&& rating == null && duration == null) {
+		if (searchTerm == null && categoryId == null && subcategoryId == null && languageId == null) {
 			Iterable<Course> courses = getCourseService().getAllCourses(pageNo, sortBy, order);
 			return getCoursePreviewMapper().mapCoursesToDTOList(courses);
 		}
 		return getCoursePreviewMapper().mapDocToDTOList(getSearchService().searchCourses(searchTerm, categoryId,
-				subcategoryId, topicId, languageId, rating, duration, pageNo, sortBy, order));
+				subcategoryId, languageId, pageNo, sortBy, order));
 	}
 
 	@GetMapping("{id}")
