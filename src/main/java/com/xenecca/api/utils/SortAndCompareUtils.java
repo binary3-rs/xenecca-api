@@ -1,6 +1,5 @@
 package com.xenecca.api.utils;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -35,7 +34,6 @@ public class SortAndCompareUtils {
 
 	private static Sort sortOrder(String sortByField, String order) {
 		return order.equals("asc") ? Sort.by(sortByField).ascending() : Sort.by(sortByField).descending();
-
 	}
 
 	public static Pageable createPageable(Integer pageNo, String sortBy, String order) {

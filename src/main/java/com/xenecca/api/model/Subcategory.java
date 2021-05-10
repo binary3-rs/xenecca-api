@@ -50,10 +50,6 @@ public class Subcategory {
 	private Category _category;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "_subcategory", orphanRemoval = true)
-	private Set<Topic> _topics = new HashSet<Topic>();
-
-	@Builder.Default
 	@OneToMany(mappedBy = "_subcategory")
 	private Set<Course> _courses = new HashSet<Course>();
 

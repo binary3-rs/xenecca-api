@@ -43,11 +43,11 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 
 	@Override
 	public LearningResource addLearningResource(NewLearningResourceDTO learningResource) {
-		MaterialType materialType = learningResource.getMaterialType();
+		// MaterialType materialType = learningResource.getMaterialType();
+		MaterialType materialType = learningResource.getFile() != null ? MaterialType.FILE : MaterialType.URL;
 		String resourceValue = getResourceValue(learningResource);
 		LearningResource resource = LearningResource.builder().name(learningResource.getName())
-				.materialType(learningResource.getMaterialType()).resource(resourceValue)
-				.resourceType(learningResource.getResourceType())
+				.materialType(materialType).resource(resourceValue).resourceType(learningResource.getResourceType())
 				.resourceCategory(
 						getLearningCategoryRepository().findById(learningResource.getResourceCategoryId()).get())
 				.build();
@@ -69,14 +69,15 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 		Page<LearningResource> pageOfResources = getLearningResourceRepository().findAll(sortedPageable);
 		return pageOfResources.getContent();
 	}
-	
 
 	@Override
 	public Iterable<LearningResource> getAllResourcesByCategory(Long categoryId, Integer pageNo) {
 		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, null, null);
-		Page<LearningResource> pageOfResources = getLearningResourceRepository().findBy_resourceCategory__id(categoryId, sortedPageable);
+		Page<LearningResource> pageOfResources = getLearningResourceRepository().findBy_resourceCategory__id(categoryId,
+				sortedPageable);
 		return pageOfResources.getContent();
 	}
+
 	@Override
 	public Map<String, Object> getFileResource(Long resourceId) {
 		LearningResource resource = getLearningResourceRepository().findById(resourceId).get();
@@ -94,7 +95,8 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 
 	@Override
 	public LearningResource updateLearningResource(Long resourceId, NewLearningResourceDTO learningResource) {
-		MaterialType materialType = learningResource.getMaterialType();
+		// MaterialType materialType = learningResource.getMaterialType();
+		MaterialType materialType = learningResource.getFile() != null ? MaterialType.FILE : MaterialType.URL;
 
 		String resourceValue = getResourceValue(learningResource);
 		LearningResource resource = getLearningResourceRepository().findById(resourceId).get();
@@ -135,7 +137,8 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 	}
 
 	private String getResourceValue(NewLearningResourceDTO learningResource) {
-		MaterialType materialType = learningResource.getMaterialType();
+		MaterialType materialType = learningResource.getFile() != null ? MaterialType.FILE : MaterialType.URL;
+//		MaterialType materialType = learningResource.getMaterialType();
 		String resourceValue = null;
 		if (materialType.equals(MaterialType.FILE)) {
 			if (learningResource.getFile() == null) {
@@ -161,5 +164,4 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 
 	}
 
-	
 }

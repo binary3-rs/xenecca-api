@@ -3,8 +3,6 @@ package com.xenecca.api.dto.request;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.web.multipart.MultipartFile;
-
-import com.xenecca.api.model.type.MaterialType;
 import com.xenecca.api.model.type.ResourceType;
 
 import lombok.AllArgsConstructor;
@@ -26,15 +24,12 @@ public class NewLearningResourceDTO {
 	private String _name;
 
 	private String _resourceURL;
-	
-	private MultipartFile _file;
 
-	@Builder.Default
-	private MaterialType _materialType = MaterialType.URL;
+	private MultipartFile _file;
 
 	@Builder.Default
 	private ResourceType _resourceType = ResourceType.TUTORIAL;
 
 	private Long _resourceCategoryId;
-	
+
 }
