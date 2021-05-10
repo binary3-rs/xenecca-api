@@ -15,8 +15,8 @@ public class CacheService {
 		cacheManager.getCacheNames().stream().forEach(cacheName -> cacheManager.getCache(cacheName).clear());
 	}
 
-	// miliseconds
-	@Scheduled(fixedRate = 21600000)
+	// every 12:30 - 00:30 
+	@Scheduled(cron = "0 30 */12 * * *")
 	public void evictAllcachesAtIntervals() {
 		evictAllCaches();
 	}

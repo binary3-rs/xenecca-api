@@ -15,10 +15,6 @@ public class SortAndCompareUtils {
 		switch (sortBy) {
 		case "date_added":
 			return "_updatedAt";
-		case "rating":
-			return "_avgRating";
-		case "num_of_students":
-			return "_numOfStudents";
 		case "name":
 			return "_name";
 		case "title":

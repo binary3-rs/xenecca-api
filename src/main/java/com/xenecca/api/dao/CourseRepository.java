@@ -12,9 +12,7 @@ import com.xenecca.api.model.Course;
 public interface CourseRepository extends PagingAndSortingRepository<Course, Long> {
 
 	List<Course> findAllBy_category__id(Long id, Pageable pageable);
-
+	
 	List<Course> findAllBy_subcategory__id(Long id, Pageable pageable);
-
-	List<Course> findAllBy_topic__id(Long id, Pageable pageable);
 
 }

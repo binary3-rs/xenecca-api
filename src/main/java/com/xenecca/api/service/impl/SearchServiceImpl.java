@@ -105,7 +105,6 @@ public class SearchServiceImpl implements SearchService {
 		if (categoryId != null || subcategoryId != null) {
 			if (subcategoryId != null) {
 				criteria.subCriteria(new Criteria("subcategory").matches(subcategoryId));
-
 			} else {
 				criteria.subCriteria(new Criteria("category").matches(categoryId));
 			}
