@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -48,18 +49,38 @@ public class CourseController {
 			@RequestParam(name = "sort", defaultValue = "date_added") String sortBy,
 			@RequestParam(name = "order", defaultValue = "desc") String order) {
 		if (searchTerm == null && categoryId == null && subcategoryId == null && languageId == null) {
-			Iterable<Course> courses = getCourseService().getAllCourses(pageNo, sortBy, order);
+			Iterable<Course> courses = getCourseService().getAllCourses(pageNo, sortBy, order, null);
 			return getCoursePreviewMapper().mapCoursesToDTOList(courses);
 		}
 		return getCoursePreviewMapper().mapDocToDTOList(getSearchService().searchCourses(searchTerm, categoryId,
 				subcategoryId, languageId, pageNo, sortBy, order));
 	}
 
-	@GetMapping("{id}")
+	@PutMapping("{id}")
 	public CourseDTO getCourseById(@PathVariable("id") Long courseId) {
 		Course course = getCourseService().getCourseById(courseId);
 		return new CourseDTO(course);
 
+	}
+
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PutMapping("{id}/redeem-coupon")
+	public void redeemCoupon(@PathVariable("id") Long courseId) {
+		getCourseService().redeemCourseCoupon(courseId);
+
+	}
+
+	@GetMapping("{id}/similar")
+	public List<CoursePreviewDTO> getSimilarCourses(@PathVariable("id") Long courseId,
+			@RequestParam(name = "num", defaultValue = "4") Integer numOfCourses) {
+		return getCoursePreviewMapper()
+				.mapCoursesToDTOList(getCourseService().getSimilarCourses(courseId, numOfCourses));
+	}
+
+	@GetMapping("recommend")
+	public List<CoursePreviewDTO> recommendTopCourses(
+			@RequestParam(name = "num", defaultValue = "8") Integer numOfCourses) {
+		return getCoursePreviewMapper().mapCoursesToDTOList(getCourseService().recommendTopCourses(numOfCourses));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)

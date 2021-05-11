@@ -1,6 +1,8 @@
 package com.xenecca.api.service.impl;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,8 +29,8 @@ public class CourseServiceImpl implements CourseService {
 	private CourseRepository _courseRepository;
 
 	@Override
-	public Iterable<Course> getAllCourses(Integer pageNo, String sortBy, String order) {
-		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order);
+	public Iterable<Course> getAllCourses(Integer pageNo, String sortBy, String order, Integer size) {
+		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order, size);
 		Page<Course> pageOfCourses = getCourseRepository().findAll(sortedPageable);
 		return pageOfCourses.getContent();
 
@@ -37,6 +39,30 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public Course getCourseById(Long courseId) {
 		return getCourseRepository().findById(courseId).get();
+	}
+
+	@Override
+	public Iterable<Course> getSimilarCourses(Long courseId, Integer numOfCourses) {
+		Course course = getCourseById(courseId);
+		Pageable pageable = SortAndCompareUtils.createPageable(0, "popularity", "desc", numOfCourses);
+		Page<Course> pageOfCourses = getCourseRepository().findBySubcategoryIdExcludeCourse(course.getId(),
+				course.getSubcategory().getId(), pageable);
+		List<Course> courses = new ArrayList<>(pageOfCourses.getContent());
+		if (courses.size() < numOfCourses) {
+			pageable = SortAndCompareUtils.createPageable(0, "popularity", "desc", numOfCourses - courses.size());
+			List<Course> coursesFetchedByCategory = getCourseRepository()
+					.findOnlyByCategoryId(course.getCategory().getId(), course.getSubcategory().getId(), pageable)
+					.getContent();
+			courses.addAll(coursesFetchedByCategory);
+
+		}
+		return courses;
+	}
+
+	@Override
+	public void redeemCourseCoupon(Long courseId) {
+		getCourseRepository().updateReedemedCouponCount(courseId);
+
 	}
 
 	@Override
@@ -49,6 +75,11 @@ public class CourseServiceImpl implements CourseService {
 		if (posterPath != null) {
 			FileUtils.deleteFile(Paths.get(posterPath));
 		}
+	}
+
+	@Override
+	public Iterable<Course> recommendTopCourses(Integer numOfCourses) {
+		return getAllCourses(0, "popularity", "desc", numOfCourses);
 	}
 
 }

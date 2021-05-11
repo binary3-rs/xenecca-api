@@ -49,7 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers("/api/v1/login", "/api-docs/**", "/swagger-ui.html**").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/v1/**").permitAll().antMatchers(HttpMethod.POST, "/api/v1/**")
+				.antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/v1/courses/{id}/redeem-coupon").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/v1/**")
 				.authenticated().antMatchers(HttpMethod.DELETE, "/api/v1/**").authenticated()
 				.antMatchers(HttpMethod.PUT, "/api/v1/**").authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(getAuthEntryPoint()).and().sessionManagement()
@@ -66,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		//config.setAllowCredentials(true);
+		// config.setAllowCredentials(true);
 		config.setAllowedOrigins(Arrays.asList("195.201.112.234", "*"));
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("*");
