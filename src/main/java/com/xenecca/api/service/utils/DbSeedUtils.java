@@ -1,8 +1,18 @@
 package com.xenecca.api.service.utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -57,34 +67,22 @@ public class DbSeedUtils {
 		}
 	}
 
-	public void populateResourceCategories() {
-		String[] webdevCategories = { "HTML", "CSS", "JavaScript", "Angular", "AngularJS", "ReactJS", "VueJS",
-				"ASP.NET", "Spring", "GraphQL", "jQuery", "Laravel", ".NET Core", "Node.js", "PHP", "PWA", "Django",
-				"Flask", "Redux", "Ruby on Rails", "Typescript", "UX design", "Web security" };
-		String[] mobiledevCategories = { "Android", "Kotlin", "Flutter", "Swift", "React Native", "Xamarin" };
-		String[] devopsCategories = { "Git", "Docker", "Kubernetes", "Ansible", "Puppeteer", "AWS", "Azure", "GCP" };
-		String[] dsaCategories = { "Complexity analysis", "LinkedList", "Stack", "Queue", "Arrays & Matrices",
-				"Binary Tree", "Binary Search Tree", "Heap", "Graph", "Greedy", "Dynamic programming", "Recursion",
-				"Strings", "Hashing" };
-		String[] dataScienceCategories = { "Linear regression", "Logistic regression", "SVM", "kNN", "Neural networks",
-				"CNN", "PCA" };
-		String[] databaseCategories = { "SQL", "T-SQL", "MySQL", "PostgreSQL", "MS SQL Server", "MongoDB", "neo4j" };
-		String[] sysdesignCategories = { "REST API Design", "Caching", "Microservices", "CAP Theorem" };
-		Map<LearningResourceDomain, String[]> categoryMap = Map.of(LearningResourceDomain.WEBDEV, webdevCategories,
-				LearningResourceDomain.MOBILE, mobiledevCategories, LearningResourceDomain.DEVOPS, devopsCategories,
-				LearningResourceDomain.DSA, dsaCategories, LearningResourceDomain.DATASCIENCE, dataScienceCategories,
-				LearningResourceDomain.DATABASES, databaseCategories, LearningResourceDomain.SYSDESIGN,
-				sysdesignCategories);
-		for (LearningResourceDomain domain : categoryMap.keySet()) {
-			for (String category : categoryMap.get(domain)) {
-				try {
-					getResourceCategoryRepository().save(new LearningResourceCategory(category, domain));
-				} catch (Exception e) {
-					continue;
-				}
+	public void populateResourceCategories(int x) throws ParseException, IOException {
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(new ClassPathResource("tech-categories.txt").getInputStream()));
+		String st;
+		while ((st = reader.readLine()) != null) {
+			String[] components = st.split("-!!-");
+
+			try {
+				LearningResourceDomain domain = LearningResourceDomain.valueOf(components[0]);
+				String tags = (components.length > 2) ? components[2] : null;
+				LearningResourceCategory category = new LearningResourceCategory(components[1], domain, tags, null);
+				getResourceCategoryRepository().save(category);
+			} catch (Exception e) {
+				continue;
 			}
 		}
 
 	}
-
 }

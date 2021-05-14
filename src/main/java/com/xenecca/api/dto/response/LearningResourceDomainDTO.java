@@ -11,10 +11,8 @@ import lombok.experimental.Accessors;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LearningResourceCategoryDTO {
+public class LearningResourceDomainDTO {
 	private Long _id;
 	private String _name;
-	private String _tags;
-	private String _logo;
 
 }

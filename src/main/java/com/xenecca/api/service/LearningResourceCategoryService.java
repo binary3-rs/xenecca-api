@@ -11,7 +11,7 @@ public interface LearningResourceCategoryService {
 	public LearningResourceCategory addResourceCategory(NewLearningResourceCategoryDTO resourceCategory);
 
 	public Iterable<LearningResourceCategory> getAllResourceCategories();
-	
+
 	public Iterable<LearningResourceCategory> getResourceCategoriesByDomain(LearningResourceDomain domain);
 
 	public Map<String, String> getResourceCategoryDomains();

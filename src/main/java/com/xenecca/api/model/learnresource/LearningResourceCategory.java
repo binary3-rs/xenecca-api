@@ -52,9 +52,18 @@ public class LearningResourceCategory {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "domain")
 	private LearningResourceDomain _domain;
+
 	@Builder.Default
 	@OneToMany(mappedBy = "_resourceCategory", fetch = FetchType.LAZY, orphanRemoval = true)
 	private Set<LearningResource> _resources = new HashSet<LearningResource>();
+
+	@Builder.Default
+	@Column(name = "tags", length = 300, columnDefinition = "varchar(300) default ''")
+	private String _tags = "";
+
+	@Builder.Default
+	@Column(name = "logo", length = 300)
+	private String _logo = null;
 
 	@CreationTimestamp
 	@Column(name = "created_at")
@@ -67,5 +76,12 @@ public class LearningResourceCategory {
 	public LearningResourceCategory(String name, LearningResourceDomain domain) {
 		_name = name;
 		_domain = domain;
+	}
+	
+	public LearningResourceCategory(String name, LearningResourceDomain domain, String tags, String logo) {
+		_name = name;
+		_domain = domain;
+		_tags = tags;
+		_logo = logo;
 	}
 }

@@ -21,6 +21,7 @@ import com.xenecca.api.model.type.MaterialType;
 import com.xenecca.api.service.LearningResourceService;
 import com.xenecca.api.service.SearchService;
 import com.xenecca.api.utils.FileUtils;
+import com.xenecca.api.utils.FileUtils.StorageType;
 import com.xenecca.api.utils.SortAndCompareUtils;
 
 import lombok.Getter;
@@ -144,7 +145,7 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 			if (learningResource.getFile() == null) {
 				throw new InvalidRequestDataException("You must upload the file for this type of resource!");
 			}
-			resourceValue = FileUtils.storeFile(learningResource.getFile());
+			resourceValue = FileUtils.storeFile(learningResource.getFile(), StorageType.RESOURCE);
 
 		} else {
 			if (learningResource.getResourceURL() == null) {

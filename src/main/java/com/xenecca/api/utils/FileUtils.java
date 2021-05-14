@@ -14,13 +14,20 @@ import org.springframework.web.multipart.MultipartFile;
 import com.xenecca.api.exception.FileStorageException;
 
 public class FileUtils {
+
 	private static final String UPLOAD_DIR = Paths.get("").toAbsolutePath().toString() + "/uploads/";
 
-	public static String storeFile(MultipartFile file) {
+	public enum StorageType {
+		RESOURCE, RESOURCE_CATEGORY;
+	}
+
+	public static String storeFile(MultipartFile file, StorageType storageType) {
+		String filePath = (storageType == StorageType.RESOURCE) ? "resources/" : "categories/";
+		String destination = UPLOAD_DIR + filePath;
 		// Normalize file name
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		if (!new File(UPLOAD_DIR).exists()) {
-			new File(UPLOAD_DIR).mkdir();
+		if (!new File(destination).exists()) {
+			new File(destination).mkdir();
 		}
 		try {
 			// Check if the file's name contains invalid characters
@@ -29,9 +36,9 @@ public class FileUtils {
 			}
 
 			// Copy file to the target location (Replacing existing file with the same name)
-			Path targetLocation = Paths.get(UPLOAD_DIR + fileName);
+			Path targetLocation = Paths.get(destination + fileName);
 			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-			return "uploads/" + fileName;
+			return "uploads/" + filePath + fileName;
 		} catch (IOException ex) {
 			throw new FileStorageException("Could not store file " + fileName + ". Please try again!");
 		}

@@ -41,7 +41,7 @@ public class ApiApplication {
 	CommandLineRunner runner() {
 		return args -> {
 			getDbSeedUtils().addUser();
-			getDbSeedUtils().populateResourceCategories();
+			getDbSeedUtils().populateResourceCategories(1);
 			getDbSeedUtils().populateCategories();
 		};
 	}
