@@ -12,6 +12,7 @@ import com.xenecca.api.dto.request.LoginDTO;
 import com.xenecca.api.dto.response.LoginDataDTO;
 import com.xenecca.api.service.AuthService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -25,6 +26,7 @@ public class AuthController {
 	AuthService _authService;
 
 	@PostMapping
+	@ApiOperation(value = "Login user")
 	public LoginDataDTO signin(@Valid @RequestBody LoginDTO credentialsDto) {
 		return getAuthService().login(credentialsDto);
 	}

@@ -47,13 +47,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests()
-				.antMatchers("/api/v1/login", "/api-docs/**", "/swagger-ui.html**").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+		http.csrf().disable().authorizeRequests()
+				.antMatchers("/api/v1/login", "**/api-docs/**", "/swagger-resources/**", "**/swagger-ui.html",
+						"/webjars/**")
+				.permitAll().antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
 				.antMatchers(HttpMethod.PUT, "/api/v1/courses/{id}/redeem-coupon").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/v1/**")
-				.authenticated().antMatchers(HttpMethod.DELETE, "/api/v1/**").authenticated()
-				.antMatchers(HttpMethod.PUT, "/api/v1/**").authenticated().and().exceptionHandling()
+				.antMatchers(HttpMethod.POST, "/api/v1/**").authenticated().antMatchers(HttpMethod.DELETE, "/api/v1/**")
+				.authenticated().antMatchers(HttpMethod.PUT, "/api/v1/**").authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(getAuthEntryPoint()).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(getTokenFilter(), UsernamePasswordAuthenticationFilter.class);
