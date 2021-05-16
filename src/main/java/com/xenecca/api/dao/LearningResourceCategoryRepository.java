@@ -9,4 +9,5 @@ import com.xenecca.api.model.type.LearningResourceDomain;
 @Repository
 public interface LearningResourceCategoryRepository extends CrudRepository<LearningResourceCategory, Long> {
 	public Iterable<LearningResourceCategory> findBy_domain(LearningResourceDomain domain);
+	public LearningResourceCategory findBy_name(String name);
 }

@@ -73,14 +73,22 @@ public class DbSeedUtils {
 		String st;
 		while ((st = reader.readLine()) != null) {
 			String[] components = st.split("-!!-");
-
 			try {
+				String name = components[1];
 				LearningResourceDomain domain = LearningResourceDomain.valueOf(components[0]);
 				String tags = (components.length > 2) ? components[2] : null;
-				LearningResourceCategory category = new LearningResourceCategory(components[1], domain, tags, null);
-				getResourceCategoryRepository().save(category);
+				LearningResourceCategory category = getResourceCategoryRepository().findBy_name(components[1]);
+				if (category == null) {
+					category = new LearningResourceCategory(name, domain, tags, null);
+					getResourceCategoryRepository().save(category);
+				} else {
+					category.setDomain(domain);
+					category.setTags(tags);
+					getResourceCategoryRepository().save(category);
+				}
 			} catch (Exception e) {
 				continue;
+
 			}
 		}
 

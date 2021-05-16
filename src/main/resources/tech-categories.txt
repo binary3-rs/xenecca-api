@@ -71,6 +71,7 @@ DEVOPS-!!-Azure-!!-
 DEVOPS-!!-Ansible-!!-
 DEVOPS-!!-Version Control Systems-!!-
 DEVOPS-!!-Server administration-!!-
+DEVOPS-!!-Linux-!!-bash,ubuntu,red hat,centos,debian,fedora,arch
 PROGRAMMING_LANGUAGES-!!-C/C++-!!-
 PROGRAMMING_LANGUAGES-!!-C#-!!-
 PROGRAMMING_LANGUAGES-!!-Python-!!-
