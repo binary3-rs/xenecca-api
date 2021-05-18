@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import com.xenecca.api.dto.response.LearningResourceDTO;
-import com.xenecca.api.es.models.LearningResourceDoc;
+import com.xenecca.api.model.elastic.LearningResourceDoc;
 import com.xenecca.api.model.learnresource.LearningResource;
 
 @Mapper(componentModel = "spring")

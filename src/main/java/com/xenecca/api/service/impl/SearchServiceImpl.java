@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.xenecca.api.dao.es.CourseDocRepository;
 import com.xenecca.api.dao.es.LearningResourceDocRepository;
-import com.xenecca.api.es.models.CourseDoc;
-import com.xenecca.api.es.models.LearningResourceDoc;
+import com.xenecca.api.model.elastic.CourseDoc;
+import com.xenecca.api.model.elastic.LearningResourceDoc;
 import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.service.SearchService;
 import com.xenecca.api.utils.SortAndCompareUtils;

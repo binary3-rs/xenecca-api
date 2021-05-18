@@ -1,6 +1,7 @@
 package com.xenecca.api.model.learnresource;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -71,10 +72,10 @@ public class LearningResource {
 
 	@CreationTimestamp
 	@Column(name = "created_at")
-	private Time _createdAt;
+	private Timestamp _createdAt;
 
 	@UpdateTimestamp
 	@Column(name = "updated_at")
-	private Time _updatedAt;
+	private Timestamp _updatedAt;
 
 }

@@ -41,6 +41,10 @@
 					"ignore_above": 256
 				}
 			}
+		},
+		"updated_at": {
+			"type": "date",
+			"format": "yyyy-MM-dd HH:mm:ss"
 		}
 	}
 }

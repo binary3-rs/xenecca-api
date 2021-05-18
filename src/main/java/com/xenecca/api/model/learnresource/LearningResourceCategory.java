@@ -1,6 +1,6 @@
 package com.xenecca.api.model.learnresource;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -67,11 +67,11 @@ public class LearningResourceCategory {
 
 	@CreationTimestamp
 	@Column(name = "created_at")
-	private Time _createdAt;
+	private Timestamp _createdAt;
 
 	@UpdateTimestamp
 	@Column(name = "updated_at")
-	private Time _updatedAt;
+	private Timestamp _updatedAt;
 
 	public LearningResourceCategory(String name, LearningResourceDomain domain) {
 		_name = name;

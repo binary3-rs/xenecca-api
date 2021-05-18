@@ -1,28 +1,28 @@
-WEBDEV-!!-HTML-!!-html
-WEBDEV-!!-CSS-!!-css,sass,less
-WEBDEV-!!-JavaScript-!!-js,javascript,es6,ecmascript
-WEBDEV-!!-Typescript-!!-typescript
-WEBDEV-!!-Angular-!!-angular
-WEBDEV-!!-React-!!-react,redux
-WEBDEV-!!-Vue.js-!!-vue
-WEBDEV-!!-Django-!!-django
-WEBDEV-!!-PHP-!!-php
-WEBDEV-!!-Laravel-!!-laravel
-WEBDEV-!!-Ruby on Rails-!!-ruby on rails
-WEBDEV-!!-Spring-!!-spring,hibernate
-WEBDEV-!!-ASP .NET-!!-asp .net,asp.net
-WEBDEV-!!-Node.js-!!-node.js
+WEBDEV-!!-HTML-!!-
+WEBDEV-!!-CSS-!!-sass,less
+WEBDEV-!!-JavaScript-!!-js,es6,ecmascript
+WEBDEV-!!-Typescript-!!-
+WEBDEV-!!-Angular-!!-
+WEBDEV-!!-React-!!-redux
+WEBDEV-!!-Vue.js-!!-
+WEBDEV-!!-Django-!!-
+WEBDEV-!!-PHP-!!-
+WEBDEV-!!-Laravel-!!-
+WEBDEV-!!-Ruby on Rails-!!-
+WEBDEV-!!-Spring-!!-hibernate
+WEBDEV-!!-ASP.NET-!!-asp .net,asp.net
+WEBDEV-!!-Node.js-!!-
 WEBDEV-!!-Web applications & dev-!!-web development,single-pag,single page,pwa,progressive web apps,mern,mean
-MOBILE-!!-Android-!!-android
-MOBILE-!!-Kotlin-!!-kotlin
-MOBILE-!!-React Native-!!-react native
-MOBILE-!!-iOS-!!-ios,apple
-MOBILE-!!-Swift-!!-swift
-MOBILE-!!-Objective-C-!!-objective c,objective-c
-MOBILE-!!-Ionic-!!-ionic
-MOBILE-!!-Xamarin-!!-xamarin
+MOBILE-!!-Android-!!-
+MOBILE-!!-Kotlin-!!-
+MOBILE-!!-React Native-!!-
+MOBILE-!!-iOS-!!-apple
+MOBILE-!!-Swift-!!-
+MOBILE-!!-Objective-C-!!-objective c
+MOBILE-!!-Ionic-!!-
+MOBILE-!!-Xamarin-!!-
 MOBILE-!!-Flutter-!!-
-DATASCIENCE-!!-Linear regression-!!-linear regression
+DATASCIENCE-!!-Linear regression-!!-
 DATASCIENCE-!!-Logistic regression-!!-
 DATASCIENCE-!!-Reinforcement learning-!!-
 DATASCIENCE-!!-Deep learning-!!-
@@ -72,8 +72,8 @@ DEVOPS-!!-Ansible-!!-
 DEVOPS-!!-Version Control Systems-!!-
 DEVOPS-!!-Server administration-!!-
 DEVOPS-!!-Linux-!!-bash,ubuntu,red hat,centos,debian,fedora,arch
-PROGRAMMING_LANGUAGES-!!-C/C++-!!-
-PROGRAMMING_LANGUAGES-!!-C#-!!-
+PROGRAMMING_LANGUAGES-!!-C/C++-!!-cplusplus, c plus plus, cpp,c++
+PROGRAMMING_LANGUAGES-!!-C#-!!-csharp
 PROGRAMMING_LANGUAGES-!!-Python-!!-
 PROGRAMMING_LANGUAGES-!!-Perl-!!-
 PROGRAMMING_LANGUAGES-!!-Ruby-!!-

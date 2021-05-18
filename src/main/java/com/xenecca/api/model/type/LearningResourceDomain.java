@@ -1,10 +1,10 @@
 package com.xenecca.api.model.type;
 
 public enum LearningResourceDomain {
-	WEBDEV("Web development"), MOBILE("Mobile development"), DEVOPS("DevOps"), DSA("Data structures and algorithsm"),
-	SOFTWARE_DESIGN("Software design and architecture"), DATASCIENCE("Data science"), DATABASES("Databases"),
-	PROGRAMMING_LANGUAGES("Programming languages"), UI_AND_UX("UI & UX"), COMPUTER_SCIENCE("Computer science"),
-	DIGITAL_MARKETING("Digital marketing"), OTHER("Other");
+	COMPUTER_SCIENCE("Computer science"), DATABASES("Databases"), DATASCIENCE("Data science"), DEVOPS("DevOps"),
+	DIGITAL_MARKETING("Digital marketing"), DSA("Data structures and algorithsm"), MOBILE("Mobile development"),
+	OTHER("Other"), PROGRAMMING_LANGUAGES("Programming languages"), SOFTWARE_DESIGN("Software design and architecture"),
+	UI_AND_UX("UI & UX"), WEBDEV("Web development");
 
 	private final String _name;
 

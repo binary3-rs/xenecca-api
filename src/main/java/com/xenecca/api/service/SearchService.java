@@ -2,8 +2,8 @@ package com.xenecca.api.service;
 
 import java.util.List;
 
-import com.xenecca.api.es.models.CourseDoc;
-import com.xenecca.api.es.models.LearningResourceDoc;
+import com.xenecca.api.model.elastic.CourseDoc;
+import com.xenecca.api.model.elastic.LearningResourceDoc;
 import com.xenecca.api.model.learnresource.LearningResource;
 
 public interface SearchService {
