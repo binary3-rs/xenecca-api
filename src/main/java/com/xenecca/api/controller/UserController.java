@@ -27,7 +27,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/users/")
 public class UserController {
 
 	@Autowired

@@ -18,8 +18,11 @@ import com.xenecca.api.dao.es.LearningResourceDocRepository;
 import com.xenecca.api.model.elastic.CourseDoc;
 import com.xenecca.api.model.elastic.LearningResourceDoc;
 import com.xenecca.api.model.learnresource.LearningResource;
+import com.xenecca.api.model.type.MaterialType;
+import com.xenecca.api.model.type.ResourceType;
 import com.xenecca.api.service.SearchService;
 import com.xenecca.api.utils.SortAndCompareUtils;
+import com.xenecca.api.utils.model.PageResult;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -39,61 +42,6 @@ public class SearchServiceImpl implements SearchService {
 
 	@Autowired
 	private ElasticsearchOperations _template;
-
-	@Override
-	public List<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId,
-			Integer languageId, Integer pageNo, String sortBy, String order) {
-		List<CourseDoc> courseList = new ArrayList<CourseDoc>();
-		Criteria criteria = createCourseCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, languageId);
-		Query query = new CriteriaQuery(criteria);
-		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order);
-		query.setPageable(pageable);
-		SearchHits<CourseDoc> courses = getTemplate().search(query, CourseDoc.class);
-		for (SearchHit<CourseDoc> courseHit : courses.getSearchHits()) {
-			CourseDoc courseDoc = courseHit.getContent();
-			if (courseDoc != null) {
-				courseList.add(courseDoc);
-			}
-		}
-		return courseList;
-	}
-
-	@Override
-	public void deleteCourseDocument(Long courseId) {
-		getCourseDocRepository().deleteById(courseId);
-	}
-
-	@Override
-	public void storeResourceDocument(LearningResource resource) {
-		LearningResourceDoc doc = LearningResourceDoc.builder().docId(resource.getId())
-				.category(resource.getResourceCategory().getId()).name(resource.getName())
-				.materialType(resource.getMaterialType().toString()).resource(resource.getResource())
-				.resourceType(resource.getResourceType().getName()).build();
-		getResourceDocRepository().save(doc);
-	}
-
-	@Override
-	public void deleteResourceDocument(Long resourceId) {
-		getResourceDocRepository().deleteById(resourceId);
-	}
-
-	@Override
-	public List<LearningResourceDoc> searchResources(String searchTerm, Long categoryId, Integer pageNo) {
-		List<LearningResourceDoc> resourceList = new ArrayList<LearningResourceDoc>();
-		Criteria criteria = createResourceCriteriaBasedOnParams(searchTerm, categoryId);
-		Query query = new CriteriaQuery(criteria);
-		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, null, null);
-		query.setPageable(pageable);
-		SearchHits<LearningResourceDoc> resources = getTemplate().search(query, LearningResourceDoc.class);
-		for (SearchHit<LearningResourceDoc> resourceHit : resources.getSearchHits()) {
-			LearningResourceDoc resourceDoc = resourceHit.getContent();
-			if (resourceDoc != null) {
-				resourceList.add(resourceDoc);
-			}
-
-		}
-		return resourceList;
-	}
 
 	private Criteria createCourseCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
 			Integer languageId) {
@@ -117,7 +65,8 @@ public class SearchServiceImpl implements SearchService {
 		return criteria;
 	}
 
-	private Criteria createResourceCriteriaBasedOnParams(String searchTerm, Long categoryId) {
+	private Criteria createResourceCriteriaBasedOnParams(String searchTerm, Long categoryId, ResourceType resourceType,
+			MaterialType materialType) {
 		Criteria criteria = new Criteria();
 		if (searchTerm != null && !searchTerm.isEmpty()) {
 			criteria.subCriteria(new Criteria("name").contains(searchTerm));
@@ -127,8 +76,69 @@ public class SearchServiceImpl implements SearchService {
 			criteria.subCriteria(new Criteria("category").matches(categoryId));
 		}
 
+		if (resourceType != null) {
+			criteria.subCriteria(new Criteria("resource_type").matches(resourceType));
+		}
+
+		if (materialType != null) {
+			criteria.subCriteria(new Criteria("material_type").matches(materialType));
+		}
 		return criteria;
 
+	}
+
+	@Override
+	public void deleteCourseDocument(Long courseId) {
+		getCourseDocRepository().deleteById(courseId);
+	}
+
+	@Override
+	public void deleteResourceDocument(Long resourceId) {
+		getResourceDocRepository().deleteById(resourceId);
+	}
+
+	@Override
+	public PageResult<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId,
+			Integer languageId, Integer pageNo, Integer pageSize, String sortBy, String order) {
+
+		Criteria criteria = createCourseCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, languageId);
+		Query query = new CriteriaQuery(criteria);
+		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, pageSize, sortBy, order);
+		query.setPageable(pageable);
+		return search(query, CourseDoc.class);
+	}
+
+	@Override
+	public PageResult<LearningResourceDoc> searchResources(String searchTerm, Long categoryId, ResourceType resourceType,
+			MaterialType materialType, Integer pageNo, Integer pageSize) {
+		Criteria criteria = createResourceCriteriaBasedOnParams(searchTerm, categoryId, resourceType, materialType);
+		Query query = new CriteriaQuery(criteria);
+		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, pageSize, null, null);
+		query.setPageable(pageable);
+		return search(query, LearningResourceDoc.class);
+	}
+
+	private <T> PageResult<T> search(Query searchQuery, Class<T> clazz) {
+		List<T> resultList = new ArrayList<T>();
+		SearchHits<T> results = getTemplate().search(searchQuery, clazz);
+		for (SearchHit<T> resourceHit : results.getSearchHits()) {
+			T doc = resourceHit.getContent();
+			if (doc != null) {
+				resultList.add(doc);
+			}
+
+		}
+		return new PageResult<T>(resultList, results.getTotalHits(), searchQuery.getPageable().getPageSize());
+
+	}
+
+	@Override
+	public void storeResourceDocument(LearningResource resource) {
+		LearningResourceDoc doc = LearningResourceDoc.builder().docId(resource.getId())
+				.category(resource.getResourceCategory().getId()).name(resource.getName())
+				.materialType(resource.getMaterialType().toString()).resource(resource.getResource())
+				.resourceType(resource.getResourceType().getName()).build();
+		getResourceDocRepository().save(doc);
 	}
 
 }

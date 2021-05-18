@@ -13,7 +13,7 @@ public class SortAndCompareUtils {
 
 	private static String sortField(String sortBy) {
 		switch (sortBy) {
-		case "date_added":
+		case "date":
 			return "_updatedAt";
 		case "popularity":
 			return "_redeemedCouponCount";
@@ -34,9 +34,9 @@ public class SortAndCompareUtils {
 		return order.equals("asc") ? Sort.by(sortByField).ascending() : Sort.by(sortByField).descending();
 	}
 
-	public static Pageable createPageable(Integer pageNo, String sortBy, String order, Integer pageSize) {
+	public static Pageable createPageable(Integer pageNo, Integer pageSize, String sortBy, String order) {
 		if (pageSize != null) {
-			return _createPageable(pageNo, sortBy, order, pageSize);
+			return _createPageable(pageNo, pageSize, sortBy, order);
 		}
 		return createPageable(pageNo, sortBy, order);
 	}
@@ -46,13 +46,13 @@ public class SortAndCompareUtils {
 		if (sortBy == null && order == null) {
 			return PageRequest.of(pageNo, Constants.RESOURCES_PAGE_SIZE);
 		}
-		return _createPageable(pageNo, sortBy, order, Constants.PAGE_SIZE);
+		return _createPageable(pageNo, Constants.PAGE_SIZE, sortBy, order);
 	}
 
-	private static Pageable _createPageable(Integer pageNo, String sortBy, String order, int size) {
+	private static Pageable _createPageable(Integer pageNo, Integer pageSize, String sortBy, String order) {
 		String sortByField = SortAndCompareUtils.sortField(sortBy);
 		Sort sort = SortAndCompareUtils.sortOrder(sortByField, order);
-		return PageRequest.of(pageNo, size, sort);
+		return PageRequest.of(pageNo, pageSize, sort);
 	}
 
 }

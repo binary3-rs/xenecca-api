@@ -4,12 +4,13 @@ import java.util.Map;
 
 import com.xenecca.api.dto.request.NewLearningResourceDTO;
 import com.xenecca.api.model.learnresource.LearningResource;
+import com.xenecca.api.utils.model.PageResult;
 
 public interface LearningResourceService {
 
 	public LearningResource addLearningResource(NewLearningResourceDTO learningResource);
 
-	public Iterable<LearningResource> getAllResources(Integer pageNo);
+	public PageResult<LearningResource> getAllResources(Integer pageNo, Integer pageSize);
 	
 	public Iterable<LearningResource> getAllResourcesByCategory(Long categoryId, Integer pageNo);
 

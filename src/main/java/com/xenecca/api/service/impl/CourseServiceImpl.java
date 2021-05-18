@@ -14,6 +14,7 @@ import com.xenecca.api.model.Course;
 import com.xenecca.api.service.CourseService;
 import com.xenecca.api.utils.FileUtils;
 import com.xenecca.api.utils.SortAndCompareUtils;
+import com.xenecca.api.utils.model.PageResult;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,10 +30,9 @@ public class CourseServiceImpl implements CourseService {
 	private CourseRepository _courseRepository;
 
 	@Override
-	public Iterable<Course> getAllCourses(Integer pageNo, String sortBy, String order, Integer size) {
-		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, sortBy, order, size);
-		Page<Course> pageOfCourses = getCourseRepository().findAll(sortedPageable);
-		return pageOfCourses.getContent();
+	public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize, String sortBy, String order) {
+		Page<Course> pageOfCourses = _getAllCourses(pageNo, pageSize, sortBy, order);
+		return new PageResult<Course>(pageOfCourses.getContent(), pageOfCourses.getTotalElements(), pageSize);
 
 	}
 
@@ -44,12 +44,12 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public Iterable<Course> getSimilarCourses(Long courseId, Integer numOfCourses) {
 		Course course = getCourseById(courseId);
-		Pageable pageable = SortAndCompareUtils.createPageable(0, "popularity", "desc", numOfCourses);
+		Pageable pageable = SortAndCompareUtils.createPageable(0, numOfCourses, "popularity", "desc");
 		Page<Course> pageOfCourses = getCourseRepository().findBySubcategoryIdExcludeCourse(course.getId(),
 				course.getSubcategory().getId(), pageable);
 		List<Course> courses = new ArrayList<>(pageOfCourses.getContent());
 		if (courses.size() < numOfCourses) {
-			pageable = SortAndCompareUtils.createPageable(0, "popularity", "desc", numOfCourses - courses.size());
+			pageable = SortAndCompareUtils.createPageable(0, numOfCourses - courses.size(), "popularity", "desc");
 			List<Course> coursesFetchedByCategory = getCourseRepository()
 					.findOnlyByCategoryId(course.getCategory().getId(), course.getSubcategory().getId(), pageable)
 					.getContent();
@@ -79,7 +79,11 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Iterable<Course> recommendTopCourses(Integer numOfCourses) {
-		return getAllCourses(0, "popularity", "desc", numOfCourses);
+		return _getAllCourses(0, numOfCourses, "popularity", "desc").getContent();
 	}
 
+	private Page<Course> _getAllCourses(Integer pageNo, Integer pageSize, String sortBy, String order) {
+		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, pageSize, sortBy, order);
+		return getCourseRepository().findAll(sortedPageable);
+	}
 }

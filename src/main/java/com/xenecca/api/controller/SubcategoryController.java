@@ -20,7 +20,6 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @RestController
-//@RequestMapping("/api/v1/categories")
 public class SubcategoryController {
 
 	@Autowired
@@ -29,13 +28,13 @@ public class SubcategoryController {
 	@Autowired
 	private SubcategoryMapper _subcategoryMapper;
 
-	@GetMapping("/api/v1/subcategories")
+	@GetMapping("/api/v1/subcategories/")
 	@ApiOperation(value = "Get all subcategories.")
 	public List<SubcategoryDTO> getAllSubcategories() {
 		return getSubcategoryMapper().mapToDTOList(getSubcategoryService().getAllSubcategories());
 	}
 
-	@GetMapping("/api/v1/categories/{id}/subcategories")
+	@GetMapping("/api/v1/categories/{id}/subcategories/")
 	@ApiOperation(value = "Get all subcategories by category.")
 	public List<SubcategoryDTO> getSubcategoriesByCategory(@PathVariable("id") Long categoryId) {
 		return getSubcategoryMapper().mapToDTOList(getSubcategoryService().getSubcategoriesByCategory(categoryId));

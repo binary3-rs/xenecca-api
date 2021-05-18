@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xenecca.api.dto.response.CourseDTO;
 import com.xenecca.api.dto.response.CoursePreviewDTO;
+import com.xenecca.api.dto.response.PageResultDTO;
 import com.xenecca.api.mapper.CoursePreviewMapper;
 import com.xenecca.api.model.Course;
+import com.xenecca.api.model.elastic.CourseDoc;
 import com.xenecca.api.service.CourseService;
 import com.xenecca.api.service.SearchService;
+import com.xenecca.api.utils.model.PageResult;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -42,23 +45,37 @@ public class CourseController {
 	@Autowired
 	private CoursePreviewMapper _coursePreviewMapper;
 
+	@GetMapping(value = "pages")
+	@ApiOperation(value = "Get number of course pages.")
+	public Integer getNumOfPages() {
+		return 0;
+	}
+
 	@GetMapping
 	@ApiOperation(value = "Get (search) available courses")
-	public List<CoursePreviewDTO> searchCourses(
+	public PageResultDTO<CoursePreviewDTO> searchCourses(
 			@ApiParam(name = "q", type = "String", value = "Search term", example = "java", required = false) @RequestParam(name = "q", required = false) String searchTerm,
 			@RequestParam(name = "category", required = false) Integer categoryId,
 			@RequestParam(value = "subcategory", required = false) Integer subcategoryId,
 			@RequestParam(value = "language", required = false) Integer languageId,
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-			@ApiParam(name = "sort", type = "String", value = "Sorting field", allowableValues = "date_added, popularity, name", example = "name", required = false) 
-			@RequestParam(name = "sort", defaultValue = "date_added") String sortBy,
+			@RequestParam(name = "pageSize", defaultValue = "12") Integer pageSize,
+			@ApiParam(name = "sort", type = "String", value = "Sorting field", allowableValues = "date, title", example = "date", required = false) @RequestParam(name = "sort", defaultValue = "date_added") String sortBy,
 			@ApiParam(name = "order", type = "String", value = "Sorting order", allowableValues = "asc, desc", example = "asc", required = false) @RequestParam(name = "order", defaultValue = "desc") String order) {
+		List<CoursePreviewDTO> courseResults;
+		long numOfResults;
 		if (searchTerm == null && categoryId == null && subcategoryId == null && languageId == null) {
-			Iterable<Course> courses = getCourseService().getAllCourses(pageNo, sortBy, order, null);
-			return getCoursePreviewMapper().mapCoursesToDTOList(courses);
+			PageResult<Course> courses = getCourseService().getAllCourses(pageNo, pageSize, sortBy, order);
+			courseResults = getCoursePreviewMapper().mapCoursesToDTOList(courses.getResults());
+			numOfResults = courses.getNumOfResults();
+		} else {
+			PageResult<CourseDoc> searchResult = getSearchService().searchCourses(searchTerm, categoryId, subcategoryId,
+					languageId, pageNo, pageSize, sortBy, order);
+			courseResults = getCoursePreviewMapper().mapDocToDTOList(searchResult.getResults());
+			numOfResults = searchResult.getNumOfResults();
 		}
-		return getCoursePreviewMapper().mapDocToDTOList(getSearchService().searchCourses(searchTerm, categoryId,
-				subcategoryId, languageId, pageNo, sortBy, order));
+
+		return new PageResultDTO<CoursePreviewDTO>(courseResults, numOfResults, pageSize);
 	}
 
 	@GetMapping("{id}")
@@ -80,8 +97,7 @@ public class CourseController {
 	@GetMapping("{id}/similar")
 	@ApiOperation(value = "Get similar courses")
 	public List<CoursePreviewDTO> getSimilarCourses(@PathVariable("id") Long courseId,
-			@ApiParam(name = "num", type = "Integer", value = "Number of desired courses", example = "6",required = false)
-			@RequestParam(name = "num", defaultValue = "4") Integer numOfCourses) {
+			@ApiParam(name = "num", type = "Integer", value = "Number of desired courses", example = "6", required = false) @RequestParam(name = "num", defaultValue = "4") Integer numOfCourses) {
 		return getCoursePreviewMapper()
 				.mapCoursesToDTOList(getCourseService().getSimilarCourses(courseId, numOfCourses));
 	}
@@ -89,8 +105,7 @@ public class CourseController {
 	@GetMapping("recommend")
 	@ApiOperation(value = "Get recommended courses")
 	public List<CoursePreviewDTO> recommendTopCourses(
-			@ApiParam(name = "num", type = "Integer", value = "Number of desired courses", example = "6",required = false)
-			@RequestParam(name = "num", defaultValue = "8") Integer numOfCourses) {
+			@ApiParam(name = "num", type = "Integer", value = "Number of desired courses", example = "6", required = false) @RequestParam(name = "num", defaultValue = "8") Integer numOfCourses) {
 		return getCoursePreviewMapper().mapCoursesToDTOList(getCourseService().recommendTopCourses(numOfCourses));
 	}
 

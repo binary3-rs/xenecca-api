@@ -23,6 +23,7 @@ import com.xenecca.api.service.SearchService;
 import com.xenecca.api.utils.FileUtils;
 import com.xenecca.api.utils.FileUtils.StorageType;
 import com.xenecca.api.utils.SortAndCompareUtils;
+import com.xenecca.api.utils.model.PageResult;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,7 +45,6 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 
 	@Override
 	public LearningResource addLearningResource(NewLearningResourceDTO learningResource) {
-		// MaterialType materialType = learningResource.getMaterialType();
 		MaterialType materialType = learningResource.getFile() != null ? MaterialType.FILE : MaterialType.URL;
 		String resourceValue = getResourceValue(learningResource);
 		LearningResource resource = LearningResource.builder().name(learningResource.getName())
@@ -65,10 +65,11 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 	}
 
 	@Override
-	public Iterable<LearningResource> getAllResources(Integer pageNo) {
-		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, null, null);
-		Page<LearningResource> pageOfResources = getLearningResourceRepository().findAll(sortedPageable);
-		return pageOfResources.getContent();
+	public PageResult<LearningResource> getAllResources(Integer pageNo, Integer pageSize) {
+		Page<LearningResource> pageOfResources = _getAllResources(pageNo, pageSize, null, null);
+		return new PageResult<LearningResource>(pageOfResources.getContent(), pageOfResources.getTotalElements(),
+				pageSize);
+
 	}
 
 	@Override
@@ -139,7 +140,6 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 
 	private String getResourceValue(NewLearningResourceDTO learningResource) {
 		MaterialType materialType = learningResource.getFile() != null ? MaterialType.FILE : MaterialType.URL;
-//		MaterialType materialType = learningResource.getMaterialType();
 		String resourceValue = null;
 		if (materialType.equals(MaterialType.FILE)) {
 			if (learningResource.getFile() == null) {
@@ -163,6 +163,11 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 		return (nameComponents.length == 2) ? nameComponents[1]
 				: MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(fileName);
 
+	}
+
+	private Page<LearningResource> _getAllResources(Integer pageNo, Integer pageSize, String sortBy, String order) {
+		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, pageSize, sortBy, order);
+		return getLearningResourceRepository().findAll(sortedPageable);
 	}
 
 }

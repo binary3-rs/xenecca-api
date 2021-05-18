@@ -9,18 +9,6 @@
 				}
 			}
 		},
-		"avg_rating": {
-			"type": "double"
-		},
-		"badge": {
-			"type": "text",
-			"fields": {
-				"keyword": {
-					"type": "keyword",
-					"ignore_above": 256
-				}
-			}
-		},
 		"category": {
 			"type": "long"
 		},
@@ -36,39 +24,8 @@
 				}
 			}
 		},
-		"instructors": {
-			"properties": {
-				"full_name": {
-					"type": "text",
-					"fields": {
-						"keyword": {
-							"type": "keyword",
-							"ignore_above": 256
-						}
-					}
-				},
-				"image": {
-					"type": "text",
-					"fields": {
-						"keyword": {
-							"type": "keyword",
-							"ignore_above": 256
-						}
-					}
-				}
-			}
-		},
 		"language": {
 			"type": "long"
-		},
-		"num_of_reviews": {
-			"type": "long"
-		},
-		"num_of_students": {
-			"type": "long"
-		},
-		"old_price": {
-			"type": "float"
 		},
 		"original_poster_url": {
 			"type": "text",
@@ -80,18 +37,6 @@
 			}
 		},
 		"poster": {
-			"type": "text",
-			"fields": {
-				"keyword": {
-					"type": "keyword",
-					"ignore_above": 256
-				}
-			}
-		},
-		"price": {
-			"type": "float"
-		},
-		"price_as_string": {
 			"type": "text",
 			"fields": {
 				"keyword": {
@@ -112,15 +57,9 @@
 				}
 			}
 		},
-		"topic": {
-			"type": "long"
-		},
 		"updated_at": {
 			"type": "date",
 			"format": "yyyy-MM-dd HH:mm:ss"
-		},
-		"duration": {
-			"type": "float"
 		}
 	}
 }

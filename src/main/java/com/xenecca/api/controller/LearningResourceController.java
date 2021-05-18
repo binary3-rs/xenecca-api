@@ -27,13 +27,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xenecca.api.dto.request.NewLearningResourceDTO;
 import com.xenecca.api.dto.response.LearningResourceDTO;
 import com.xenecca.api.dto.response.LearningResourceTypeDTO;
+import com.xenecca.api.dto.response.PageResultDTO;
 import com.xenecca.api.mapper.LearningResourceMapper;
+import com.xenecca.api.model.elastic.LearningResourceDoc;
 import com.xenecca.api.model.learnresource.LearningResource;
+import com.xenecca.api.model.type.MaterialType;
 import com.xenecca.api.model.type.ResourceType;
 import com.xenecca.api.service.LearningResourceService;
 import com.xenecca.api.service.SearchService;
+import com.xenecca.api.utils.model.PageResult;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -58,20 +63,33 @@ public class LearningResourceController {
 	@PostMapping
 	@ApiOperation(value = "Add new file learning resource.")
 	public LearningResourceDTO addLearningResource(@Valid @ModelAttribute NewLearningResourceDTO learningResourceData) {
-		return getLearningResourceMapper().mapToDTO(getLearningResourceService().addLearningResource(learningResourceData));
+		return getLearningResourceMapper()
+				.mapToDTO(getLearningResourceService().addLearningResource(learningResourceData));
 	}
 
 	@GetMapping
-	@ApiOperation(value = "Get learning resources.")
-	public List<LearningResourceDTO> getResources(@RequestParam(name = "q", required = false) String searchTerm,
+	@ApiOperation(value = "Get (search) learning resources.")
+	public PageResultDTO<LearningResourceDTO> getResources(
+			@ApiParam(name = "q", value = "Search term") @RequestParam(name = "q", required = false) String searchTerm,
 			@RequestParam(name = "category", required = false) Long categoryId,
-			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-		if (searchTerm == null && categoryId == null) {
-			Iterable<LearningResource> resources = getLearningResourceService().getAllResources(pageNo);
-			return getLearningResourceMapper().mapToDTOList(resources);
+			@RequestParam(name = "resourceType", required = false) ResourceType resourceType,
+			@RequestParam(name = "materialType", required = false) MaterialType materialType,
+			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(name = "pageSize", defaultValue = "100") Integer pageSize) {
+		long numOfResults;
+		List<LearningResourceDTO> resourceResults;
+		if (searchTerm == null && categoryId == null && resourceType == null && materialType == null) {
+			PageResult<LearningResource> resources = getLearningResourceService().getAllResources(pageNo, pageSize);
+			resourceResults = getLearningResourceMapper().mapToDTOList(resources.getResults());
+			numOfResults = resources.getNumOfResults();
+		} else {
+			PageResult<LearningResourceDoc> resources = getSearchService().searchResources(searchTerm, categoryId,
+					resourceType, materialType, pageNo, pageSize);
+			resourceResults = getLearningResourceMapper().mapDocsToDTOList(resources.getResults());
+			numOfResults = resources.getNumOfResults();
+
 		}
-		return getLearningResourceMapper()
-				.mapDocsToDTOList(getSearchService().searchResources(searchTerm, categoryId, pageNo));
+		return new PageResultDTO<LearningResourceDTO>(resourceResults, numOfResults, pageSize);
 	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.ALL_VALUE)
