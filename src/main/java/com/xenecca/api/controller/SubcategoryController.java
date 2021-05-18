@@ -11,6 +11,7 @@ import com.xenecca.api.dto.response.SubcategoryDTO;
 import com.xenecca.api.mapper.SubcategoryMapper;
 import com.xenecca.api.service.SubcategoryService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -29,12 +30,14 @@ public class SubcategoryController {
 	private SubcategoryMapper _subcategoryMapper;
 
 	@GetMapping("/api/v1/subcategories")
+	@ApiOperation(value = "Get all subcategories.")
 	public List<SubcategoryDTO> getAllSubcategories() {
 		return getSubcategoryMapper().mapToDTOList(getSubcategoryService().getAllSubcategories());
 	}
 
 	@GetMapping("/api/v1/categories/{id}/subcategories")
-	public List<SubcategoryDTO> getSubcategoriesForCategory(@PathVariable("id") Long categoryId) {
+	@ApiOperation(value = "Get all subcategories by category.")
+	public List<SubcategoryDTO> getSubcategoriesByCategory(@PathVariable("id") Long categoryId) {
 		return getSubcategoryMapper().mapToDTOList(getSubcategoryService().getSubcategoriesByCategory(categoryId));
 	}
 

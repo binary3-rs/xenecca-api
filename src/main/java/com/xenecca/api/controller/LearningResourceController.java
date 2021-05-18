@@ -26,12 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xenecca.api.dto.request.NewLearningResourceDTO;
 import com.xenecca.api.dto.response.LearningResourceDTO;
+import com.xenecca.api.dto.response.LearningResourceTypeDTO;
 import com.xenecca.api.mapper.LearningResourceMapper;
 import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.model.type.ResourceType;
 import com.xenecca.api.service.LearningResourceService;
 import com.xenecca.api.service.SearchService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -52,16 +54,17 @@ public class LearningResourceController {
 	@Autowired
 	private LearningResourceMapper _learningResourceMapper;
 
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public LearningResourceDTO addLearningResource(@Valid @ModelAttribute NewLearningResourceDTO learningResource) {
-		return getLearningResourceMapper().mapToDTO(getLearningResourceService().addLearningResource(learningResource));
+	@ApiOperation(value = "Add new file learning resource.")
+	public LearningResourceDTO addLearningResource(@Valid @ModelAttribute NewLearningResourceDTO learningResourceData) {
+		return getLearningResourceMapper().mapToDTO(getLearningResourceService().addLearningResource(learningResourceData));
 	}
 
 	@GetMapping
+	@ApiOperation(value = "Get learning resources.")
 	public List<LearningResourceDTO> getResources(@RequestParam(name = "q", required = false) String searchTerm,
-
 			@RequestParam(name = "category", required = false) Long categoryId,
-
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
 		if (searchTerm == null && categoryId == null) {
 			Iterable<LearningResource> resources = getLearningResourceService().getAllResources(pageNo);
@@ -71,25 +74,8 @@ public class LearningResourceController {
 				.mapDocsToDTOList(getSearchService().searchResources(searchTerm, categoryId, pageNo));
 	}
 
-	/*
-	 * @GetMapping public List<LearningResourceDTO> getResources(@RequestParam(name
-	 * = "q", required = false) String searchTerm,
-	 * 
-	 * @RequestParam(name = "category", required = false) Long categoryId,
-	 * 
-	 * @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) { if
-	 * (searchTerm == null) { // Iterable<LearningResource> resources = //
-	 * getLearningResourceService().getAllResources(pageNo);
-	 * Iterable<LearningResource> resources =
-	 * getLearningResourceService().getAllResourcesByCategory(categoryId, pageNo);
-	 * 
-	 * return getLearningResourceMapper().mapToDTOList(resources); } return
-	 * getLearningResourceMapper()
-	 * .mapDocsToDTOList(getSearchService().searchResources(searchTerm, categoryId,
-	 * pageNo)); }
-	 */
-
 	@GetMapping(value = "/{id}", produces = MediaType.ALL_VALUE)
+	@ApiOperation(value = "Get the file learning resource.", produces = "application/octet-stream")
 	public ResponseEntity<InputStreamResource> getFileResource(@PathVariable("id") Long resourceId) {
 		Map<String, Object> fileData = getLearningResourceService().getFileResource(resourceId);
 		ByteArrayInputStream file = (ByteArrayInputStream) fileData.get("file");
@@ -103,23 +89,26 @@ public class LearningResourceController {
 	}
 
 	@GetMapping("/types")
-	public Map<String, String> getResourceTypes() {
+	@ApiOperation(value = "Get learning resource types")
+	public LearningResourceTypeDTO getResourceTypes() {
 		Map<String, String> types = new HashMap<String, String>();
 		for (ResourceType type : ResourceType.values()) {
 			types.put(type.toString(), type.getName());
 		}
-		return types;
+		return new LearningResourceTypeDTO(types);
 	}
 
 	@PutMapping("{id}")
+	@ApiOperation(value = "Update the learning resource")
 	public LearningResourceDTO updateLearningResource(@PathVariable("id") Long resourceId,
-			@Valid @ModelAttribute NewLearningResourceDTO learningResource) {
+			@Valid @ModelAttribute NewLearningResourceDTO learningResourceData) {
 		return getLearningResourceMapper()
-				.mapToDTO(getLearningResourceService().updateLearningResource(resourceId, learningResource));
+				.mapToDTO(getLearningResourceService().updateLearningResource(resourceId, learningResourceData));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("{id}")
+	@ApiOperation(value = "Delete learning resource")
 	public void deleteLearningResource(@PathVariable("id") Long resourceId) {
 		getLearningResourceService().deleteLearningResource(resourceId);
 	}

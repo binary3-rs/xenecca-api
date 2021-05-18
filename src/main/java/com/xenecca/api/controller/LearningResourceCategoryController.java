@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +25,7 @@ import com.xenecca.api.model.learnresource.LearningResourceCategory;
 import com.xenecca.api.model.type.LearningResourceDomain;
 import com.xenecca.api.service.impl.LearningResourceCategoryService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -43,16 +43,18 @@ public class LearningResourceCategoryController {
 	@Autowired
 	private LearningResourceCategoryMapper _resourceCategoryMapper;
 
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
+	@ApiOperation(value = "Add new learning resource category")
 	public LearningResourceCategoryDTO addLearningResourceCategory(
-			@Valid @ModelAttribute NewLearningResourceCategoryDTO resourceCategoryDTO) {
+			@Valid @ModelAttribute NewLearningResourceCategoryDTO resourceCategoryData) {
 		return getResourceCategoryMapper()
-				.mapToDTO(getResourceCategoryService().addResourceCategory(resourceCategoryDTO));
+				.mapToDTO(getResourceCategoryService().addResourceCategory(resourceCategoryData));
 	}
 
 	@GetMapping
-	public List<LearningResourceCategoryDTO> getResourceCategories(
-			@RequestParam(name = "domain", required = false) LearningResourceDomain domain) {
+	@ApiOperation(value = "Get learning resource categories (by domain)", notes = "Get resource categories. If the domain is ommited, returns all categories.")
+	public List<LearningResourceCategoryDTO> getResourceCategories(LearningResourceDomain domain) {
 		Iterable<LearningResourceCategory> categories = (domain == null)
 				? getResourceCategoryService().getAllResourceCategories()
 				: getResourceCategoryService().getResourceCategoriesByDomain(domain);
@@ -60,6 +62,7 @@ public class LearningResourceCategoryController {
 	}
 
 	@GetMapping("/domains")
+	@ApiOperation(value = "Get learning resource category domains")
 	public Map<String, String> getResourceCategoryDomains() {
 		Map<String, String> domains = new HashMap<String, String>();
 		for (LearningResourceDomain domain : LearningResourceDomain.values()) {
@@ -69,14 +72,16 @@ public class LearningResourceCategoryController {
 	}
 
 	@PutMapping("{id}")
+	@ApiOperation(value = "Update learning resource category")
 	public LearningResourceCategoryDTO updateLearningResourceCategory(@PathVariable("id") Long resourceCategoryId,
-			@Valid @ModelAttribute NewLearningResourceCategoryDTO resourceCategoryDTO) {
-		return getResourceCategoryMapper()
-				.mapToDTO(getResourceCategoryService().updateResourceCategory(resourceCategoryId, resourceCategoryDTO));
+			@Valid @ModelAttribute NewLearningResourceCategoryDTO resourceCategoryData) {
+		return getResourceCategoryMapper().mapToDTO(
+				getResourceCategoryService().updateResourceCategory(resourceCategoryId, resourceCategoryData));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("{id}")
+	@ApiOperation(value = "Delete learning resource category")
 	public void deleteLearningResourceCategory(@PathVariable("id") Long resourceCategoryId) {
 		getResourceCategoryService().deleteResourceCategory(resourceCategoryId);
 	}
