@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 import javax.validation.ConstraintViolationException;
 
+import org.elasticsearch.ElasticsearchException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -113,11 +114,19 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-//	@ExceptionHandler({ RuntimeException.class, Exception.class })
-//	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
-//		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-//				request.getDescription(false));
-//		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
+	@ExceptionHandler({ ElasticsearchException.class })
+	public final ResponseEntity<ExceptionResponse> handleElasticsearchEException(Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+				"There is a problem with the search functionality. Please, try later or contact staff.",
+				request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler({ RuntimeException.class, Exception.class })
+	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 }

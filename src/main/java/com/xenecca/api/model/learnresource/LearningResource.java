@@ -1,8 +1,6 @@
 package com.xenecca.api.model.learnresource;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;

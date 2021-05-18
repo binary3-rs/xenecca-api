@@ -99,18 +99,18 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public PageResult<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId,
-			Integer languageId, Integer pageNo, Integer pageSize, String sortBy, String order) {
+			Integer languageId, Integer pageNo, Integer pageSize) {
 
 		Criteria criteria = createCourseCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, languageId);
 		Query query = new CriteriaQuery(criteria);
-		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, pageSize, sortBy, order);
+		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, pageSize, "date", "desc");
 		query.setPageable(pageable);
 		return search(query, CourseDoc.class);
 	}
 
 	@Override
-	public PageResult<LearningResourceDoc> searchResources(String searchTerm, Long categoryId, ResourceType resourceType,
-			MaterialType materialType, Integer pageNo, Integer pageSize) {
+	public PageResult<LearningResourceDoc> searchResources(String searchTerm, Long categoryId,
+			ResourceType resourceType, MaterialType materialType, Integer pageNo, Integer pageSize) {
 		Criteria criteria = createResourceCriteriaBasedOnParams(searchTerm, categoryId, resourceType, materialType);
 		Query query = new CriteriaQuery(criteria);
 		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, pageSize, null, null);

@@ -59,18 +59,16 @@ public class CourseController {
 			@RequestParam(value = "subcategory", required = false) Integer subcategoryId,
 			@RequestParam(value = "language", required = false) Integer languageId,
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(name = "pageSize", defaultValue = "12") Integer pageSize,
-			@ApiParam(name = "sort", type = "String", value = "Sorting field", allowableValues = "date, title", example = "date", required = false) @RequestParam(name = "sort", defaultValue = "date_added") String sortBy,
-			@ApiParam(name = "order", type = "String", value = "Sorting order", allowableValues = "asc, desc", example = "asc", required = false) @RequestParam(name = "order", defaultValue = "desc") String order) {
+			@RequestParam(name = "pageSize", defaultValue = "12") Integer pageSize) {
 		List<CoursePreviewDTO> courseResults;
 		long numOfResults;
 		if (searchTerm == null && categoryId == null && subcategoryId == null && languageId == null) {
-			PageResult<Course> courses = getCourseService().getAllCourses(pageNo, pageSize, sortBy, order);
+			PageResult<Course> courses = getCourseService().getAllCourses(pageNo, pageSize);
 			courseResults = getCoursePreviewMapper().mapCoursesToDTOList(courses.getResults());
 			numOfResults = courses.getNumOfResults();
 		} else {
 			PageResult<CourseDoc> searchResult = getSearchService().searchCourses(searchTerm, categoryId, subcategoryId,
-					languageId, pageNo, pageSize, sortBy, order);
+					languageId, pageNo, pageSize);
 			courseResults = getCoursePreviewMapper().mapDocToDTOList(searchResult.getResults());
 			numOfResults = searchResult.getNumOfResults();
 		}

@@ -5,7 +5,7 @@ import com.xenecca.api.utils.model.PageResult;
 
 public interface CourseService {
 
-	public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize, String sortBy, String order);
+	public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize);
 
 	public Course getCourseById(Long courseId);
 

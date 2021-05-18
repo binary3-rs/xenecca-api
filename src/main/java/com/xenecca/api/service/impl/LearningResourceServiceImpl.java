@@ -97,7 +97,6 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 
 	@Override
 	public LearningResource updateLearningResource(Long resourceId, NewLearningResourceDTO learningResource) {
-		// MaterialType materialType = learningResource.getMaterialType();
 		MaterialType materialType = learningResource.getFile() != null ? MaterialType.FILE : MaterialType.URL;
 
 		String resourceValue = getResourceValue(learningResource);

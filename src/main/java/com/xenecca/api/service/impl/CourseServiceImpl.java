@@ -30,8 +30,8 @@ public class CourseServiceImpl implements CourseService {
 	private CourseRepository _courseRepository;
 
 	@Override
-	public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize, String sortBy, String order) {
-		Page<Course> pageOfCourses = _getAllCourses(pageNo, pageSize, sortBy, order);
+	public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize) {
+		Page<Course> pageOfCourses = _getAllCourses(pageNo, pageSize, "date", "desc");
 		return new PageResult<Course>(pageOfCourses.getContent(), pageOfCourses.getTotalElements(), pageSize);
 
 	}

@@ -17,10 +17,6 @@ public class SortAndCompareUtils {
 			return "_updatedAt";
 		case "popularity":
 			return "_redeemedCouponCount";
-		case "name":
-			return "_name";
-		case "title":
-			return "_title";
 		case "id":
 			return "_id";
 		case "doc_id":

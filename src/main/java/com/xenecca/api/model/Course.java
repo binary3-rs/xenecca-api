@@ -62,7 +62,7 @@ public class Course implements Serializable {
 	@Column(name = "description")
 	private String _description;
 
-	@Size(min = 0, max = 1000)
+	@Size(min = 0, max = 1200)
 	@Column(name = "objectives")
 	private String _objectives;
 
@@ -85,7 +85,7 @@ public class Course implements Serializable {
 	@Column(name = "redeemed_coupon_count", columnDefinition = "bigint default 0")
 	private Long _redeemedCouponCount = 0L;
 
-	@Size(min = 0, max = 1000)
+	@Size(min = 0, max = 1200)
 	@Column(name = "requirements")
 	private String _requirements;
 
