@@ -21,6 +21,7 @@ import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.model.type.MaterialType;
 import com.xenecca.api.model.type.ResourceType;
 import com.xenecca.api.service.SearchService;
+import com.xenecca.api.utils.Constants;
 import com.xenecca.api.utils.SortAndCompareUtils;
 import com.xenecca.api.utils.model.PageResult;
 
@@ -103,7 +104,8 @@ public class SearchServiceImpl implements SearchService {
 
 		Criteria criteria = createCourseCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, languageId);
 		Query query = new CriteriaQuery(criteria);
-		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, pageSize, "date", "desc");
+		Pageable pageable = SortAndCompareUtils.createPageable(pageNo,
+				pageSize != null ? pageSize : Constants.COURSE_PAGE_SIZE, "date", "desc");
 		query.setPageable(pageable);
 		return search(query, CourseDoc.class);
 	}
@@ -113,7 +115,8 @@ public class SearchServiceImpl implements SearchService {
 			ResourceType resourceType, MaterialType materialType, Integer pageNo, Integer pageSize) {
 		Criteria criteria = createResourceCriteriaBasedOnParams(searchTerm, categoryId, resourceType, materialType);
 		Query query = new CriteriaQuery(criteria);
-		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, pageSize, null, null);
+		Pageable pageable = SortAndCompareUtils.createPageable(pageNo,
+				pageSize != null ? pageSize : Constants.RESOURCES_PAGE_SIZE, null, null);
 		query.setPageable(pageable);
 		return search(query, LearningResourceDoc.class);
 	}

@@ -75,7 +75,7 @@ public class LearningResourceController {
 			@RequestParam(name = "resourceType", required = false) ResourceType resourceType,
 			@RequestParam(name = "materialType", required = false) MaterialType materialType,
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(name = "pageSize", defaultValue = "100") Integer pageSize) {
+			@RequestParam(name = "pageSize", required = false) Integer pageSize) {
 		long numOfResults;
 		List<LearningResourceDTO> resourceResults;
 		if (searchTerm == null && categoryId == null && resourceType == null && materialType == null) {

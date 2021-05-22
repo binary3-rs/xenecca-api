@@ -20,6 +20,7 @@ import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.model.type.MaterialType;
 import com.xenecca.api.service.LearningResourceService;
 import com.xenecca.api.service.SearchService;
+import com.xenecca.api.utils.Constants;
 import com.xenecca.api.utils.FileUtils;
 import com.xenecca.api.utils.FileUtils.StorageType;
 import com.xenecca.api.utils.SortAndCompareUtils;
@@ -73,8 +74,8 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 	}
 
 	@Override
-	public Iterable<LearningResource> getAllResourcesByCategory(Long categoryId, Integer pageNo) {
-		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, null, null);
+	public Iterable<LearningResource> getAllResourcesByCategory(Long categoryId, Integer pageNo, Integer pageSize) {
+		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, Constants.RESOURCES_PAGE_SIZE, null, null);
 		Page<LearningResource> pageOfResources = getLearningResourceRepository().findBy_resourceCategory__id(categoryId,
 				sortedPageable);
 		return pageOfResources.getContent();
@@ -165,7 +166,8 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 	}
 
 	private Page<LearningResource> _getAllResources(Integer pageNo, Integer pageSize, String sortBy, String order) {
-		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, pageSize, sortBy, order);
+		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo,
+				pageSize != null ? pageSize : Constants.RESOURCES_PAGE_SIZE, sortBy, order);
 		return getLearningResourceRepository().findAll(sortedPageable);
 	}
 

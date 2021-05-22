@@ -53,7 +53,7 @@ public class CourseController {
 			@RequestParam(value = "subcategory", required = false) Integer subcategoryId,
 			@RequestParam(value = "language", required = false) Integer languageId,
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(name = "pageSize", defaultValue = "12") Integer pageSize) {
+			@RequestParam(name = "pageSize", required = false) Integer pageSize) {
 		List<CoursePreviewDTO> courseResults;
 		long numOfResults;
 		if (searchTerm == null && categoryId == null && subcategoryId == null && languageId == null) {
