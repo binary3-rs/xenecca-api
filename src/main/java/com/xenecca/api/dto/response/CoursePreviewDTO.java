@@ -27,7 +27,7 @@ public class CoursePreviewDTO {
 
 	private String _poster;
 
-	private String _originalPosterURL;
+	private String _originalPosterUrl;
 
 	private Date _timeUpdated;
 
@@ -36,7 +36,7 @@ public class CoursePreviewDTO {
 		_title = doc.getTitle();
 		_headline = doc.getHeadline();
 		_poster = doc.getPoster();
-		_originalPosterURL = doc.getOriginalPosterURL();
+		_originalPosterUrl = doc.getOriginalPosterUrl();
 		_timeUpdated = doc.getUpdatedAt();
 	}
 
@@ -45,7 +45,7 @@ public class CoursePreviewDTO {
 		_title = course.getTitle();
 		_headline = course.getHeadline();
 		_poster = course.getPosterPath();
-		_originalPosterURL = course.getOriginalPosterURL();
+		_originalPosterUrl = course.getOriginalPosterUrl();
 		_timeUpdated = course.getUpdatedAt();
 
 	}

@@ -52,7 +52,7 @@ public class CourseDoc {
 	private String _poster;
 
 	@Field(name = "original_poster_url", index = false, storeNullValue = true, type = Text)
-	private String _originalPosterURL;
+	private String _originalPosterUrl;
 
 	@Field(name = "updated_at", type = FieldType.Date, store = true, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date _updatedAt;

@@ -45,12 +45,6 @@ public class CourseController {
 	@Autowired
 	private CoursePreviewMapper _coursePreviewMapper;
 
-	@GetMapping(value = "pages")
-	@ApiOperation(value = "Get number of course pages.")
-	public Integer getNumOfPages() {
-		return 0;
-	}
-
 	@GetMapping
 	@ApiOperation(value = "Get (search) available courses")
 	public PageResultDTO<CoursePreviewDTO> searchCourses(

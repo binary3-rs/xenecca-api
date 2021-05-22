@@ -31,7 +31,7 @@ public class SortAndCompareUtils {
 	}
 
 	public static Pageable createPageable(Integer pageNo, Integer pageSize, String sortBy, String order) {
-		if (pageSize != null) {
+		if (pageSize != null && sortBy != null && order != null) {
 			return _createPageable(pageNo, pageSize, sortBy, order);
 		}
 		return createPageable(pageNo, sortBy, order);
@@ -39,7 +39,7 @@ public class SortAndCompareUtils {
 
 	public static Pageable createPageable(Integer pageNo, String sortBy, String order) {
 
-		if (sortBy == null && order == null) {
+		if (sortBy == null) {
 			return PageRequest.of(pageNo, Constants.RESOURCES_PAGE_SIZE);
 		}
 		return _createPageable(pageNo, Constants.PAGE_SIZE, sortBy, order);

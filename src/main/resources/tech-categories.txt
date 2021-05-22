@@ -1,91 +1,91 @@
-WEBDEV-!!-HTML-!!-
-WEBDEV-!!-CSS-!!-sass,less
-WEBDEV-!!-JavaScript-!!-js,es6,ecmascript
-WEBDEV-!!-Typescript-!!-
-WEBDEV-!!-Angular-!!-
-WEBDEV-!!-React-!!-redux
-WEBDEV-!!-Vue.js-!!-
-WEBDEV-!!-Django-!!-
-WEBDEV-!!-PHP-!!-
-WEBDEV-!!-Laravel-!!-
-WEBDEV-!!-Ruby on Rails-!!-
-WEBDEV-!!-Spring-!!-hibernate
-WEBDEV-!!-ASP.NET-!!-asp .net,asp.net
-WEBDEV-!!-Node.js-!!-
-WEBDEV-!!-Web applications & dev-!!-web development,single-pag,single page,pwa,progressive web apps,mern,mean
-MOBILE-!!-Android-!!-
-MOBILE-!!-Kotlin-!!-
-MOBILE-!!-React Native-!!-
-MOBILE-!!-iOS-!!-apple
-MOBILE-!!-Swift-!!-
-MOBILE-!!-Objective-C-!!-objective c
-MOBILE-!!-Ionic-!!-
-MOBILE-!!-Xamarin-!!-
-MOBILE-!!-Flutter-!!-
-DATASCIENCE-!!-Linear regression-!!-
-DATASCIENCE-!!-Logistic regression-!!-
-DATASCIENCE-!!-Reinforcement learning-!!-
-DATASCIENCE-!!-Deep learning-!!-
-DATASCIENCE-!!-Datasets-!!-
-DATASCIENCE-!!-Computer vision-!!-
-DATASCIENCE-!!-Recommender systems-!!-
-DATASCIENCE-!!-Face recognition-!!-
-DATASCIENCE-!!-Robotics-!!-
-DATASCIENCE-!!-Python for Data Science-!!-
-DATASCIENCE-!!-Neural Networks-!!-
-DATASCIENCE-!!-Bioinformatics-!!-
-DATASCIENCE-!!-Keras-!!-
-DATASCIENCE-!!-Tensorflow-!!-
-DATASCIENCE-!!-Pytorch-!!-
-DATASCIENCE-!!-OpenAI-!!-
-DATASCIENCE-!!-Data mining-!!-
-DATASCIENCE-!!-NLP-!!-
-DSA-!!-Arrays & matrices-!!-
-DSA-!!-Linked Lists-!!-
-DSA-!!-Stacks & Queues-!!-
-DSA-!!-Hash maps-!!-dictionary
-DSA-!!-Trees-!!-
-DSA-!!-Graphs-!!-
-DSA-!!-Strings-!!-
-DSA-!!-Heaps-!!-priority queue
-DSA-!!-Algorithms-!!-
-DSA-!!-Sorting-!!-
-DSA-!!-Searching-!!-
-DSA-!!-Greedy algorithms-!!-
-DSA-!!-Recursion & backtracking-!!-
-DSA-!!-Dynamic programming-!!-
-DSA-!!-Bit manipulation-!!-
-DSA-!!-Math & numerical-!!-
-DATABASES-!!-SQL-!!-
-DATABASES-!!-NoSQL-!!-
-DATABASES-!!-Cloud databases-!!-
-DATABASES-!!-Database design-!!-
-DATABASES-!!-DBMS-!!-
-DEVOPS-!!-Docker-!!-
-DEVOPS-!!-Kubernetes-!!-
-DEVOPS-!!-Teraform-!!-
-DEVOPS-!!-Jenkins-!!-
-DEVOPS-!!-AWS-!!-
-DEVOPS-!!-GCP-!!-
-DEVOPS-!!-Azure-!!-
-DEVOPS-!!-Ansible-!!-
-DEVOPS-!!-Version Control Systems-!!-
-DEVOPS-!!-Server administration-!!-
-DEVOPS-!!-Linux-!!-bash,ubuntu,red hat,centos,debian,fedora,arch
-PROGRAMMING_LANGUAGES-!!-C/C++-!!-cplusplus, c plus plus, cpp,c++
-PROGRAMMING_LANGUAGES-!!-C#-!!-csharp
-PROGRAMMING_LANGUAGES-!!-Python-!!-
-PROGRAMMING_LANGUAGES-!!-Perl-!!-
-PROGRAMMING_LANGUAGES-!!-Ruby-!!-
-PROGRAMMING_LANGUAGES-!!-Bash-!!-
-PROGRAMMING_LANGUAGES-!!-Fortran-!!-
-PROGRAMMING_LANGUAGES-!!-Haskell-!!-
-PROGRAMMING_LANGUAGES-!!-Go-!!-
-PROGRAMMING_LANGUAGES-!!-Scala-!!-
-PROGRAMMING_LANGUAGES-!!-Rust-!!-
-PROGRAMMING_LANGUAGES-!!-Java-!!-
-SOFTWARE_DESIGN-!!-Object-oriented design-!!-
-SOFTWARE_DESIGN-!!-Clean code-!!-
-SOFTWARE_DESIGN-!!-UML-!!-
-SOFTWARE_DESIGN-!!-QA-!!-
-SOFTWARE_DESIGN-!!-System design-!!-
+WEBDEV--!!--HTML--!!--
+WEBDEV--!!--CSS--!!--sass,less
+WEBDEV--!!--JavaScript--!!--js,es6,ecmascript
+WEBDEV--!!--Typescript--!!--
+WEBDEV--!!--Angular--!!--
+WEBDEV--!!--React--!!--redux
+WEBDEV--!!--Vue.js--!!--
+WEBDEV--!!--Django--!!--
+WEBDEV--!!--PHP--!!--
+WEBDEV--!!--Laravel--!!--
+WEBDEV--!!--Ruby on Rails--!!--
+WEBDEV--!!--Spring--!!--hibernate
+WEBDEV--!!--ASP.NET--!!--asp .net,asp.net
+WEBDEV--!!--Node.js--!!--
+WEBDEV--!!--Web applications & dev--!!--web development,single-pag,single page,pwa,progressive web apps,mern,mean
+MOBILE--!!--Android--!!--
+MOBILE--!!--Kotlin--!!--
+MOBILE--!!--React Native--!!--
+MOBILE--!!--iOS--!!--apple
+MOBILE--!!--Swift--!!--
+MOBILE--!!--Objective-C--!!--objective c
+MOBILE--!!--Ionic--!!--
+MOBILE--!!--Xamarin--!!--
+MOBILE--!!--Flutter--!!--
+DATASCIENCE--!!--Linear regression--!!--
+DATASCIENCE--!!--Logistic regression--!!--
+DATASCIENCE--!!--Reinforcement learning--!!--
+DATASCIENCE--!!--Deep learning--!!--
+DATASCIENCE--!!--Datasets--!!--
+DATASCIENCE--!!--Computer vision--!!--
+DATASCIENCE--!!--Recommender systems--!!--
+DATASCIENCE--!!--Face recognition--!!--
+DATASCIENCE--!!--Robotics--!!--
+DATASCIENCE--!!--Python for Data Science--!!--
+DATASCIENCE--!!--Neural Networks--!!--
+DATASCIENCE--!!--Bioinformatics--!!--
+DATASCIENCE--!!--Keras--!!--
+DATASCIENCE--!!--Tensorflow--!!--
+DATASCIENCE--!!--Pytorch--!!--
+DATASCIENCE--!!--OpenAI--!!--
+DATASCIENCE--!!--Data mining--!!--
+DATASCIENCE--!!--NLP--!!--
+DSA--!!--Arrays & matrices--!!--
+DSA--!!--Linked Lists--!!--
+DSA--!!--Stacks & Queues--!!--
+DSA--!!--Hash maps--!!--dictionary
+DSA--!!--Trees--!!--
+DSA--!!--Graphs--!!--
+DSA--!!--Strings--!!--
+DSA--!!--Heaps--!!--priority queue
+DSA--!!--Algorithms--!!--
+DSA--!!--Sorting--!!--
+DSA--!!--Searching--!!--
+DSA--!!--Greedy algorithms--!!--
+DSA--!!--Recursion & backtracking--!!--
+DSA--!!--Dynamic programming--!!--
+DSA--!!--Bit manipulation--!!--
+DSA--!!--Math & numerical--!!--
+DATABASES--!!--SQL--!!--
+DATABASES--!!--NoSQL--!!--
+DATABASES--!!--Cloud databases--!!--
+DATABASES--!!--Database design--!!--
+DATABASES--!!--DBMS--!!--
+DEVOPS--!!--Docker--!!--
+DEVOPS--!!--Kubernetes--!!--
+DEVOPS--!!--Teraform--!!--
+DEVOPS--!!--Jenkins--!!--
+DEVOPS--!!--AWS--!!--
+DEVOPS--!!--GCP--!!--
+DEVOPS--!!--Azure--!!--
+DEVOPS--!!--Ansible--!!--
+DEVOPS--!!--Version Control Systems--!!--
+DEVOPS--!!--Server administration--!!--
+DEVOPS--!!--Linux--!!--bash,ubuntu,red hat,centos,debian,fedora,arch
+PROGRAMMING_LANGUAGES--!!--C/C++--!!--cplusplus, c plus plus, cpp,c++
+PROGRAMMING_LANGUAGES--!!--C#--!!--csharp
+PROGRAMMING_LANGUAGES--!!--Python--!!--
+PROGRAMMING_LANGUAGES--!!--Perl--!!--
+PROGRAMMING_LANGUAGES--!!--Ruby--!!--
+PROGRAMMING_LANGUAGES--!!--Bash--!!--
+PROGRAMMING_LANGUAGES--!!--Fortran--!!--
+PROGRAMMING_LANGUAGES--!!--Haskell--!!--
+PROGRAMMING_LANGUAGES--!!--Go--!!--
+PROGRAMMING_LANGUAGES--!!--Scala--!!--
+PROGRAMMING_LANGUAGES--!!--Rust--!!--
+PROGRAMMING_LANGUAGES--!!--Java--!!--
+SOFTWARE_DESIGN--!!--Object-oriented design--!!--
+SOFTWARE_DESIGN--!!--Clean code--!!--
+SOFTWARE_DESIGN--!!--UML--!!--
+SOFTWARE_DESIGN--!!--QA--!!--
+SOFTWARE_DESIGN--!!--System design--!!--

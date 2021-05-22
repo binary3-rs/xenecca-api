@@ -64,16 +64,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
-	public CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration config = new CorsConfiguration();
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		// config.setAllowCredentials(true);
-		config.setAllowedOrigins(Arrays.asList("195.201.112.234", "*"));
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("*");
-		source.registerCorsConfiguration("/api/v1/**", config);
-		return source;
-	}
+//	@Bean
+//	public CorsConfigurationSource corsConfigurationSource() {
+//		CorsConfiguration config = new CorsConfiguration();
+//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//		// config.setAllowCredentials(true);
+//		config.addAllowedOrigin("*");
+//		config.addAllowedHeader("*");
+//		config.addAllowedMethod("*");
+//		source.registerCorsConfiguration("/api/v1/**", config);
+//		return source;
+//	}
 
 }

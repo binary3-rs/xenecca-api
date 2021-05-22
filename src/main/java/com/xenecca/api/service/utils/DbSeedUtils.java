@@ -66,7 +66,7 @@ public class DbSeedUtils {
 				new InputStreamReader(new ClassPathResource("tech-categories.txt").getInputStream()));
 		String st;
 		while ((st = reader.readLine()) != null) {
-			String[] components = st.split("-!!-");
+			String[] components = st.split("--!!--");
 			try {
 				String name = components[1];
 				LearningResourceDomain domain = LearningResourceDomain.valueOf(components[0]);

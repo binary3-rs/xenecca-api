@@ -79,7 +79,7 @@ public class Course implements Serializable {
 
 	@URL
 	@Column(name = "original_poster_url", unique = true)
-	private String _originalPosterURL;
+	private String _originalPosterUrl;
 
 	@Builder.Default
 	@Column(name = "redeemed_coupon_count", columnDefinition = "bigint default 0")
@@ -91,7 +91,7 @@ public class Course implements Serializable {
 
 	@URL
 	@Column(name = "host_url", unique = true, nullable = false, length = 300)
-	private String _hostURL;
+	private String _hostUrl;
 
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -102,12 +102,9 @@ public class Course implements Serializable {
 	@Column(name = "title", unique = true, nullable = false)
 	private String _title;
 
-	@Column(name = "udemy_id", unique = true, nullable = true)
-	private Long _udemyId;
-
 	@URL
 	@Column(name = "udemy_url", unique = true, nullable = false, length = 300)
-	private String _udemyURL;
+	private String _udemyUrl;
 
 	@UpdateTimestamp
 	@Column(name = "updated_at")
