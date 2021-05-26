@@ -11,14 +11,24 @@ public class CacheService {
 	@Autowired
 	CacheManager cacheManager;
 
-	public void evictAllCaches() {
-		cacheManager.getCacheNames().stream().forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+	// every 13hrs
+	@Scheduled(cron = "0 0 */13 * * *")
+	public void evictCourseDataCachesAtInterval() {
+		cacheManager.getCache("courses").clear();
+		cacheManager.getCache("categories").clear();
+		cacheManager.getCache("subcategories").clear();
 	}
 
-	// every 12:30 - 00:30 
-	@Scheduled(cron = "0 30 */12 * * *")
-	public void evictAllcachesAtIntervals() {
-		evictAllCaches();
+	// every 12 hours
+	@Scheduled(cron = "0 0 */18 * * *")
+	public void evictResourceCacheAtInterval() {
+		cacheManager.getCache("resources").clear();
+	}
+
+	// every 24 hours
+	@Scheduled(cron = "0 0 */24 * * *")
+	public void evictResourceCategoriesCacheAtInterval() {
+		cacheManager.getCache("resources").clear();
 	}
 
 }

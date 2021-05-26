@@ -48,8 +48,8 @@ public class ApiApplication {
 
 	@Bean
 	public CacheManager cacheManager() {
-		return new ConcurrentMapCacheManager(new String[] { "categories", "subcategories", "topics", "languages",
-				"resource-categories", "resource-domains" });
+		return new ConcurrentMapCacheManager(new String[] { "categories", "subcategories",
+				"resource-categories", "resource-domains", "courses", "resources" });
 	}
 
 	public static void main(String[] args) {

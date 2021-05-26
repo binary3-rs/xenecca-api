@@ -21,7 +21,6 @@ import com.xenecca.api.model.learnresource.LearningResource;
 import com.xenecca.api.model.type.MaterialType;
 import com.xenecca.api.model.type.ResourceType;
 import com.xenecca.api.service.SearchService;
-import com.xenecca.api.utils.Constants;
 import com.xenecca.api.utils.SortAndCompareUtils;
 import com.xenecca.api.utils.model.PageResult;
 
@@ -44,8 +43,7 @@ public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private ElasticsearchOperations _template;
 
-	private Criteria createCourseCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId,
-			Integer languageId) {
+	private Criteria createCourseCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId) {
 		Criteria criteria = new Criteria();
 		if (searchTerm != null && !searchTerm.isEmpty()) {
 			criteria.subCriteria(new Criteria("title").contains(searchTerm).or("headline").contains(searchTerm));
@@ -57,10 +55,6 @@ public class SearchServiceImpl implements SearchService {
 			} else {
 				criteria.subCriteria(new Criteria("category").matches(categoryId));
 			}
-		}
-
-		if (languageId != null) {
-			criteria.subCriteria(new Criteria("language").matches(languageId));
 		}
 
 		return criteria;
@@ -100,12 +94,11 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public PageResult<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId,
-			Integer languageId, Integer pageNo, Integer pageSize) {
+			Integer pageNo, Integer pageSize) {
 
-		Criteria criteria = createCourseCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId, languageId);
+		Criteria criteria = createCourseCriteriaBasedOnParams(searchTerm, categoryId, subcategoryId);
 		Query query = new CriteriaQuery(criteria);
-		Pageable pageable = SortAndCompareUtils.createPageable(pageNo,
-				pageSize != null ? pageSize : Constants.COURSE_PAGE_SIZE, "date", "desc");
+		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, pageSize, "date", "desc");
 		query.setPageable(pageable);
 		return search(query, CourseDoc.class);
 	}
@@ -115,8 +108,7 @@ public class SearchServiceImpl implements SearchService {
 			ResourceType resourceType, MaterialType materialType, Integer pageNo, Integer pageSize) {
 		Criteria criteria = createResourceCriteriaBasedOnParams(searchTerm, categoryId, resourceType, materialType);
 		Query query = new CriteriaQuery(criteria);
-		Pageable pageable = SortAndCompareUtils.createPageable(pageNo,
-				pageSize != null ? pageSize : Constants.RESOURCES_PAGE_SIZE, null, null);
+		Pageable pageable = SortAndCompareUtils.createPageable(pageNo, pageSize, null, null);
 		query.setPageable(pageable);
 		return search(query, LearningResourceDoc.class);
 	}

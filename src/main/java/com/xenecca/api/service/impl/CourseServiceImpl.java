@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class CourseServiceImpl implements CourseService {
 	private CourseRepository _courseRepository;
 
 	@Override
+	@Cacheable(cacheNames = "courses")
 	public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize) {
 		Page<Course> pageOfCourses = _getAllCourses(pageNo, pageSize, "date", "desc");
 		return new PageResult<Course>(pageOfCourses.getContent(), pageOfCourses.getTotalElements(), pageSize);

@@ -21,6 +21,7 @@ import com.xenecca.api.model.Course;
 import com.xenecca.api.model.elastic.CourseDoc;
 import com.xenecca.api.service.CourseService;
 import com.xenecca.api.service.SearchService;
+import com.xenecca.api.utils.Constants;
 import com.xenecca.api.utils.model.PageResult;
 
 import io.swagger.annotations.ApiOperation;
@@ -51,18 +52,17 @@ public class CourseController {
 			@ApiParam(name = "q", type = "String", value = "Search term", example = "java", required = false) @RequestParam(name = "q", required = false) String searchTerm,
 			@RequestParam(name = "category", required = false) Integer categoryId,
 			@RequestParam(value = "subcategory", required = false) Integer subcategoryId,
-			@RequestParam(value = "language", required = false) Integer languageId,
-			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(name = "pageSize", required = false) Integer pageSize) {
+			@RequestParam(name = "page", defaultValue = "0") Integer pageNo,
+			@RequestParam(name = "size", defaultValue = Constants.COURSE_PAGE_SIZE_AS_STR) Integer pageSize) {
 		List<CoursePreviewDTO> courseResults;
 		long numOfResults;
-		if (searchTerm == null && categoryId == null && subcategoryId == null && languageId == null) {
+		if (searchTerm == null && categoryId == null && subcategoryId == null) {
 			PageResult<Course> courses = getCourseService().getAllCourses(pageNo, pageSize);
 			courseResults = getCoursePreviewMapper().mapCoursesToDTOList(courses.getResults());
 			numOfResults = courses.getNumOfResults();
 		} else {
 			PageResult<CourseDoc> searchResult = getSearchService().searchCourses(searchTerm, categoryId, subcategoryId,
-					languageId, pageNo, pageSize);
+					pageNo, pageSize);
 			courseResults = getCoursePreviewMapper().mapDocToDTOList(searchResult.getResults());
 			numOfResults = searchResult.getNumOfResults();
 		}

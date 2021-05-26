@@ -38,7 +38,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class LearningResourceCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,7 +77,7 @@ public class LearningResourceCategory {
 		_name = name;
 		_domain = domain;
 	}
-	
+
 	public LearningResourceCategory(String name, LearningResourceDomain domain, String tags, String logo) {
 		_name = name;
 		_domain = domain;

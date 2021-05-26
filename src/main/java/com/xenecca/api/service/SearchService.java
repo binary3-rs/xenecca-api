@@ -14,7 +14,7 @@ public interface SearchService {
 	public void deleteResourceDocument(Long resourceId);
 
 	public PageResult<CourseDoc> searchCourses(String searchTerm, Integer categoryId, Integer subcategoryId,
-			Integer languageId, Integer pageNo, Integer pageSize);
+			Integer pageNo, Integer pageSize);
 
 	public PageResult<LearningResourceDoc> searchResources(String searchTerm, Long categoryId,
 			ResourceType resourceType, MaterialType materialType, Integer pageNo, Integer pageSize);

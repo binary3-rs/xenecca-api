@@ -40,8 +40,7 @@ public class Language {
 	private Long _id;
 
 	@NotBlank(message = "Language name must not be blank!")
-//	@Min(1)
-	@Column(name = "name", unique = true, nullable = false, length=30)
+	@Column(name = "name", unique = true, nullable = false, length = 30)
 	private String _name;
 
 	@Builder.Default

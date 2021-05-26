@@ -35,6 +35,7 @@ import com.xenecca.api.model.type.MaterialType;
 import com.xenecca.api.model.type.ResourceType;
 import com.xenecca.api.service.LearningResourceService;
 import com.xenecca.api.service.SearchService;
+import com.xenecca.api.utils.Constants;
 import com.xenecca.api.utils.model.PageResult;
 
 import io.swagger.annotations.ApiOperation;
@@ -74,9 +75,10 @@ public class LearningResourceController {
 			@RequestParam(name = "category", required = false) Long categoryId,
 			@RequestParam(name = "resourceType", required = false) ResourceType resourceType,
 			@RequestParam(name = "materialType", required = false) MaterialType materialType,
-			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(name = "pageSize", required = false) Integer pageSize) {
+			@RequestParam(name = "page", defaultValue = "0") Integer pageNo,
+			@RequestParam(name = "size", defaultValue = Constants.RESOURCES_PAGE_SIZE_AS_STR) Integer pageSize) {
 		long numOfResults;
+
 		List<LearningResourceDTO> resourceResults;
 		if (searchTerm == null && categoryId == null && resourceType == null && materialType == null) {
 			PageResult<LearningResource> resources = getLearningResourceService().getAllResources(pageNo, pageSize);
