@@ -1,7 +1,7 @@
 package com.xenecca.api.service;
 
 import com.xenecca.api.dto.request.NewSubcategoryDTO;
-import com.xenecca.api.model.Subcategory;
+import com.xenecca.api.model.course.Subcategory;
 
 public interface SubcategoryService {
 	

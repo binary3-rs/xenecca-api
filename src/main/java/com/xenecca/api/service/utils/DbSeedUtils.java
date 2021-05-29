@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 import com.xenecca.api.dao.CategoryRepository;
 import com.xenecca.api.dao.LearningResourceCategoryRepository;
 import com.xenecca.api.dao.UserRepository;
-import com.xenecca.api.model.Category;
 import com.xenecca.api.model.User;
+import com.xenecca.api.model.course.Category;
 import com.xenecca.api.model.learnresource.LearningResourceCategory;
 import com.xenecca.api.model.type.LearningResourceDomain;
 

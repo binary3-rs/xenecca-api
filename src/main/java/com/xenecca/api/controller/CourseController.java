@@ -17,7 +17,7 @@ import com.xenecca.api.dto.response.CourseDTO;
 import com.xenecca.api.dto.response.CoursePreviewDTO;
 import com.xenecca.api.dto.response.PageResultDTO;
 import com.xenecca.api.mapper.CoursePreviewMapper;
-import com.xenecca.api.model.Course;
+import com.xenecca.api.model.course.Course;
 import com.xenecca.api.model.elastic.CourseDoc;
 import com.xenecca.api.service.CourseService;
 import com.xenecca.api.service.SearchService;

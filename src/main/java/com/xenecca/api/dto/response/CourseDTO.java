@@ -1,7 +1,8 @@
 package com.xenecca.api.dto.response;
 
 import java.sql.Timestamp;
-import com.xenecca.api.model.Course;
+
+import com.xenecca.api.model.course.Course;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

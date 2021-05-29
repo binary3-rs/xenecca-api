@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.xenecca.api.dao.CategoryRepository;
 import com.xenecca.api.dto.request.NewCategoryDTO;
-import com.xenecca.api.model.Category;
+import com.xenecca.api.model.course.Category;
 import com.xenecca.api.service.CategoryService;
 
 import lombok.Getter;

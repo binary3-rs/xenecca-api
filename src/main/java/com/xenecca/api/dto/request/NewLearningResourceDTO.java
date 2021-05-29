@@ -1,8 +1,10 @@
 package com.xenecca.api.dto.request;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
+
 import com.xenecca.api.model.type.ResourceType;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +32,7 @@ public class NewLearningResourceDTO {
 	@Builder.Default
 	private ResourceType _resourceType = ResourceType.TUTORIAL;
 
+	@NotNull(message = "You must provide category of the resource!")
 	private Long _resourceCategoryId;
 
 }

@@ -1,7 +1,7 @@
 package com.xenecca.api.service;
 
 import com.xenecca.api.dto.request.NewCategoryDTO;
-import com.xenecca.api.model.Category;
+import com.xenecca.api.model.course.Category;
 
 public interface CategoryService {
 	

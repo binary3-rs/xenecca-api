@@ -5,7 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 
 import com.xenecca.api.dto.response.CategoryDTO;
-import com.xenecca.api.model.Category;
+import com.xenecca.api.model.course.Category;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {

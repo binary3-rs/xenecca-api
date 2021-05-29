@@ -2,7 +2,7 @@ package com.xenecca.api.dto.response;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.xenecca.api.model.Course;
+import com.xenecca.api.model.course.Course;
 import com.xenecca.api.model.elastic.CourseDoc;
 
 import lombok.AllArgsConstructor;

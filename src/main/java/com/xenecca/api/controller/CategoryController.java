@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xenecca.api.dto.request.NewCategoryDTO;
 import com.xenecca.api.dto.response.CategoryDTO;
 import com.xenecca.api.mapper.CategoryMapper;
-import com.xenecca.api.model.Category;
+import com.xenecca.api.model.course.Category;
 import com.xenecca.api.service.CategoryService;
 
 import io.swagger.annotations.ApiOperation;

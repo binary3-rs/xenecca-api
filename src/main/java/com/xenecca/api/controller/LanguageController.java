@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xenecca.api.dto.request.NewLanguageDTO;
 import com.xenecca.api.dto.response.LanguageDTO;
 import com.xenecca.api.mapper.LanguageMapper;
-import com.xenecca.api.model.Language;
+import com.xenecca.api.model.course.Language;
 import com.xenecca.api.service.LanguageService;
 
 import io.swagger.annotations.ApiOperation;

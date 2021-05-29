@@ -10,7 +10,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.xenecca.api.model.Course;
+import com.xenecca.api.model.course.Course;
 
 @Repository
 public interface CourseRepository extends PagingAndSortingRepository<Course, Long> {

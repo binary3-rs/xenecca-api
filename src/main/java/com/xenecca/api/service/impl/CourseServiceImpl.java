@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.xenecca.api.dao.CourseRepository;
-import com.xenecca.api.model.Course;
+import com.xenecca.api.model.course.Course;
 import com.xenecca.api.service.CourseService;
 import com.xenecca.api.utils.FileUtils;
 import com.xenecca.api.utils.SortAndCompareUtils;

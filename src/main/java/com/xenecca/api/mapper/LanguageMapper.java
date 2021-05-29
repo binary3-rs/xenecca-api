@@ -5,7 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 
 import com.xenecca.api.dto.response.LanguageDTO;
-import com.xenecca.api.model.Language;
+import com.xenecca.api.model.course.Language;
 
 @Mapper(componentModel = "spring")
 public interface LanguageMapper {

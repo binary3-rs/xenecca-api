@@ -5,7 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 
 import com.xenecca.api.dto.response.SubcategoryDTO;
-import com.xenecca.api.model.Subcategory;
+import com.xenecca.api.model.course.Subcategory;
 
 @Mapper(componentModel = "spring")
 public interface SubcategoryMapper {

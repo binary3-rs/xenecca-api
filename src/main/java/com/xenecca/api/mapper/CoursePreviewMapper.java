@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.xenecca.api.dto.response.CoursePreviewDTO;
-import com.xenecca.api.model.Course;
+import com.xenecca.api.model.course.Course;
 import com.xenecca.api.model.elastic.CourseDoc;
 
 @Component

@@ -3,7 +3,7 @@ package com.xenecca.api.dao;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.xenecca.api.model.Subcategory;
+import com.xenecca.api.model.course.Subcategory;
 
 @Repository
 public interface SubcategoryRepository extends CrudRepository<Subcategory, Long> {

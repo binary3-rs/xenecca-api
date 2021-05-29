@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.xenecca.api.dao.CategoryRepository;
 import com.xenecca.api.dao.SubcategoryRepository;
 import com.xenecca.api.dto.request.NewSubcategoryDTO;
-import com.xenecca.api.model.Category;
-import com.xenecca.api.model.Subcategory;
+import com.xenecca.api.model.course.Category;
+import com.xenecca.api.model.course.Subcategory;
 import com.xenecca.api.service.SubcategoryService;
 
 import lombok.Getter;

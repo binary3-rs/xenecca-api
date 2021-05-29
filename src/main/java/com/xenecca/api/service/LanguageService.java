@@ -1,7 +1,7 @@
 package com.xenecca.api.service;
 
 import com.xenecca.api.dto.request.NewLanguageDTO;
-import com.xenecca.api.model.Language;
+import com.xenecca.api.model.course.Language;
 
 public interface LanguageService {
 

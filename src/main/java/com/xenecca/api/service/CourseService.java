@@ -1,6 +1,6 @@
 package com.xenecca.api.service;
 
-import com.xenecca.api.model.Course;
+import com.xenecca.api.model.course.Course;
 import com.xenecca.api.utils.model.PageResult;
 
 public interface CourseService {

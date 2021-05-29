@@ -1,10 +1,9 @@
-package com.xenecca.api.model;
+package com.xenecca.api.model.course;
 
 import java.sql.Time;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,21 +31,21 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class Category {
+public class Language {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long _id;
 
-	@NotBlank(message = "Category name must not be blank!")
-	@Column(name = "name", unique = true, nullable = false, length = 60)
+	@NotBlank(message = "Language name must not be blank!")
+	@Column(name = "name", unique = true, nullable = false, length = 30)
 	private String _name;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "_category", orphanRemoval = true)
-	private Set<Subcategory> _subcategories = new HashSet<Subcategory>();
+	@OneToMany(mappedBy = "_language")
+	private Set<Course> _courses = new HashSet<>();
 
 	@CreationTimestamp
 	@Column(name = "created_at")
@@ -56,12 +55,4 @@ public class Category {
 	@Column(name = "updated_at")
 	private Time _updatedAt;
 
-	public Category(String name) {
-		_name = name;
-	}
-
-	public void addSubcategory(Subcategory subcategory) {
-		_subcategories.add(subcategory);
-		// subcategory.setCategory(this);
-	}
 }

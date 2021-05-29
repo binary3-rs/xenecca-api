@@ -1,8 +1,10 @@
 package com.xenecca.api.dto.response;
 
-import com.xenecca.api.model.course.Category;
+import com.xenecca.api.model.type.MessageStatus;
+import com.xenecca.api.model.type.MessageSubject;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,16 +13,15 @@ import lombok.experimental.Accessors;
 @Accessors(prefix = "_")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDTO {
+public class MessageDTO {
+
 	private Long _id;
 	private String _name;
-
-	public CategoryDTO(Category category) {
-		if (category != null) {
-			_id = category.getId();
-			_name = category.getName();
-		}
-	}
+	private String _content;
+	private String _email;
+	private MessageSubject _subject;
+	private MessageStatus _status;
 }

@@ -1,4 +1,4 @@
-package com.xenecca.api.model;
+package com.xenecca.api.model.course;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
