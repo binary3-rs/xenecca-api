@@ -1,10 +1,6 @@
 package com.xenecca.api.dto.response;
 
-import com.xenecca.api.model.type.MessageStatus;
-import com.xenecca.api.model.type.MessageSubject;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,15 +9,12 @@ import lombok.experimental.Accessors;
 @Accessors(prefix = "_")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageDTO {
+public class SubscriptionDTO {
 
-	private Long _id;
-	private String _name;
-	private String _content;
 	private String _email;
-	private String _subject;
-	private String _status;
+	private String _unsubscribeToken;
+	private String _type;
+
 }

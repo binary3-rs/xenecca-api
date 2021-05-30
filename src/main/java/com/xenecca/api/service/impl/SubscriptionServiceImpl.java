@@ -30,9 +30,24 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		Subscription subscription = Subscription.builder().email(subscriptionData.getEmail()).build();
 		try {
 			getSubscriptionRepository().save(subscription);
-		} catch(ConstraintViolationException | DataIntegrityViolationException ex) {
+		} catch (ConstraintViolationException | DataIntegrityViolationException ex) {
 			throw new SubscriptionAlreadyExistsException("You're already subscribed to our notifications!");
 		}
+	}
+
+	@Override
+	public Iterable<Subscription> getAllSubscriptions() {
+		return getSubscriptionRepository().findAll();
+	}
+
+	@Override
+	public boolean unsubscribe(String unsubscribeToken) {
+		Subscription subscription = getSubscriptionRepository().findBy_unsubscribeToken(unsubscribeToken).orElse(null);
+		if (subscription != null) {
+			getSubscriptionRepository().delete(subscription);
+			return true;
+		}
+		return false;
 	}
 
 }
