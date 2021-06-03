@@ -45,11 +45,6 @@ public class Course implements Serializable {
 	 */
 	private static final long serialVersionUID = 3783958850800043842L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long _id;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category _category;
@@ -62,24 +57,37 @@ public class Course implements Serializable {
 	@Column(name = "description")
 	private String _description;
 
-	@Size(min = 0, max = 1200)
-	@Column(name = "objectives")
-	private String _objectives;
-
 	@Column(name = "headline", length = 255)
 	private String _headline;
 
-	@Column(name = "poster_path")
-	private String _posterPath;
+	@URL
+	@Column(name = "host_url", unique = true, nullable = false, length = 300)
+	private String _hostUrl;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long _id;
 
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "language_id")
 	private Language _language;
 
+	@Size(min = 0, max = 1200)
+	@Column(name = "objectives")
+	private String _objectives;
+
 	@URL
 	@Column(name = "original_poster_url", unique = true)
 	private String _originalPosterUrl;
+
+	@Column(name = "poster_path")
+	private String _posterPath;
+
+	@Builder.Default
+	@Column(name = "published_on_discord")
+	private Boolean _publishedOnDiscord = false;
 
 	@Builder.Default
 	@Column(name = "redeemed_coupon_count", columnDefinition = "bigint default 0")
@@ -89,9 +97,8 @@ public class Course implements Serializable {
 	@Column(name = "requirements")
 	private String _requirements;
 
-	@URL
-	@Column(name = "host_url", unique = true, nullable = false, length = 300)
-	private String _hostUrl;
+	@Column(name = "slug", unique = true, nullable = false, length = 350)
+	private String _slug;
 
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)

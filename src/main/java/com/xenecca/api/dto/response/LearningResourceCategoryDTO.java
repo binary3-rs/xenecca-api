@@ -14,7 +14,6 @@ import lombok.experimental.Accessors;
 public class LearningResourceCategoryDTO {
 	private Long _id;
 	private String _name;
-	private String _tags;
 	private String _logo;
 
 }

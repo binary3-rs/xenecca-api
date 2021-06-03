@@ -3,6 +3,7 @@ package com.xenecca.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,10 +71,20 @@ public class CourseController {
 		return new PageResultDTO<CoursePreviewDTO>(courseResults, numOfResults, pageSize);
 	}
 
-	@GetMapping("{id}")
-	@ApiOperation(value = "Get a course (by id)")
-	public CourseDTO getCourseById(@PathVariable("id") Long courseId) {
-		Course course = getCourseService().getCourseById(courseId);
+	/*
+	 * @GetMapping("{id}")
+	 * 
+	 * @ApiOperation(value = "Get a course (by id)") public CourseDTO
+	 * getCourseById(@PathVariable("id") Long courseId) { Course course =
+	 * getCourseService().getCourseById(courseId); return new CourseDTO(course);
+	 * 
+	 * }
+	 */
+	@Cacheable(cacheNames = "courses")
+	@GetMapping("{slug}")
+	@ApiOperation(value = "Get a course (by slug)")
+	public CourseDTO getCourseBySlug(@PathVariable("slug") String slug) {
+		Course course = getCourseService().getCourseBySlug(slug);
 		return new CourseDTO(course);
 
 	}

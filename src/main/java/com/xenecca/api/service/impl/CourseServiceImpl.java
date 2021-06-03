@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
 	private CourseRepository _courseRepository;
 
 	@Override
-	@Cacheable(cacheNames = "courses")
+	@Cacheable(cacheNames = "courses-by-page")
 	public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize) {
 		Page<Course> pageOfCourses = _getAllCourses(pageNo, pageSize, "date", "desc");
 		return new PageResult<Course>(pageOfCourses.getContent(), pageOfCourses.getTotalElements(), pageSize);
@@ -41,6 +42,11 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public Course getCourseById(Long courseId) {
 		return getCourseRepository().findById(courseId).get();
+	}
+	
+	@Override
+	public Course getCourseBySlug(String slug) {
+		return getCourseRepository().findBy_slug(slug).get();
 	}
 
 	@Override
@@ -66,8 +72,10 @@ public class CourseServiceImpl implements CourseService {
 		getCourseRepository().updateReedemedCouponCount(courseId);
 
 	}
-
+	
+	
 	@Override
+	@CacheEvict(cacheNames= {"courses", "courses-by-page"}, allEntries=true)
 	public void deleteCourseById(Long courseId) {
 		Course course = getCourseRepository().findById(courseId).get();
 		String posterPath = course.getPosterPath();
@@ -88,4 +96,6 @@ public class CourseServiceImpl implements CourseService {
 		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, pageSize, sortBy, order);
 		return getCourseRepository().findAll(sortedPageable);
 	}
+
+
 }

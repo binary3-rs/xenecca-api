@@ -54,13 +54,13 @@ public class LearningResourceCategoryService implements com.xenecca.api.service.
 	}
 
 	@Override
-	@Cacheable(cacheNames = "resource-categories")
+	//@Cacheable(cacheNames = "resource-categories")
 	public Iterable<LearningResourceCategory> getResourceCategoriesByDomain(LearningResourceDomain domain) {
 		return getResourceCategoryRepository().findBy_domain(domain);
 	}
 
 	@Override
-	@Cacheable(cacheNames = "resource-domains")
+	//@Cacheable(cacheNames = "resource-domains")
 	public Map<String, String> getResourceCategoryDomains() {
 		Map<String, String> domains = new HashMap<String, String>();
 		for (LearningResourceDomain domain : LearningResourceDomain.values()) {

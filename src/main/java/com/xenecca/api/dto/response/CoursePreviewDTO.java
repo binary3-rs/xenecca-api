@@ -24,6 +24,8 @@ public class CoursePreviewDTO {
 	private String _title;
 
 	private String _headline;
+	
+	private String _slug;
 
 	private String _poster;
 
@@ -33,6 +35,7 @@ public class CoursePreviewDTO {
 
 	public CoursePreviewDTO(CourseDoc doc) {
 		_id = doc.getDocId();
+		_slug = doc.getSlug();
 		_title = doc.getTitle();
 		_headline = doc.getHeadline();
 		_poster = doc.getPoster();
@@ -43,6 +46,7 @@ public class CoursePreviewDTO {
 	public CoursePreviewDTO(Course course) {
 		_id = course.getId();
 		_title = course.getTitle();
+		_slug = course.getSlug();
 		_headline = course.getHeadline();
 		_poster = course.getPosterPath();
 		_originalPosterUrl = course.getOriginalPosterUrl();

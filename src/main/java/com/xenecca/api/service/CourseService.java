@@ -9,6 +9,8 @@ public interface CourseService {
 
 	public Course getCourseById(Long courseId);
 
+	public Course getCourseBySlug(String slug);
+	
 	public Iterable<Course> getSimilarCourses(Long courseId, Integer numOfCourses);
 
 	public Iterable<Course> recommendTopCourses(Integer numOfCourses);

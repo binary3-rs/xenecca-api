@@ -1,5 +1,7 @@
 package com.xenecca.api.dao;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -18,6 +20,8 @@ public interface CourseRepository extends PagingAndSortingRepository<Course, Lon
 	Page<Course> findAllBy_category__id(Long id, Pageable pageable);
 
 	Page<Course> findAllBy_subcategory__id(Long id, Pageable pageable);
+	
+	Optional<Course> findBy_slug(String slug);
 
 	@Modifying
 	@Transactional

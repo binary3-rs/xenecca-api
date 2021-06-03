@@ -3,7 +3,6 @@ package com.xenecca.api.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.xenecca.api.dao.CategoryRepository;
@@ -41,13 +40,11 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = "subcategories")
 	public Iterable<Subcategory> getAllSubcategories() {
 		return getSubcategoryRepository().findAll();
 	}
 
 	@Override
-	@Cacheable(cacheNames = "subcategories")
 	public Iterable<Subcategory> getSubcategoriesByCategory(Long categoryId) {
 		return getSubcategoryRepository().findBy_category__id(categoryId);
 	}

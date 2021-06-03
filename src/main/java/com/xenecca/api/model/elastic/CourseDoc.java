@@ -51,6 +51,9 @@ public class CourseDoc {
 	@Field(name = "poster", index = false, storeNullValue = true, type = Text)
 	private String _poster;
 
+	@Field(name = "slug", index = false, storeNullValue = false, type = Text)
+	private String _slug;
+
 	@Field(name = "original_poster_url", index = false, storeNullValue = true, type = Text)
 	private String _originalPosterUrl;
 

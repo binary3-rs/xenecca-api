@@ -69,7 +69,7 @@ DEVOPS--!!--AWS--!!--
 DEVOPS--!!--GCP--!!--
 DEVOPS--!!--Azure--!!--
 DEVOPS--!!--Ansible--!!--
-DEVOPS--!!--Version Control Systems--!!--
+DEVOPS--!!--Version Control Systems--!!--git, github
 DEVOPS--!!--Server administration--!!--
 DEVOPS--!!--Linux--!!--bash,ubuntu,red hat,centos,debian,fedora,arch
 PROGRAMMING_LANGUAGES--!!--C/C++--!!--cplusplus, c plus plus, cpp,c++
@@ -89,3 +89,4 @@ SOFTWARE_DESIGN--!!--Clean code--!!--
 SOFTWARE_DESIGN--!!--UML--!!--
 SOFTWARE_DESIGN--!!--QA--!!--
 SOFTWARE_DESIGN--!!--System design--!!--
+COMPUTER_SCIENCE--!!--Tools--!!--LaTeX, cmake

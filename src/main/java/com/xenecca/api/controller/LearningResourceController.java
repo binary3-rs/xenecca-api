@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -108,6 +109,7 @@ public class LearningResourceController {
 
 	}
 
+	@Cacheable(cacheNames = "resource-types", key = "#root.method")
 	@GetMapping("/types")
 	@ApiOperation(value = "Get learning resource types")
 	public LearningResourceTypeDTO getResourceTypes() {

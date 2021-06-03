@@ -3,6 +3,7 @@ package com.xenecca.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +43,7 @@ public class CategoryController {
 		return getCategoryMapper().mapToDTO(getCategoryService().addCategory(categoryData));
 	}
 
+	@Cacheable(value="categories", key="#root.method")
 	@GetMapping
 	@ApiOperation(value = "Get all categories", produces = "application/json")
 	public List<CategoryDTO> getAllCategories() {

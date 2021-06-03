@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,15 +53,24 @@ public class LearningResourceCategoryController {
 				.mapToDTO(getResourceCategoryService().addResourceCategory(resourceCategoryData));
 	}
 
-	@GetMapping
+	@Cacheable(cacheNames = "resource-categories", key = "#domain.getName()", sync = true)
+	@GetMapping(params = { "domain" })
 	@ApiOperation(value = "Get learning resource categories (by domain)", notes = "Get resource categories. If the domain is ommited, returns all categories.")
 	public List<LearningResourceCategoryDTO> getResourceCategories(LearningResourceDomain domain) {
-		Iterable<LearningResourceCategory> categories = (domain == null)
-				? getResourceCategoryService().getAllResourceCategories()
-				: getResourceCategoryService().getResourceCategoriesByDomain(domain);
+		Iterable<LearningResourceCategory> categories = getResourceCategoryService()
+				.getResourceCategoriesByDomain(domain);
 		return getResourceCategoryMapper().mapToDTOList(categories);
 	}
 
+	@Cacheable(cacheNames = "resource-categories", key = "#root.method")
+	@GetMapping
+	@ApiOperation(value = "Get all learning resource categories", notes = "Get resource categories.")
+	public List<LearningResourceCategoryDTO> getAllResource() {
+		Iterable<LearningResourceCategory> categories = getResourceCategoryService().getAllResourceCategories();
+		return getResourceCategoryMapper().mapToDTOList(categories);
+	}
+
+	@Cacheable(value = "resource-domains", key = "#root.method")
 	@GetMapping("/domains")
 	@ApiOperation(value = "Get learning resource category domains")
 	public Map<String, String> getResourceCategoryDomains() {

@@ -24,6 +24,15 @@
 				}
 			}
 		},
+		"slug": {
+			"type": "text",
+			"fields": {
+				"keyword": {
+					"type": "keyword",
+					"ignore_above": 300
+				}
+			}
+		},
 		"language": {
 			"type": "long"
 		},
