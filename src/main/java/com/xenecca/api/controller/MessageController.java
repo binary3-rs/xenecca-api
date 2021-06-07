@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xenecca.api.dto.request.ChangeMessageStatusDTO;
 import com.xenecca.api.dto.request.NewMessageDTO;
 import com.xenecca.api.dto.response.MessageDTO;
+import com.xenecca.api.dto.response.ValueMapDTO;
 import com.xenecca.api.mapper.MessageMapper;
 import com.xenecca.api.service.MessageService;
 
@@ -30,7 +30,6 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/api/v1/messages/")
 public class MessageController {
 
 	@Autowired
@@ -40,28 +39,33 @@ public class MessageController {
 	private MessageMapper _messageMapper;
 
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping
+	@PostMapping("/api/v1/contact")
 	public void addMessage(@Valid @RequestBody NewMessageDTO messageData) {
 		getMessageService().addMessage(messageData);
 	}
 
-	@GetMapping
+	@GetMapping("/api/v1/contact/subject-types")
+	public ValueMapDTO getSubjectTypes() {
+		return getMessageService().getSubjectTypes();
+	}
+
+	@GetMapping("/api/v1/messages/")
 	public List<MessageDTO> getAllMessages() {
 		return getMessageMapper().mapToDTOList(getMessageService().getAllMessages());
 	}
 
-	@GetMapping("{id}")
+	@GetMapping("/api/v1/messages/{id}")
 	public MessageDTO getMessage(@PathVariable("id") Long id) {
 		return getMessageMapper().mapToDTO(getMessageService().getMessage(id));
 	}
 
-	@PatchMapping("{id}")
+	@PatchMapping("/api/v1/messages/{id}")
 	public MessageDTO changeMessageStatus(@PathVariable("id") Long id, @RequestBody ChangeMessageStatusDTO statusData) {
 		return getMessageMapper().mapToDTO(getMessageService().changeMessageStatus(id, statusData.getStatus()));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("{id}")
+	@DeleteMapping("/api/v1/messages/{id}")
 	public void deleteMessage(@PathVariable("id") Long id) {
 		getMessageService().deleteMessage(id);
 	}

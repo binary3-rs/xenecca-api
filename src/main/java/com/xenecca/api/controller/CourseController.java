@@ -80,7 +80,7 @@ public class CourseController {
 	 * 
 	 * }
 	 */
-	@Cacheable(cacheNames = "courses")
+	@Cacheable(cacheNames = "courses", key = "#slug", sync = true)
 	@GetMapping("{slug}")
 	@ApiOperation(value = "Get a course (by slug)")
 	public CourseDTO getCourseBySlug(@PathVariable("slug") String slug) {
@@ -97,6 +97,7 @@ public class CourseController {
 
 	}
 
+	@Cacheable(cacheNames = "similar-courses", key = "#courseId", sync = true)
 	@GetMapping("{id}/similar")
 	@ApiOperation(value = "Get similar courses")
 	public List<CoursePreviewDTO> getSimilarCourses(@PathVariable("id") Long courseId,
@@ -105,6 +106,7 @@ public class CourseController {
 				.mapCoursesToDTOList(getCourseService().getSimilarCourses(courseId, numOfCourses));
 	}
 
+	@Cacheable(cacheNames = "top-courses", sync = true)
 	@GetMapping("recommend")
 	@ApiOperation(value = "Get recommended courses")
 	public List<CoursePreviewDTO> recommendTopCourses(

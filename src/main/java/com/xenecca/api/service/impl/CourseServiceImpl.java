@@ -32,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
 	private CourseRepository _courseRepository;
 
 	@Override
-	@Cacheable(cacheNames = "courses-by-page")
+	@Cacheable(cacheNames = "courses-by-page", sync = true)
 	public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize) {
 		Page<Course> pageOfCourses = _getAllCourses(pageNo, pageSize, "date", "desc");
 		return new PageResult<Course>(pageOfCourses.getContent(), pageOfCourses.getTotalElements(), pageSize);
@@ -43,7 +43,7 @@ public class CourseServiceImpl implements CourseService {
 	public Course getCourseById(Long courseId) {
 		return getCourseRepository().findById(courseId).get();
 	}
-	
+
 	@Override
 	public Course getCourseBySlug(String slug) {
 		return getCourseRepository().findBy_slug(slug).get();
@@ -72,10 +72,9 @@ public class CourseServiceImpl implements CourseService {
 		getCourseRepository().updateReedemedCouponCount(courseId);
 
 	}
-	
-	
+
 	@Override
-	@CacheEvict(cacheNames= {"courses", "courses-by-page"}, allEntries=true)
+	@CacheEvict(cacheNames = { "courses", "courses-by-page", "similar-courses", "top-courses" }, allEntries = true)
 	public void deleteCourseById(Long courseId) {
 		Course course = getCourseRepository().findById(courseId).get();
 		String posterPath = course.getPosterPath();
@@ -96,6 +95,5 @@ public class CourseServiceImpl implements CourseService {
 		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, pageSize, sortBy, order);
 		return getCourseRepository().findAll(sortedPageable);
 	}
-
 
 }

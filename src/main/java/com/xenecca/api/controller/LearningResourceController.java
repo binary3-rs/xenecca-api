@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xenecca.api.dto.request.NewLearningResourceDTO;
 import com.xenecca.api.dto.response.LearningResourceDTO;
-import com.xenecca.api.dto.response.LearningResourceTypeDTO;
+import com.xenecca.api.dto.response.ValueMapDTO;
 import com.xenecca.api.dto.response.PageResultDTO;
 import com.xenecca.api.mapper.LearningResourceMapper;
 import com.xenecca.api.model.elastic.LearningResourceDoc;
@@ -109,15 +109,15 @@ public class LearningResourceController {
 
 	}
 
-	@Cacheable(cacheNames = "resource-types", key = "#root.method")
+	@Cacheable(cacheNames = "resource-types", sync = true)
 	@GetMapping("/types")
 	@ApiOperation(value = "Get learning resource types")
-	public LearningResourceTypeDTO getResourceTypes() {
+	public ValueMapDTO getResourceTypes() {
 		Map<String, String> types = new HashMap<String, String>();
 		for (ResourceType type : ResourceType.values()) {
 			types.put(type.toString(), type.getName());
 		}
-		return new LearningResourceTypeDTO(types);
+		return new ValueMapDTO(types);
 	}
 
 	@PutMapping("{id}")

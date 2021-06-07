@@ -62,7 +62,7 @@ public class LearningResourceCategoryController {
 		return getResourceCategoryMapper().mapToDTOList(categories);
 	}
 
-	@Cacheable(cacheNames = "resource-categories", key = "#root.method")
+	@Cacheable(cacheNames = "resource-categories", sync = true)
 	@GetMapping
 	@ApiOperation(value = "Get all learning resource categories", notes = "Get resource categories.")
 	public List<LearningResourceCategoryDTO> getAllResource() {
@@ -70,7 +70,7 @@ public class LearningResourceCategoryController {
 		return getResourceCategoryMapper().mapToDTOList(categories);
 	}
 
-	@Cacheable(value = "resource-domains", key = "#root.method")
+	@Cacheable(value = "resource-domains", sync = true)
 	@GetMapping("/domains")
 	@ApiOperation(value = "Get learning resource category domains")
 	public Map<String, String> getResourceCategoryDomains() {

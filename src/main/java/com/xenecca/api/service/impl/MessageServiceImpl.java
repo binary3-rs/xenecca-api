@@ -1,14 +1,19 @@
 package com.xenecca.api.service.impl;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xenecca.api.dao.MessageRepository;
 import com.xenecca.api.dto.request.NewMessageDTO;
+import com.xenecca.api.dto.response.ValueMapDTO;
 import com.xenecca.api.exception.ResourceNotFoundException;
 import com.xenecca.api.mapper.MessageMapper;
 import com.xenecca.api.model.Message;
 import com.xenecca.api.model.type.MessageStatus;
+import com.xenecca.api.model.type.MessageSubject;
 import com.xenecca.api.service.MessageService;
 
 import lombok.Getter;
@@ -31,6 +36,12 @@ public class MessageServiceImpl implements MessageService {
 	public void addMessage(NewMessageDTO messageData) {
 		Message message = getMessageMapper().mapToEntity(messageData);
 		getMessageRepository().save(message);
+	}
+
+	@Override
+	public ValueMapDTO getSubjectTypes() {
+		return new ValueMapDTO(Arrays.stream(MessageSubject.values())
+				.collect(Collectors.toMap(MessageSubject::toString, MessageSubject::getName)));
 	}
 
 	@Override

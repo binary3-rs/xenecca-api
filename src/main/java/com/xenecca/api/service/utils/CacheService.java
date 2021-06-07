@@ -16,19 +16,29 @@ public class CacheService {
 	@Autowired
 	private CacheManager _cacheManager;
 
+	// every day at 3:30
+	@Scheduled(cron = "0 30 3 */1 * *")
+	public void evictCacheDaily() {
+		getCacheManager().getCache("courses").clear();
+		getCacheManager().getCache("similar-courses").clear();
+		getCacheManager().getCache("top-courses").clear();
+	}
+
 	// every 13hrs
 	@Scheduled(cron = "0 0 */13 * * *")
 	public void evictCourseDataCachesAtInterval() {
-		getCacheManager().getCache("courses").clear();
+
 		getCacheManager().getCache("courses-by-page").clear();
-		//getCacheManager().getCache("categories").clear(); -- categories are predefined
+		// getCacheManager().getCache("categories").clear(); -- categories are
+		// predefined
 		getCacheManager().getCache("subcategories").clear();
 	}
 
-	// every 18 hours
+	// every 3rd day
 	@Scheduled(cron = "0 0 0 */3 * *")
 	public void evictResourceCacheAtInterval() {
 		getCacheManager().getCache("resources").clear();
+		getCacheManager().getCache("resources-by-category").clear();
 		getCacheManager().getCache("resource-categories").clear();
 	}
 

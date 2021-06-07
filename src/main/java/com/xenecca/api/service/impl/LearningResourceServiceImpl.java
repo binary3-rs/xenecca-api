@@ -67,7 +67,7 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = "resources")
+	@Cacheable(cacheNames = "resources", sync = true)
 	public PageResult<LearningResource> getAllResources(Integer pageNo, Integer pageSize) {
 		Page<LearningResource> pageOfResources = _getAllResources(pageNo, pageSize, null, null);
 		return new PageResult<LearningResource>(pageOfResources.getContent(), pageOfResources.getTotalElements(),
@@ -76,7 +76,7 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = "resources")
+	@Cacheable(cacheNames = "resources-by-category", sync = true)
 	public Iterable<LearningResource> getAllResourcesByCategory(Long categoryId, Integer pageNo, Integer pageSize) {
 		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, pageSize, null, null);
 		Page<LearningResource> pageOfResources = getLearningResourceRepository().findBy_resourceCategory__id(categoryId,
@@ -130,7 +130,7 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 		}
 	}
 
-	@CacheEvict(cacheNames = "resources", allEntries = true)
+	@CacheEvict(cacheNames = { "resources", "resources-by-category" }, allEntries = true)
 	@Override
 	public void deleteLearningResource(Long resourceId) {
 		LearningResource resource = getLearningResourceRepository().findById(resourceId).get();

@@ -29,14 +29,15 @@ public class SubcategoryController {
 	@Autowired
 	private SubcategoryMapper _subcategoryMapper;
 
-	@Cacheable(value="subcategories", key="#root.method")
+	// NOTE: by default 0 is used as key
+	@Cacheable(value = "subcategories", key = "#root.method", sync = true)
 	@GetMapping("/api/v1/subcategories/")
 	@ApiOperation(value = "Get all subcategories.")
 	public List<SubcategoryDTO> getAllSubcategories() {
 		return getSubcategoryMapper().mapToDTOList(getSubcategoryService().getAllSubcategories());
 	}
 
-	@Cacheable(cacheNames = "subcategories")
+	@Cacheable(cacheNames = "subcategories", sync = true)
 	@GetMapping("/api/v1/categories/{id}/subcategories/")
 	@ApiOperation(value = "Get all subcategories by category.")
 	public List<SubcategoryDTO> getSubcategoriesByCategory(@PathVariable("id") Long categoryId) {

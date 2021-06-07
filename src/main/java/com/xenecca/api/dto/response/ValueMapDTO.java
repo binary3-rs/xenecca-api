@@ -14,6 +14,6 @@ import lombok.experimental.Accessors;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LearningResourceTypeDTO {
+public class ValueMapDTO {
 	private Map<String, String> _values = new HashMap<String, String>();
 }

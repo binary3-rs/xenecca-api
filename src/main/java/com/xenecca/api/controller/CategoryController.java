@@ -43,7 +43,7 @@ public class CategoryController {
 		return getCategoryMapper().mapToDTO(getCategoryService().addCategory(categoryData));
 	}
 
-	@Cacheable(value="categories", key="#root.method")
+	@Cacheable(value = "categories", sync = true)
 	@GetMapping
 	@ApiOperation(value = "Get all categories", produces = "application/json")
 	public List<CategoryDTO> getAllCategories() {
