@@ -26,7 +26,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/api/v1/languages/")
+@RequestMapping("/v1/languages/")
 public class LanguageController {
 
 	@Autowired

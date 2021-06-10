@@ -27,7 +27,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/api/v1/users/")
+@RequestMapping("/v1/users/")
 public class UserController {
 
 	@Autowired
@@ -37,7 +37,7 @@ public class UserController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	@ApiOperation(value = "Add new user.")
+	@ApiOperation(value = "Add new user")
 	public UserDTO addUser(@RequestBody @Valid NewUserDTO userData) {
 		return getUserMapper().mapToDTO(getUserService().addUser(userData));
 	}

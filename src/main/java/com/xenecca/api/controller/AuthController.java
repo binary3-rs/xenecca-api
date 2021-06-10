@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @Accessors(prefix = "_")
 @Getter
 @RestController
-@RequestMapping(value = "/api/v1/login")
+@RequestMapping(value = "/v1/login")
 @Api(value = "Auth controller")
 public class AuthController {
 

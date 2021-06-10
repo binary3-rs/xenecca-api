@@ -39,33 +39,33 @@ public class MessageController {
 	private MessageMapper _messageMapper;
 
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/api/v1/contact")
+	@PostMapping("/v1/contact")
 	public void addMessage(@Valid @RequestBody NewMessageDTO messageData) {
 		getMessageService().addMessage(messageData);
 	}
 
-	@GetMapping("/api/v1/contact/subject-types")
+	@GetMapping("/v1/contact/subject-types")
 	public ValueMapDTO getSubjectTypes() {
 		return getMessageService().getSubjectTypes();
 	}
 
-	@GetMapping("/api/v1/messages/")
+	@GetMapping("/v1/messages/")
 	public List<MessageDTO> getAllMessages() {
 		return getMessageMapper().mapToDTOList(getMessageService().getAllMessages());
 	}
 
-	@GetMapping("/api/v1/messages/{id}")
+	@GetMapping("/v1/messages/{id}")
 	public MessageDTO getMessage(@PathVariable("id") Long id) {
 		return getMessageMapper().mapToDTO(getMessageService().getMessage(id));
 	}
 
-	@PatchMapping("/api/v1/messages/{id}")
+	@PatchMapping("/v1/messages/{id}")
 	public MessageDTO changeMessageStatus(@PathVariable("id") Long id, @RequestBody ChangeMessageStatusDTO statusData) {
 		return getMessageMapper().mapToDTO(getMessageService().changeMessageStatus(id, statusData.getStatus()));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("/api/v1/messages/{id}")
+	@DeleteMapping("/v1/messages/{id}")
 	public void deleteMessage(@PathVariable("id") Long id) {
 		getMessageService().deleteMessage(id);
 	}

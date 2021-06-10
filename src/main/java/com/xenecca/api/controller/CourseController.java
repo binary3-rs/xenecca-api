@@ -35,7 +35,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/api/v1/courses/")
+@RequestMapping("/v1/courses/")
 public class CourseController {
 
 	@Autowired

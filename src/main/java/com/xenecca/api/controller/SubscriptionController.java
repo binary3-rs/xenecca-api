@@ -29,7 +29,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @RestController
-@RequestMapping(value = "/api/v1/subscriptions/")
+@RequestMapping(value = "/v1/subscriptions/")
 public class SubscriptionController {
 
 	@Autowired

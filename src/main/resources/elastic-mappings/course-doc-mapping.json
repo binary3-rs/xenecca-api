@@ -36,15 +36,6 @@
 		"language": {
 			"type": "long"
 		},
-		"original_poster_url": {
-			"type": "text",
-			"fields": {
-				"keyword": {
-					"type": "keyword",
-					"ignore_above": 256
-				}
-			}
-		},
 		"poster": {
 			"type": "text",
 			"fields": {

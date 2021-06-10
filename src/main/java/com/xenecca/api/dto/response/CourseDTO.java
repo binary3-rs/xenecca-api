@@ -25,7 +25,6 @@ public class CourseDTO {
 	private String _objectives;
 	private String _headline;
 	private String _poster;
-	private String _originalPosterUrl;
 	private String _requirements;
 	private String _udemyUrl;
 	private Timestamp _updatedAt;
@@ -40,7 +39,6 @@ public class CourseDTO {
 		_objectives = course.getObjectives();
 		_headline = course.getHeadline();
 		_poster = course.getPosterPath();
-		_originalPosterUrl = course.getOriginalPosterUrl();
 		_requirements = course.getRequirements();
 		_udemyUrl = course.getUdemyUrl();
 		_updatedAt = course.getUpdatedAt();

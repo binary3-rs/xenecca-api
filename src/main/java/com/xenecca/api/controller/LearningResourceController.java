@@ -49,7 +49,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/api/v1/resources/")
+@RequestMapping("/v1/learning-resources/")
 public class LearningResourceController {
 
 	@Autowired

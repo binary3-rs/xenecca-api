@@ -35,7 +35,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/api/v1/resource-categories/")
+@RequestMapping("/v1/learning-resource-categories/")
 public class LearningResourceCategoryController {
 
 	@Autowired
