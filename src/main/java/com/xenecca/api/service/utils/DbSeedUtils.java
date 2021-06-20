@@ -49,9 +49,7 @@ public class DbSeedUtils {
 	}
 
 	public void populateCategories() {
-		String[] categories = { "Business", "Design", "Development", "Finance & Accounting", "IT & Software",
-				"Marketing", "Music", "Office", "Productivity", "Personal Development", "Photography & Video",
-				"Teaching & Academics" };
+		String[] categories = { "Design", "Development", "IT & Software", "Marketing" };
 		for (String category : categories) {
 			try {
 				getCategoryRepository().save(new Category(category));
