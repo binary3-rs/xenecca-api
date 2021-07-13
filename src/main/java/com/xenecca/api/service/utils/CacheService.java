@@ -24,13 +24,10 @@ public class CacheService {
 		getCacheManager().getCache("top-courses").clear();
 	}
 
-	// every 13hrs
-	@Scheduled(cron = "0 0 */13 * * *")
+	// every 3rd hour at :30 mins
+	@Scheduled(cron = "0 30 */3 * * *")
 	public void evictCourseDataCachesAtInterval() {
-
 		getCacheManager().getCache("courses-by-page").clear();
-		// getCacheManager().getCache("categories").clear(); -- categories are
-		// predefined
 		getCacheManager().getCache("subcategories").clear();
 	}
 
@@ -41,16 +38,5 @@ public class CacheService {
 		getCacheManager().getCache("resources-by-category").clear();
 		getCacheManager().getCache("resource-categories").clear();
 	}
-
-	/*
-	 * // on 1st day of the month
-	 * 
-	 * @Scheduled(cron = "0 0 6 1 * *") public void
-	 * evictResourceTypesCacheAtInterval() {
-	 * getCacheManager().getCache("resource-domains").clear();
-	 * getCacheManager().getCache("resource-types").clear();
-	 * 
-	 * }
-	 */
 
 }
