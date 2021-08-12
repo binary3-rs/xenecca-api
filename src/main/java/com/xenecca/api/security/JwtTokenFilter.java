@@ -1,6 +1,7 @@
 package com.xenecca.api.security;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Date;
 
 import javax.servlet.FilterChain;
@@ -15,8 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.xenecca.api.exception.ExceptionResponse;
-import com.xenecca.api.exception.InvalidJwtAuthenticationException;
+import com.xenecca.api.error.ApiErrorResponse;
+import com.xenecca.api.error.exception.InvalidJwtAuthenticationException;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -64,7 +65,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			Throwable ex) {
 		response.setStatus(status.value());
 		response.setContentType("application/json");
-		ExceptionResponse apiError = new ExceptionResponse(new Date(), ex.getMessage(), request.getRequestURI());
+		ApiErrorResponse apiError = new ApiErrorResponse(Instant.now(), ex.getMessage(), request.getRequestURI());
 		try {
 			String json = apiError.convertToJson();
 			response.getWriter().write(json);

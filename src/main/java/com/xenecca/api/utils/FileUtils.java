@@ -11,7 +11,7 @@ import java.nio.file.StandardCopyOption;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.xenecca.api.exception.FileStorageException;
+import com.xenecca.api.error.exception.FileStorageException;
 
 public class FileUtils {
 

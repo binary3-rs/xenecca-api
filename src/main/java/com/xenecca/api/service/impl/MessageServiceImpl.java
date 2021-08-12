@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.xenecca.api.dao.MessageRepository;
 import com.xenecca.api.dto.request.NewMessageDTO;
 import com.xenecca.api.dto.response.ValueMapDTO;
-import com.xenecca.api.exception.ResourceNotFoundException;
+import com.xenecca.api.error.exception.ResourceNotFoundException;
 import com.xenecca.api.mapper.MessageMapper;
 import com.xenecca.api.model.Message;
 import com.xenecca.api.model.type.MessageStatus;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.xenecca.api.dao.SubscriptionRepository;
 import com.xenecca.api.dto.request.NewSubscriptionDTO;
-import com.xenecca.api.exception.SubscriptionAlreadyExistsException;
+import com.xenecca.api.error.exception.SubscriptionAlreadyExistsException;
 import com.xenecca.api.model.Subscription;
 import com.xenecca.api.service.SubscriptionService;
 

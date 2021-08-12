@@ -1,10 +1,10 @@
-package com.xenecca.api.exception;
+package com.xenecca.api.error.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class BadAPIRequestException extends APIException {
+public class BadAPIRequestException extends ApiException {
 	/**
 	 * 
 	 */

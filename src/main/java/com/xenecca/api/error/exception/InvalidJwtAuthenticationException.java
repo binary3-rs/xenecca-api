@@ -1,4 +1,4 @@
-package com.xenecca.api.exception;
+package com.xenecca.api.error.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

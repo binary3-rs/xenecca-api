@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import com.xenecca.api.exception.InvalidJwtAuthenticationException;
+import com.xenecca.api.error.exception.InvalidJwtAuthenticationException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

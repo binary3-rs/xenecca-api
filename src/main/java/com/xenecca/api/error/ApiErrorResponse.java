@@ -1,5 +1,6 @@
-package com.xenecca.api.exception;
+package com.xenecca.api.error;
 
+import java.time.Instant;
 import java.util.Date;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,9 +17,9 @@ import lombok.experimental.Accessors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExceptionResponse {
+public class ApiErrorResponse {
 
-	private Date _timestamp;
+	private Instant _timestamp;
 	private String _message;
 	private String _details;
 	

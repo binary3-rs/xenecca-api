@@ -1,10 +1,10 @@
-package com.xenecca.api.exception;
+package com.xenecca.api.error.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends APIException {
+public class ResourceNotFoundException extends ApiException {
 
 	/**
 	 * 
