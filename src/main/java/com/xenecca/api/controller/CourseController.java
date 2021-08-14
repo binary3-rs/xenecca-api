@@ -81,7 +81,7 @@ public class CourseController {
 	 * }
 	 */
 	@Cacheable(cacheNames = "courses", key = "#slug", sync = true)
-	@GetMapping("{slug}")
+	@GetMapping("{slug}/")
 	@ApiOperation(value = "Get a course (by slug)")
 	public CourseDTO getCourseBySlug(@PathVariable("slug") String slug) {
 		Course course = getCourseService().getCourseBySlug(slug);
