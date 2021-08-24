@@ -90,3 +90,7 @@ SOFTWARE_DESIGN--!!--UML--!!--
 SOFTWARE_DESIGN--!!--QA--!!--
 SOFTWARE_DESIGN--!!--System design--!!--
 COMPUTER_SCIENCE--!!--Tools--!!--LaTeX, cmake
+COMPUTER_SCIENCE--!!--Compilers--!!--
+COMPUTER_SCIENCE--!!--Operating systems--!!--
+COMPUTER_SCIENCE--!!--Computer Networks--!!--
+COMPUTER_SCIENCE--!!--Network and apps security--!!--

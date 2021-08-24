@@ -30,7 +30,7 @@ public class NewLearningResourceDTO {
 	private MultipartFile _file;
 
 	@Builder.Default
-	private ResourceType _resourceType = ResourceType.TUTORIAL;
+	private ResourceType _resourceType = ResourceType.TUTORIAL_OR_COURSE;
 
 	@NotNull(message = "You must provide category of the resource!")
 	private Long _resourceCategoryId;
