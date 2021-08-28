@@ -46,7 +46,15 @@ public class SearchServiceImpl implements SearchService {
     private Criteria createCourseCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId) {
         Criteria criteria = new Criteria();
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            criteria.subCriteria(new Criteria("title").contains(searchTerm).or("headline").contains(searchTerm));
+            Criteria subcriteria = new Criteria();
+            String[] terms = searchTerm.split(" ");
+            for (String term : terms) {
+                subcriteria = subcriteria.or(new Criteria("title")
+                        .contains(term)
+                        .or("headline")
+                        .contains(term));
+            }
+            criteria.subCriteria(subcriteria);
         }
 
         if (categoryId != null || subcategoryId != null) {
@@ -64,8 +72,15 @@ public class SearchServiceImpl implements SearchService {
                                                          MaterialType materialType) {
         Criteria criteria = new Criteria();
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            criteria.subCriteria(new Criteria("name"));
+            Criteria subcriteria = new Criteria();
+            String[] terms = searchTerm.split(" ");
+            for (String term : terms) {
+                subcriteria = subcriteria.or(new Criteria("title")
+                        .contains(term));
+            }
+            criteria.subCriteria(subcriteria);
         }
+
         if (categoryId != null) {
             criteria.subCriteria(new Criteria("category").matches(categoryId));
         }
@@ -80,6 +95,7 @@ public class SearchServiceImpl implements SearchService {
         return criteria;
 
     }
+
 
     @Override
     public void deleteCourseDocument(Long courseId) {
@@ -117,9 +133,7 @@ public class SearchServiceImpl implements SearchService {
         SearchHits<T> results = getTemplate().search(searchQuery, clazz);
         for (SearchHit<T> resourceHit : results.getSearchHits()) {
             T doc = resourceHit.getContent();
-            if (doc != null) {
-                resultList.add(doc);
-            }
+            resultList.add(doc);
 
         }
         return new PageResult<T>(resultList, results.getTotalHits(), searchQuery.getPageable().getPageSize());
