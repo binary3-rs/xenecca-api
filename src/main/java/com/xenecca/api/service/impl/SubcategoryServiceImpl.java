@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xenecca.api.dao.CategoryRepository;
-import com.xenecca.api.dao.SubcategoryRepository;
+import com.xenecca.api.dao.course.CategoryRepository;
+import com.xenecca.api.dao.course.SubcategoryRepository;
 import com.xenecca.api.dto.request.NewSubcategoryDTO;
 import com.xenecca.api.model.course.Category;
 import com.xenecca.api.model.course.Subcategory;

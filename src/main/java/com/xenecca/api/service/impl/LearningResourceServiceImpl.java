@@ -13,8 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.xenecca.api.dao.LearningResourceCategoryRepository;
-import com.xenecca.api.dao.LearningResourceRepository;
+import com.xenecca.api.dao.learningresource.LearningResourceCategoryRepository;
+import com.xenecca.api.dao.learningresource.LearningResourceRepository;
 import com.xenecca.api.dto.request.NewLearningResourceDTO;
 import com.xenecca.api.error.exception.BadAPIRequestException;
 import com.xenecca.api.error.exception.InvalidRequestDataException;
@@ -62,6 +62,7 @@ public class LearningResourceServiceImpl implements LearningResourceService {
 			if (materialType.equals(MaterialType.FILE)) {
 				FileUtils.deleteFile(Paths.get(resourceValue));
 			}
+			System.out.println(e);
 			throw e;
 		}
 	}

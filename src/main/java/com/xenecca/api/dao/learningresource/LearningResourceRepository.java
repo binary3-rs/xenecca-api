@@ -1,4 +1,4 @@
-package com.xenecca.api.dao;
+package com.xenecca.api.dao.learningresource;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

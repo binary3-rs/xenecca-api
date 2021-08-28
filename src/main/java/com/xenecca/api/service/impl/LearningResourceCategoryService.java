@@ -9,7 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.xenecca.api.dao.LearningResourceCategoryRepository;
+import com.xenecca.api.dao.learningresource.LearningResourceCategoryRepository;
 import com.xenecca.api.dto.request.NewLearningResourceCategoryDTO;
 import com.xenecca.api.mapper.LearningResourceCategoryMapper;
 import com.xenecca.api.model.learnresource.LearningResourceCategory;

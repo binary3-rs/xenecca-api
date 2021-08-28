@@ -1,4 +1,4 @@
-package com.xenecca.api.dao;
+package com.xenecca.api.dao.course;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -8,6 +8,6 @@ import com.xenecca.api.model.course.Subcategory;
 @Repository
 public interface SubcategoryRepository extends CrudRepository<Subcategory, Long> {
 
-	public Iterable<Subcategory> findBy_category__id(Long categoryId);
-	public Iterable<Subcategory> findBy_category__name(String categoryName);
+	Iterable<Subcategory> findBy_category__id(Long categoryId);
+	Iterable<Subcategory> findBy_category__name(String categoryName);
 }

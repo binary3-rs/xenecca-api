@@ -1,4 +1,4 @@
-package com.xenecca.api.dao;
+package com.xenecca.api.dao.course;
 
 import java.util.Optional;
 

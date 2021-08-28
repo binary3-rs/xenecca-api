@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.CacheManager;
@@ -28,6 +29,7 @@ import lombok.experimental.Accessors;
 @SpringBootApplication
 @Getter
 @EnableScheduling
+//public class ApiApplication extends SpringBootServletInitializer {
 public class ApiApplication extends SpringBootServletInitializer {
 
     @Autowired
@@ -54,6 +56,11 @@ public class ApiApplication extends SpringBootServletInitializer {
                 "resource-types", "courses", "similar-courses", "top-courses", "courses-by-page", "resources",
                 "resources-by-category", "resource-categories");
     }
+
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//        return application.sources(ApiApplication.class);
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(ApiApplication.class, args);

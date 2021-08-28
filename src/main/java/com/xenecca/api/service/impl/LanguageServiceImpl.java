@@ -3,7 +3,7 @@ package com.xenecca.api.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xenecca.api.dao.LanguageRepository;
+import com.xenecca.api.dao.course.LanguageRepository;
 import com.xenecca.api.dto.request.NewLanguageDTO;
 import com.xenecca.api.model.course.Language;
 import com.xenecca.api.service.LanguageService;

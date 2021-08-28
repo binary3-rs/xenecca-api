@@ -10,8 +10,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.xenecca.api.dao.CategoryRepository;
-import com.xenecca.api.dao.LearningResourceCategoryRepository;
+import com.xenecca.api.dao.course.CategoryRepository;
+import com.xenecca.api.dao.learningresource.LearningResourceCategoryRepository;
 import com.xenecca.api.dao.UserRepository;
 import com.xenecca.api.model.User;
 import com.xenecca.api.model.course.Category;
