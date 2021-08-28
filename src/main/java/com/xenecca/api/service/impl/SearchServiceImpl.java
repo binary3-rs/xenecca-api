@@ -46,14 +46,15 @@ public class SearchServiceImpl implements SearchService {
     private Criteria createCourseCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId) {
         Criteria criteria = new Criteria();
         if (searchTerm != null && !searchTerm.isEmpty()) {
+            Criteria subcriteria = new Criteria();
             String[] terms = searchTerm.split(" ");
             for (String term : terms) {
-                criteria
-                        .subCriteria(new Criteria("title")
-                                .contains(term)
-                                .or("headline")
-                                .contains(term));
+                subcriteria = subcriteria.or(new Criteria("title")
+                        .contains(term)
+                        .or("headline")
+                        .contains(term));
             }
+            criteria.subCriteria(subcriteria);
         }
 
         if (categoryId != null || subcategoryId != null) {
@@ -71,7 +72,13 @@ public class SearchServiceImpl implements SearchService {
                                                          MaterialType materialType) {
         Criteria criteria = new Criteria();
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            criteria.subCriteria(new Criteria("name").contains(searchTerm));
+            Criteria subcriteria = new Criteria();
+            String[] terms = searchTerm.split(" ");
+            for (String term : terms) {
+                subcriteria = subcriteria.or(new Criteria("title")
+                        .contains(term));
+            }
+            criteria.subCriteria(subcriteria);
         }
 
         if (categoryId != null) {
