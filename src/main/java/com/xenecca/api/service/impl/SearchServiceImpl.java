@@ -46,7 +46,7 @@ public class SearchServiceImpl implements SearchService {
     private Criteria createCourseCriteriaBasedOnParams(String searchTerm, Integer categoryId, Integer subcategoryId) {
         Criteria criteria = new Criteria();
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            Criteria subcriteria = new Criteria();
+            Criteria subcriteria = new Criteria("title").matches(searchTerm).or("headline").matches(searchTerm);
             String[] terms = searchTerm.split(" ");
             for (String term : terms) {
                 subcriteria = subcriteria.or(new Criteria("title")
@@ -72,10 +72,10 @@ public class SearchServiceImpl implements SearchService {
                                                          MaterialType materialType) {
         Criteria criteria = new Criteria();
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            Criteria subcriteria = new Criteria();
+            Criteria subcriteria = new Criteria("name").matches(searchTerm);
             String[] terms = searchTerm.split(" ");
             for (String term : terms) {
-                subcriteria = subcriteria.or(new Criteria("title")
+                subcriteria = subcriteria.or(new Criteria("name")
                         .contains(term));
             }
             criteria.subCriteria(subcriteria);

@@ -44,7 +44,7 @@ public class DbSeedUtils {
 				.password(getPasswordEncoder().encode("xeneccaMaNiNe")).build();
 		try {
 			getUserRepository().save(user);
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 		}
 	}
 
@@ -53,8 +53,7 @@ public class DbSeedUtils {
 		for (String category : categories) {
 			try {
 				getCategoryRepository().save(new Category(category));
-			} catch (Exception e) {
-				continue;
+			} catch (Exception ignored) {
 			}
 		}
 	}
@@ -78,8 +77,7 @@ public class DbSeedUtils {
 					category.setTags(tags);
 					getResourceCategoryRepository().save(category);
 				}
-			} catch (Exception e) {
-				continue;
+			} catch (Exception ignored) {
 
 			}
 		}

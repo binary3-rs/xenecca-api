@@ -66,7 +66,7 @@ public class LearningResource {
 	@Builder.Default
 	@Enumerated(EnumType.STRING)
 	@Column(name = "resource_type")
-	private ResourceType _resourceType = ResourceType.TUTORIAL;
+	private ResourceType _resourceType = ResourceType.TUTORIAL_OR_COURSE;
 
 	@CreationTimestamp
 	@Column(name = "created_at")
