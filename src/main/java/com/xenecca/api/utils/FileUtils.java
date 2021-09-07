@@ -15,7 +15,8 @@ import com.xenecca.api.exception.FileStorageException;
 
 public class FileUtils {
 
-    private static final String UPLOAD_DIR = Paths.get("").toAbsolutePath().toString() + "/uploads/";
+    private static final String UPLOAD_DIR =
+            Paths.get("").toAbsolutePath().toString() + "/uploads/";
 
     public enum StorageType {
         RESOURCE, RESOURCE_CATEGORY;

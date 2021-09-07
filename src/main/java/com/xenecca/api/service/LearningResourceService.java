@@ -8,16 +8,16 @@ import com.xenecca.api.utils.model.PageResult;
 
 public interface LearningResourceService {
 
-	public LearningResource addLearningResource(NewLearningResourceDTO learningResource);
+	LearningResource addLearningResource(NewLearningResourceDTO learningResource);
 
-	public PageResult<LearningResource> getAllResources(Integer pageNo, Integer pageSize);
+	PageResult<LearningResource> getAllResources(Integer pageNo, Integer pageSize);
 
-	public Iterable<LearningResource> getAllResourcesByCategory(Long categoryId, Integer pageNo, Integer pageSize);
+	Iterable<LearningResource> getAllResourcesByCategory(Long categoryId, Integer pageNo, Integer pageSize);
 
-	public Map<String, Object> getFileResource(Long resourceId);
+	Map<String, Object> getFileResource(Long resourceId);
 
-	public LearningResource updateLearningResource(Long resourceId, NewLearningResourceDTO learningResource);
+	LearningResource updateLearningResource(Long resourceId, NewLearningResourceDTO learningResource);
 
-	public void deleteLearningResource(Long resourceId);
+	void deleteLearningResource(Long resourceId);
 
 }

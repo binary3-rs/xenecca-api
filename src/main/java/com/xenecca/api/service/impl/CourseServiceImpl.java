@@ -28,72 +28,72 @@ import lombok.experimental.Accessors;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-	@Autowired
-	private CourseRepository _courseRepository;
+    @Autowired
+    private CourseRepository _courseRepository;
 
-	@Override
-	@Cacheable(cacheNames = "courses-by-page", sync = true)
-	public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize) {
-		Page<Course> pageOfCourses = _getAllCourses(pageNo, pageSize, "date", "desc");
-		return new PageResult<Course>(pageOfCourses.getContent(), pageOfCourses.getTotalElements(), pageSize);
+    @Override
+    @Cacheable(cacheNames = "courses:page", sync = true)
+    public PageResult<Course> getAllCourses(Integer pageNo, Integer pageSize) {
+        Page<Course> pageOfCourses = _getAllCourses(pageNo, pageSize, "date", "desc");
+        return new PageResult<Course>(pageOfCourses.getContent(), pageOfCourses.getTotalElements(), pageSize);
 
-	}
+    }
 
-	@Override
-	public Course getCourseById(Long courseId) {
-		return getCourseRepository().findById(courseId).get();
-	}
+    @Override
+    public Course getCourseById(Long courseId) {
+        return getCourseRepository().findById(courseId).get();
+    }
 
-	@Override
-	public Course getCourseBySlug(String slug) {
-		return getCourseRepository().findBy_slug(slug).get();
-	}
+    @Override
+    public Course getCourseBySlug(String slug) {
+        return getCourseRepository().findBy_slug(slug).get();
+    }
 
-	@Override
-	public Iterable<Course> getSimilarCourses(Long courseId, Integer numOfCourses) {
-		Course course = getCourseById(courseId);
-		Pageable pageable = SortAndCompareUtils.createPageable(0, numOfCourses, "popularity", "desc");
-		Page<Course> pageOfCourses = getCourseRepository().findBySubcategoryIdExcludeCourse(course.getId(),
-				course.getSubcategory().getId(), pageable);
-		List<Course> courses = new ArrayList<>(pageOfCourses.getContent());
-		if (courses.size() < numOfCourses) {
-			pageable = SortAndCompareUtils.createPageable(0, numOfCourses - courses.size(), "popularity", "desc");
-			List<Course> coursesFetchedByCategory = getCourseRepository()
-					.findOnlyByCategoryId(course.getCategory().getId(), course.getSubcategory().getId(), pageable)
-					.getContent();
-			courses.addAll(coursesFetchedByCategory);
+    @Override
+    public Iterable<Course> getSimilarCourses(Long courseId, Integer numOfCourses) {
+        Course course = getCourseById(courseId);
+        Pageable pageable = SortAndCompareUtils.createPageable(0, numOfCourses, "popularity", "desc");
+        Page<Course> pageOfCourses = getCourseRepository().findBySubcategoryIdExcludeCourse(course.getId(),
+                course.getSubcategory().getId(), pageable);
+        List<Course> courses = new ArrayList<>(pageOfCourses.getContent());
+        if (courses.size() < numOfCourses) {
+            pageable = SortAndCompareUtils.createPageable(0, numOfCourses - courses.size(), "popularity", "desc");
+            List<Course> coursesFetchedByCategory = getCourseRepository()
+                    .findOnlyByCategoryId(course.getCategory().getId(), course.getSubcategory().getId(), pageable)
+                    .getContent();
+            courses.addAll(coursesFetchedByCategory);
 
-		}
-		return courses;
-	}
+        }
+        return courses;
+    }
 
-	@Override
-	public void redeemCourseCoupon(Long courseId) {
-		getCourseRepository().updateReedemedCouponCount(courseId);
+    @Override
+    public void redeemCourseCoupon(Long courseId) {
+        getCourseRepository().updateReedemedCouponCount(courseId);
 
-	}
+    }
 
-	@Override
-	@CacheEvict(cacheNames = { "courses", "courses-by-page", "similar-courses", "top-courses" }, allEntries = true)
-	public void deleteCourseById(Long courseId) {
-		Course course = getCourseRepository().findById(courseId).get();
-		String posterPath = course.getPosterPath();
-		// delete course instance
-		getCourseRepository().delete(course);
+    @Override
+    @CacheEvict(cacheNames = {"courses", "courses:page", "courses:similar", "courses:top"}, allEntries = true)
+    public void deleteCourseById(Long courseId) {
+        Course course = getCourseRepository().findById(courseId).get();
+        String posterPath = course.getPosterPath();
+        // delete course instance
+        getCourseRepository().delete(course);
 
-		if (posterPath != null) {
-			FileUtils.deleteFile(Paths.get(posterPath));
-		}
-	}
+        if (posterPath != null) {
+            FileUtils.deleteFile(Paths.get(posterPath));
+        }
+    }
 
-	@Override
-	public Iterable<Course> recommendTopCourses(Integer numOfCourses) {
-		return _getAllCourses(0, numOfCourses, "popularity", "desc").getContent();
-	}
+    @Override
+    public Iterable<Course> recommendTopCourses(Integer numOfCourses) {
+        return _getAllCourses(0, numOfCourses, "popularity", "desc").getContent();
+    }
 
-	private Page<Course> _getAllCourses(Integer pageNo, Integer pageSize, String sortBy, String order) {
-		Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, pageSize, sortBy, order);
-		return getCourseRepository().findAll(sortedPageable);
-	}
+    private Page<Course> _getAllCourses(Integer pageNo, Integer pageSize, String sortBy, String order) {
+        Pageable sortedPageable = SortAndCompareUtils.createPageable(pageNo, pageSize, sortBy, order);
+        return getCourseRepository().findAll(sortedPageable);
+    }
 
 }

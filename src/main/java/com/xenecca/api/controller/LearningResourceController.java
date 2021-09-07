@@ -52,87 +52,87 @@ import lombok.experimental.Accessors;
 @RequestMapping("/v1/learning-resources/")
 public class LearningResourceController {
 
-	@Autowired
-	private LearningResourceService _learningResourceService;
+    @Autowired
+    private LearningResourceService _learningResourceService;
 
-	@Autowired
-	private SearchService _searchService;
+    @Autowired
+    private SearchService _searchService;
 
-	@Autowired
-	private LearningResourceMapper _learningResourceMapper;
+    @Autowired
+    private LearningResourceMapper _learningResourceMapper;
 
-	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping
-	@ApiOperation(value = "Add new file learning resource.")
-	public LearningResourceDTO addLearningResource(@Valid @ModelAttribute NewLearningResourceDTO learningResourceData) {
-		return getLearningResourceMapper()
-				.mapToDTO(getLearningResourceService().addLearningResource(learningResourceData));
-	}
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    @ApiOperation(value = "Add new file learning resource.")
+    public LearningResourceDTO addLearningResource(@Valid @ModelAttribute NewLearningResourceDTO learningResourceData) {
+        return getLearningResourceMapper()
+                .mapToDTO(getLearningResourceService().addLearningResource(learningResourceData));
+    }
 
-	@GetMapping
-	@ApiOperation(value = "Get (search) learning resources.")
-	public PageResultDTO<LearningResourceDTO> getResources(
-			@ApiParam(name = "q", value = "Search term") @RequestParam(name = "q", required = false) String searchTerm,
-			@RequestParam(name = "category", required = false) Long categoryId,
-			@RequestParam(name = "resourceType", required = false) ResourceType resourceType,
-			@RequestParam(name = "materialType", required = false) MaterialType materialType,
-			@RequestParam(name = "page", defaultValue = "0") Integer pageNo,
-			@RequestParam(name = "size", defaultValue = Constants.RESOURCES_PAGE_SIZE_AS_STR) Integer pageSize) {
-		long numOfResults;
+    @GetMapping
+    @ApiOperation(value = "Get (search) learning resources.")
+    public PageResultDTO<LearningResourceDTO> getResources(
+            @ApiParam(name = "q", value = "Search term") @RequestParam(name = "q", required = false) String searchTerm,
+            @RequestParam(name = "category", required = false) Long categoryId,
+            @RequestParam(name = "resourceType", required = false) ResourceType resourceType,
+            @RequestParam(name = "materialType", required = false) MaterialType materialType,
+            @RequestParam(name = "page", defaultValue = "0") Integer pageNo,
+            @RequestParam(name = "size", defaultValue = Constants.RESOURCES_PAGE_SIZE_AS_STR) Integer pageSize) {
+        long numOfResults;
 
-		List<LearningResourceDTO> resourceResults;
-		if (searchTerm == null && categoryId == null && resourceType == null && materialType == null) {
-			PageResult<LearningResource> resources = getLearningResourceService().getAllResources(pageNo, pageSize);
-			resourceResults = getLearningResourceMapper().mapToDTOList(resources.getResults());
-			numOfResults = resources.getNumOfResults();
-		} else {
-			PageResult<LearningResourceDoc> resources = getSearchService().searchResources(searchTerm, categoryId,
-					resourceType, materialType, pageNo, pageSize);
-			resourceResults = getLearningResourceMapper().mapDocsToDTOList(resources.getResults());
-			numOfResults = resources.getNumOfResults();
+        List<LearningResourceDTO> resourceResults;
+        if (searchTerm == null && categoryId == null && resourceType == null && materialType == null) {
+            PageResult<LearningResource> resources = getLearningResourceService().getAllResources(pageNo, pageSize);
+            resourceResults = getLearningResourceMapper().mapToDTOList(resources.getResults());
+            numOfResults = resources.getNumOfResults();
+        } else {
+            PageResult<LearningResourceDoc> resources = getSearchService().searchResources(searchTerm, categoryId,
+                    resourceType, materialType, pageNo, pageSize);
+            resourceResults = getLearningResourceMapper().mapDocsToDTOList(resources.getResults());
+            numOfResults = resources.getNumOfResults();
 
-		}
-		return new PageResultDTO<LearningResourceDTO>(resourceResults, numOfResults, pageSize);
-	}
+        }
+        return new PageResultDTO<LearningResourceDTO>(resourceResults, numOfResults, pageSize);
+    }
 
-	@GetMapping(value = "/{id}", produces = MediaType.ALL_VALUE)
-	@ApiOperation(value = "Get the file learning resource.", produces = "application/octet-stream")
-	public ResponseEntity<InputStreamResource> getFileResource(@PathVariable("id") Long resourceId) {
-		Map<String, Object> fileData = getLearningResourceService().getFileResource(resourceId);
-		ByteArrayInputStream file = (ByteArrayInputStream) fileData.get("file");
-		String name = fileData.get("name").toString();
-		String[] mimeType = fileData.get("mimeType").toString().split("/");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", String.format("inline; filename=%s", name));
-		return ResponseEntity.ok().headers(headers).contentType(new MediaType(mimeType[0], mimeType[1]))
-				.body(new InputStreamResource(file));
+    @GetMapping(value = "/{id}", produces = MediaType.ALL_VALUE)
+    @ApiOperation(value = "Get the file learning resource.", produces = "application/octet-stream")
+    public ResponseEntity<InputStreamResource> getFileResource(@PathVariable("id") Long resourceId) {
+        Map<String, Object> fileData = getLearningResourceService().getFileResource(resourceId);
+        ByteArrayInputStream file = (ByteArrayInputStream) fileData.get("file");
+        String name = fileData.get("name").toString();
+        String[] mimeType = fileData.get("mimeType").toString().split("/");
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", String.format("inline; filename=%s", name));
+        return ResponseEntity.ok().headers(headers).contentType(new MediaType(mimeType[0], mimeType[1]))
+                .body(new InputStreamResource(file));
 
-	}
+    }
 
-	@Cacheable(cacheNames = "resource-types", sync = true)
-	@GetMapping("/types")
-	@ApiOperation(value = "Get learning resource types")
-	public ValueMapDTO getResourceTypes() {
-		Map<String, String> types = new HashMap<String, String>();
-		for (ResourceType type : ResourceType.values()) {
-			types.put(type.toString(), type.getName());
-		}
-		return new ValueMapDTO(types);
-	}
+    @Cacheable(cacheNames = "resources:type", sync = true)
+    @GetMapping("/types")
+    @ApiOperation(value = "Get learning resource types")
+    public ValueMapDTO getResourceTypes() {
+        Map<String, String> types = new HashMap<String, String>();
+        for (ResourceType type : ResourceType.values()) {
+            types.put(type.toString(), type.getName());
+        }
+        return new ValueMapDTO(types);
+    }
 
-	@PutMapping("{id}")
-	@ApiOperation(value = "Update the learning resource")
-	public LearningResourceDTO updateLearningResource(@PathVariable("id") Long resourceId,
-			@Valid @ModelAttribute NewLearningResourceDTO learningResourceData) {
-		return getLearningResourceMapper()
-				.mapToDTO(getLearningResourceService().updateLearningResource(resourceId, learningResourceData));
-	}
+    @PutMapping("{id}")
+    @ApiOperation(value = "Update the learning resource")
+    public LearningResourceDTO updateLearningResource(@PathVariable("id") Long resourceId,
+                                                      @Valid @ModelAttribute NewLearningResourceDTO learningResourceData) {
+        return getLearningResourceMapper()
+                .mapToDTO(getLearningResourceService().updateLearningResource(resourceId, learningResourceData));
+    }
 
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("{id}")
-	@ApiOperation(value = "Delete learning resource")
-	public void deleteLearningResource(@PathVariable("id") Long resourceId) {
-		getLearningResourceService().deleteLearningResource(resourceId);
-	}
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("{id}")
+    @ApiOperation(value = "Delete learning resource")
+    public void deleteLearningResource(@PathVariable("id") Long resourceId) {
+        getLearningResourceService().deleteLearningResource(resourceId);
+    }
 
 }

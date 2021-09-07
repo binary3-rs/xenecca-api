@@ -30,38 +30,38 @@ import lombok.experimental.Accessors;
 @EnableScheduling
 public class ApiApplication extends SpringBootServletInitializer {
 
-	@Autowired
-	private DbSeedUtils _dbSeedUtils;
+    @Autowired
+    private DbSeedUtils _dbSeedUtils;
 
-	@Autowired
-	private CacheService _cacheService;
+    @Autowired
+    private CacheService _cacheService;
 
-	@Autowired
-	private CacheManager _cacheManager;
+    @Autowired
+    private CacheManager _cacheManager;
 
-	@Bean
-	CommandLineRunner runner() {
-		return args -> {
-			getDbSeedUtils().addUser();
-			getDbSeedUtils().populateResourceCategories(1);
-			getDbSeedUtils().populateCategories();
-		};
-	}
+    @Bean
+    CommandLineRunner runner() {
+        return args -> {
+            getDbSeedUtils().addUser();
+            getDbSeedUtils().populateResourceCategories(1);
+            getDbSeedUtils().populateCategories();
+        };
+    }
 
-	@Bean
-	public CacheManager cacheManager() {
-		return new ConcurrentMapCacheManager(new String[] { "categories", "subcategories", "resource-domains",
-				"resource-types", "courses", "similar-courses", "top-courses", "courses-by-page", "resources",
-				"resources-by-category", "resource-categories" });
-	}
+    @Bean
+    public CacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("categories", "subcategories", "resources:domains",
+                "resources:type", "courses", "courses:similar", "courses:top", "courses:page", "resources",
+                "resources:category", "resources:categories");
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ApiApplication.class, args);
+    }
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(ApiApplication.class);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(ApiApplication.class);
+    }
 
 }

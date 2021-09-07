@@ -47,7 +47,7 @@ public class LearningResourceCategoryService implements com.xenecca.api.service.
 	}
 
 	@Override
-	@Cacheable(cacheNames = "resource-categories", sync=true)
+	@Cacheable(cacheNames = "resources:categories", sync=true)
 	public Iterable<LearningResourceCategory> getAllResourceCategories() {
 		return getResourceCategoryRepository().findAll();
 
