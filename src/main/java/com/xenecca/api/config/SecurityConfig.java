@@ -28,39 +28,40 @@ import lombok.experimental.Accessors;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private JwtTokenFilter _tokenFilter;
+    @Autowired
+    private JwtTokenFilter _tokenFilter;
 
-	@Autowired
-	private RestAuthenticationEntryPoint _authEntryPoint;
+    @Autowired
+    private RestAuthenticationEntryPoint _authEntryPoint;
 
-	@Bean(BeanIds.AUTHENTICATION_MANAGER)
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return new AuthManager();
-	}
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return new AuthManager();
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/v1/login").permitAll()
-				.antMatchers("**/api-docs/**", "/swagger-resources/**", "**/swagger-ui.html", "/webjars/**").permitAll()
-				.antMatchers("/v1/contact*").permitAll().antMatchers("/v1/users/**").authenticated()
-				.antMatchers(HttpMethod.GET, "/v1/messages/**", "/v1/subscriptions/**").authenticated()
-				.antMatchers(HttpMethod.POST, "/v1/messages/", "/v1/subscriptions/").permitAll()
-				.antMatchers(HttpMethod.DELETE, "/v1/subscriptions/{token}").permitAll()
-				.antMatchers(HttpMethod.GET, "/v1/**").permitAll()
-				.antMatchers(HttpMethod.PUT, "/v1/courses/{id}/redeem-coupon").permitAll()
-				.antMatchers(HttpMethod.POST, "/v1/**").authenticated().antMatchers(HttpMethod.DELETE, "/v1/**")
-				.authenticated().antMatchers(HttpMethod.PUT, "/v1/**").authenticated()
-				.antMatchers(HttpMethod.PATCH, "/v1/**").authenticated().and().exceptionHandling()
-				.authenticationEntryPoint(getAuthEntryPoint()).and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.addFilterBefore(getTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-	}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable().authorizeRequests().antMatchers("/v1/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/v1/student-opportunities/").permitAll()
+                .antMatchers("**/api-docs/**", "/swagger-resources/**", "**/swagger-ui.html", "/webjars/**").permitAll()
+                .antMatchers("/v1/contact*").permitAll().antMatchers("/v1/users/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/v1/messages/**", "/v1/subscriptions/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/v1/messages/", "/v1/subscriptions/").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/v1/subscriptions/{token}").permitAll()
+                .antMatchers(HttpMethod.GET, "/v1/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/v1/courses/{id}/redeem-coupon").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/**").authenticated().antMatchers(HttpMethod.DELETE, "/v1/**")
+                .authenticated().antMatchers(HttpMethod.PUT, "/v1/**").authenticated()
+                .antMatchers(HttpMethod.PATCH, "/v1/**").authenticated().and().exceptionHandling()
+                .authenticationEntryPoint(getAuthEntryPoint()).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(getTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

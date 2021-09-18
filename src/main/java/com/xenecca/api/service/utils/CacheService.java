@@ -16,7 +16,7 @@ public class CacheService {
 	@Autowired
 	private CacheManager _cacheManager;
 
-	// every 3rd hour at :30 mins
+	// every 4th hour at :30 mins
 	@Scheduled(cron = "0 30 */4 * * *")
 	public void evictCourseCachesAtInterval() {
 		// TODO: add null pointer exception protection
